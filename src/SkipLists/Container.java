@@ -16,8 +16,16 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      * Searches for the value using the key which is a Comparable object.
      *
      * @param key key to be searched for
+     * @throws IllegalArgumentException @param cannot be null
      */
     V search(K key);
+
+    /**
+     * Gets the first element in the list.
+     *
+     * @return The first element in the list
+     */
+    KVPair<K, V> first();
 
 
     /**
@@ -25,6 +33,7 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      * by its lexicographical order.
      *
      * @param it the KVPair to be inserted
+     * @throws IllegalArgumentException @param cannot be null
      */
     void insert(KVPair<K, V> it);
 
@@ -35,6 +44,7 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      *
      * @param key the KVPair to be removed
      * @return returns the removed pair if the pair was valid and null if not
+     * @throws IllegalArgumentException @param cannot be null
      */
     KVPair<K, V> remove(K key);
 
@@ -44,6 +54,7 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      *
      * @param val the value of the KVPair to be removed
      * @return returns true if the removal was successful
+     * @throws IllegalArgumentException @param cannot be null
      */
     KVPair<K, V> removeByValue(V val);
 
@@ -53,6 +64,11 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      * @return returns a positive integer indicating the size of the list
      */
     int size();
+
+    /**Checks if the current container is empty
+     *
+     * */
+    boolean isEmpty();
 
     /**
      * Returns the current number of elements in the list
