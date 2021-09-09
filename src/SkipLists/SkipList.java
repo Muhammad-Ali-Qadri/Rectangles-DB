@@ -35,21 +35,25 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
         //Find the value by iterating the list from head and the highest level
         SkipNode current = head;
 
+        //Find the node pointing to the key
         for(int i = level; i > -1; i--)
-            while(current.forward[i] != null && current.forward[i].pair.getKey().compareTo(key) < 0)
+            while(current.forward[i] != null && current.forward[i].element().getKey().compareTo(key) < 0)
                 current = current.forward[i];
 
-        current = current.forward[0];
-        return (current.pair.getKey().equals(key)) ? current.pair.getValue(): null;
-    }
-
-    @Override
-    public KVPair<K, V> first() {
-        return (head == null || head.forward[0] == null) ? null: head.forward[0].pair;
+        current = current.forward[0]; //return value if key is found
+        return (current.element().getKey().equals(key)) ? current.element().getValue(): null;
     }
 
     /**
-     * @return the size of the SkipList
+     * {@inheritDoc}
+     * */
+    @Override
+    public KVPair<K, V> first() {
+        return (head == null || head.forward[0] == null) ? null: head.forward[0].element();
+    }
+
+    /**
+     * {@inheritDoc}
      */
    @Override
     public int size() {
@@ -75,9 +79,9 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
         SkipNode[] update = (SkipNode[]) Array.newInstance(SkipNode.class, level + 1);
         SkipNode current = head;
 
-        //Find insertion point
+        //Find insertion point for the new item
         for(int i = level; i > -1; i--) {
-            while (current.forward[i] != null && current.forward[i].pair.getKey().compareTo(it.getKey()) < 0) {
+            while (current.forward[i] != null && current.forward[i].element().getKey().compareTo(it.getKey()) < 0) {
                 current = current.forward[i];
             }
             update[i] = current;
@@ -86,8 +90,8 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
         SkipNode newNode = new SkipNode(it, newLevel);
 
         for(int i = 0; i <= newLevel; i++){
-            newNode.forward[i] = update[i].forward[i];
-            update[i].forward[i] = newNode;
+            newNode.forward[i] = update[i].forward[i]; //who the new node points to
+            update[i].forward[i] = newNode; //who points to the new node
         }
 
         size++;
@@ -110,7 +114,7 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
 
         //Find deletion point
         for(int i = level; i > -1; i--) {
-            while (current.forward[i] != null && current.forward[i].pair.getKey().compareTo(key) < 0) {
+            while (current.forward[i] != null && current.forward[i].element().getKey().compareTo(key) < 0) {
                 current = current.forward[i];
             }
             update[i] = current;
@@ -118,7 +122,7 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
 
         current = current.forward[0];
 
-        if(current == null || !current.pair.getKey().equals(key)) //key does not exist
+        if(current == null || !current.element().getKey().equals(key)) //key does not exist
             return null;
 
         //Disconnect all previous nodes connected to value
@@ -130,7 +134,7 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
             update[i].forward[i] = current.forward[i];
 
         size--;
-        return current.pair;
+        return current.element();
     }
 
 
@@ -139,17 +143,21 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
      */
     @Override
     public KVPair<K, V> removeByValue(V val) {
+        //Checks for null input and empty list
         if(val == null) throw new IllegalArgumentException();
         if(isEmpty()) return null;
 
         K key = null;
 
+        //Find key for the given value
         for (KVPair<K, V> pair : this) {
             if (pair.getValue().equals(val)) {
                 key = pair.getKey();
                 break;
             }
         }
+
+        //Remove and return the item
         return (key == null) ? null : remove(key);
     }
 
@@ -160,7 +168,6 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
      */
     @Override
     public Iterator<KVPair<K, V>> iterator() {
-        // TODO Auto-generated method stub
         return new SkipListIterator();
     }
 
@@ -246,22 +253,31 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
      * @author Muhammad Ali Qadri
      */
     private class SkipListIterator implements Iterator<KVPair<K, V>> {
-        private SkipNode current;
+        private SkipNode current; //Current node the iterator points to
 
+        /** Constructs this class object.
+         * */
         public SkipListIterator() {
+            //Points to head, or the next element
             current = head;
             if(current.forward[0] != null)
                 current = current.forward[0];
         }
 
+        /**
+         * {@inheritDoc}
+         * */
         @Override
         public boolean hasNext() {
             return !isEmpty() && current != null;
         }
 
+        /**
+         * {@inheritDoc}
+         * */
         @Override
         public KVPair<K, V> next() {
-            KVPair<K, V> pair = current.pair;
+            KVPair<K, V> pair = current.element();
             current = current.forward[0];
             return pair;
         }
