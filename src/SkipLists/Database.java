@@ -14,22 +14,7 @@ import java.awt.Rectangle;
  * @author Muhammad Ali Qadri
  *
  */
-public class Database {
-
-    // this is the SkipList object that we are using
-    // a string for the name of the rectangle and then
-    // a rectangle object, these are stored in a KVPair,
-    // see the KVPair class for more information
-    private SkipList<String, Rectangle> list;
-
-    /**
-     * The constructor for this class initializes a SkipList object with String
-     * and Rectangle a its parameters.
-     */
-    public Database() {
-        list = new SkipList<String, Rectangle>();
-    }
-
+public interface Database {
 
     /**
      * Inserts the KVPair in the SkipList if the rectangle has valid coordinates
@@ -40,10 +25,7 @@ public class Database {
      * @param pair
      *            the KVPair to be inserted
      */
-    public void insert(KVPair<String, Rectangle> pair) {
-
-
-    }
+    void insert(KVPair<String, Rectangle> pair);
 
 
     /**
@@ -53,10 +35,7 @@ public class Database {
      * @param name
      *            the name of the rectangle to be removed
      */
-    public void remove(String name) {
- 
-
-    }
+    void remove(String name);
 
 
     /**
@@ -72,9 +51,7 @@ public class Database {
      * @param h
      *            height of the rectangle to be removed
      */
-    public void remove(int x, int y, int w, int h) {
-
-    }
+    void remove(int x, int y, int w, int h);
 
 
     /**
@@ -92,9 +69,7 @@ public class Database {
      * @param h
      *            height of the region
      */
-    public void regionsearch(int x, int y, int w, int h) {
-
-    }
+    void regionSearch(int x, int y, int w, int h);
 
 
 
@@ -102,9 +77,7 @@ public class Database {
      * Prints out all the rectangles that Intersect each other by calling the
      * SkipList method for intersections. You will need to use two SkipList Iterators for this
      */
-    public void intersections() {
-
-    }
+    void intersections();
 
 
     /**
@@ -114,18 +87,13 @@ public class Database {
      * @param name
      *            name of the Rectangle to be searched for
      */
-    public void search(String name) {
-
-    }
-
+    void search(String name);
 
     /**
      * Prints out a dump of the SkipList which includes information about the
      * size of the SkipList and shows all of the contents of the SkipList. This
      * will all be delegated to the SkipList.
      */
-    public void dump() {
-        list.dump();
-    }
+    void dump();
 
 }

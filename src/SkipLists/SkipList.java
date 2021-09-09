@@ -5,165 +5,148 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
 
-
-/**
- * This class implements SkipList data structure and contains an inner SkipNode
- * class which the SkipList will make an array of to store data.
- * 
+/** This class implements the Container interface and represents
+ * the skip list data structure to fulfil the interface functionalities
+ *
+ * @param <K> Key
+ * @param <V> Value
  * @author Muhammad Ali Qadri
- * 
- * @version 2021-08-23
- * @param <K>
- *            Key
- * @param <V>
- *            Value
  */
-public class SkipList<K extends Comparable<? super K>, V>
-    implements Iterable<KVPair<K, V>> {
+public class SkipList<K extends Comparable<? super K>, V> extends AbstractContainer<K, V> {
     private SkipNode head; // First element of the top level
     private int size; // number of entries in the Skip List
+    private int level; //Highest level in the skip list
 
     /**
      * Initializes the fields head, size and level
      */
     public SkipList() {
         head = new SkipNode(null, 0);
-        size = 0;
     }
 
-
     /**
-     * Returns a random level number which is used as the depth of the SkipNode
-     * 
-     * @return a random level number
+     * {@inheritDoc}
      */
-    int randomLevel() {
-        int lev;
-        Random value = new Random();
-        for (lev = 0; Math.abs(value.nextInt()) % 2 == 0; lev++) {
-            // Do nothing
-        }
-        return lev; // returns a random level
-    }
+    @Override
+    public V search(K key) {
+        if(level == -1) return null; //In case list is empty
 
+        //Find the value by iterating the list from head and the highest level
+        SkipNode current = head;
 
-    /**
-     * Searches for the KVPair using the key which is a Comparable object.
-     * 
-     * @param key
-     *            key to be searched for
-     */
-    public ArrayList<KVPair<K, V>> search(K key) {
-        return null;
+        for(int i = level; i > -1; i--)
+            while(current.forward[i] != null && current.forward[i].pair.getKey().compareTo(key) < 0)
+                current = current.forward[i];
+
+        current = current.forward[0];
+        return (current.pair.getKey().equals(key)) ? current.pair.getValue(): null;
     }
 
 
     /**
      * @return the size of the SkipList
      */
+   @Override
     public int size() {
         return size;
     }
 
 
     /**
-     * Inserts the KVPair in the SkipList at its appropriate spot as designated
-     * by its lexicoragraphical order.
-     * 
-     * @param it
-     *            the KVPair to be inserted
+     * {@inheritDoc}
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public void insert(KVPair<K, V> it) {
 
     }
 
 
     /**
+     * {@inheritDoc}
+     */
+
+    @Override
+    public KVPair<K, V> remove(K key) {
+        return null;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public KVPair<K, V> removeByValue(V val) {
+        return null;
+    }
+
+
+    /** Implements method from Iterable class
+     *
+     * @return the iterator used to traverse through the list
+     */
+    @Override
+    public Iterator<KVPair<K, V>> iterator() {
+        // TODO Auto-generated method stub
+        return new SkipListIterator();
+    }
+
+
+    /**
      * Increases the number of levels in head so that no element has more
      * indices than the head.
-     * 
-     * @param newLevel
-     *            the number of levels to be added to head
+     *
+     * @param newLevel the number of levels to be added to head
      */
-    @SuppressWarnings("unchecked")
     private void adjustHead(int newLevel) {
 
     }
 
 
     /**
-     * Removes the KVPair that is passed in as a parameter and returns true if
-     * the pair was valid and false if not.
-     * 
-     * @param key
-     *            the KVPair to be removed
-     * @return returns the removed pair if the pair was valid and null if not
+     * Returns a random level number which is used as the depth of the SkipNode
+     *
+     * @return a random level number
      */
-
-    @SuppressWarnings("unchecked")
-    public KVPair<K, V> remove(K key) {
-        return null;
-
-    }
-
-
-    /**
-     * Removes a KVPair with the specified value.
-     * 
-     * @param val
-     *            the value of the KVPair to be removed
-     * @return returns true if the removal was successful
-     */
-    public KVPair<K, V> removeByValue(V val) {
-        return null;
-    }
-
-
-    /**
-     * Prints out the SkipList in a human readable format to the console.
-     */
-    public void dump() {
-
+    private int randomLevel() {
+        int lev = 0;
+        Random value = new Random();
+        while(Math.abs(value.nextInt()) % 2 == 0) lev++;
+        return lev; // returns a random level
     }
 
     /**
      * This class implements a SkipNode for the SkipList data structure.
-     * 
-     * @author CS Staff
-     * 
-     * @version 2016-01-30
+     *
+     * @author Muhammad Ali Qadri
      */
     private class SkipNode {
 
         // the KVPair to hold
         private KVPair<K, V> pair;
         // what is this
-        private SkipNode [] forward;
+        private SkipNode[] forward;
         // the number of levels
         private int level;
 
         /**
          * Initializes the fields with the required KVPair and the number of
          * levels from the random level method in the SkipList.
-         * 
-         * @param tempPair
-         *            the KVPair to be inserted
-         * @param level
-         *            the number of levels that the SkipNode should have
+         *
+         * @param tempPair the KVPair to be inserted
+         * @param level    the number of levels that the SkipNode should have
          */
         @SuppressWarnings("unchecked")
         public SkipNode(KVPair<K, V> tempPair, int level) {
             pair = tempPair;
-            forward = (SkipNode[])Array.newInstance(SkipList.SkipNode.class,
-                level + 1);
+            forward = (SkipNode[]) Array.newInstance(SkipList.SkipNode.class,
+                    level + 1);
             this.level = level;
         }
 
 
         /**
          * Returns the KVPair stored in the SkipList.
-         * 
+         *
          * @return the KVPair
          */
         public KVPair<K, V> element() {
@@ -172,7 +155,13 @@ public class SkipList<K extends Comparable<? super K>, V>
 
     }
 
-
+    /**
+     * This class implements an iterator for the SkipList data structure.
+     * It will be used to iterate the nodes of the SkipList and
+     * efficiently be used in any foreach loop or wherever required
+     *
+     * @author Muhammad Ali Qadri
+     */
     private class SkipListIterator implements Iterator<KVPair<K, V>> {
         private SkipNode current;
 
@@ -195,12 +184,6 @@ public class SkipList<K extends Comparable<? super K>, V>
             return null;
         }
 
-    }
-
-    @Override
-    public Iterator<KVPair<K, V>> iterator() {
-        // TODO Auto-generated method stub
-        return new SkipListIterator();
     }
 
 }

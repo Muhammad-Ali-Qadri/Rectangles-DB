@@ -1,39 +1,38 @@
 package SkipLists;
 
+import java.util.Objects;
+
 /**
  * This class holds a generic Key-value pair implementation with the compareTo
  * method from the Comparable class implemented as well. The purpose of this
  * class is to hold generic KVPair object which will be stored in the SkipList.
  * There is also a toString method for easily translating the objects contained
  * in the KVPair into a human readable string.
- * 
- * @author Muhammad Ali Qadri
  *
- * @param <K>
- *            Key to be used
- * @param <V>
- *            Value to be associated with the key
+ * @param <K> Key to be used
+ * @param <V> Value to be associated with the key
+ * @author Muhammad Ali Qadri
  */
 
-//public class KVPair<K, V> implements Comparable<KVPair<K, V>> {
-	//Another Implementation choice is to require K to implement Comparable not KVPair
-	public class KVPair<K extends Comparable<? super K>, V> implements Comparable<KVPair<K, V>>{
+//Another Implementation choice is to require K to implement Comparable not KVPair
+public class KVPair<K extends Comparable<? super K>, V> implements Comparable<KVPair<K, V>> {
 
     // the object to be a key
-    private K key;
+    private final K key;
     // the object to be the value at the key
-    private V value;
+    private final V value;
 
     /**
      * The constructor assigns value to the key and value fields from user
      * specified objects.
-     * 
-     * @param strKey
-     *            the key for the KVPair
-     * @param val
-     *            the value for the KVPair
+     *
+     * @param strKey the key for the KVPair
+     * @param val    the value for the KVPair
+     * @throws IllegalArgumentException if @params is null
      */
     public KVPair(K strKey, V val) {
+        if(strKey == null || val == null) throw new IllegalArgumentException();
+
         this.key = strKey;
         this.value = val;
     }
@@ -59,7 +58,7 @@ package SkipLists;
     }
 
 
-    @Override
+
     /**
      * Implements the compareTo method from the Comparable interface.
      * This will be used to easily compare two KVPair objects.
@@ -73,20 +72,39 @@ package SkipLists;
      *         the invoking string is after pair2
      *
      */
+    @Override
     public int compareTo(KVPair<K, V> pair2) {
-    	
-    	return this.key.compareTo(pair2.getKey());
+        return this.key.compareTo(pair2.getKey());
+    }
 
+    /**
+     * Returns the KVPair in a human-readable format.
+     *
+     * @return A human-readable string representing the KVPair object
+     */
+    @Override
+    public String toString() {
+        return "(" + key + ", " + value
+                + ")";
     }
 
 
     /**
-     * Returns the KVPair in a human readable format.
+     * Checks if both objects are equal or not.
      *
-     * @return A human readable string representing the KVPair object
+     * @param o the object to check equals with
+     * @return true if input and this object are equal otherwise false
      */
-    public String toString() {
-        return "(" + key + ", " + value
-            + ")";
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        KVPair<?, ?> kvPair = (KVPair<?, ?>) o;
+        return Objects.equals(key, kvPair.key) && Objects.equals(value, kvPair.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, value);
     }
 }
