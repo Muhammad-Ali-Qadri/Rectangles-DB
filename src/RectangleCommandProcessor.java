@@ -37,15 +37,17 @@ public class RectangleCommandProcessor implements Processor {
      */
     @Override
     public String process(String input) {
-        List<String> allInputs = new ArrayList<>(); //stores all the words form input
-        Matcher matcher = Pattern.compile("[A-Za-z0-9_-]+").matcher(input); //finds all the words in the input statement
+        //stores all the words form input
+        List<String> allInputs = new ArrayList<>();
+        //finds all the words in the input statement
+        Matcher matcher = Pattern.compile("[A-Za-z0-9_-]+").matcher(input);
 
         while (matcher.find())
             allInputs.add(matcher.group());
 
         StringBuilder result = new StringBuilder();
 
-        for(String in: allInputs) result.append(in).append(" ");
+        for (String in : allInputs) result.append(in).append(" ");
         result.append("\n\n");
 
         //allInputs.get(0) is the command to operate
@@ -73,20 +75,28 @@ public class RectangleCommandProcessor implements Processor {
      * @return result of the operation
      */
     private String processInsertion(List<String> operationInput) {
-        //Regex match starting with letter, then any character or digit or underscore
+        //Regex match starting with letter,
+        // then any character or digit or underscore
         if (!validateKey(operationInput.get(1)))
-            return "Rectangle rejected: " + getRectangleRepresentation(operationInput);
+            return "Rectangle rejected: " +
+                    getRectangleRepresentation(operationInput);
 
-        int x = Integer.parseInt(operationInput.get(2)), y = Integer.parseInt(operationInput.get(3)),
-                w = Integer.parseInt(operationInput.get(4)), h = Integer.parseInt(operationInput.get(5));
+        int x = Integer.parseInt(operationInput.get(2)),
+                y = Integer.parseInt(operationInput.get(3)),
+                w = Integer.parseInt(operationInput.get(4)),
+                h = Integer.parseInt(operationInput.get(5));
 
         //Reject if coordinates or height or width < 0
-        if (x < 0 || y < 0 || w <= 0 || h <= 0 || x + w > WorldBoxWidth || y + h > worldBoxHeight)
-            return "Rectangle rejected: " + getRectangleRepresentation(operationInput);
+        if (x < 0 || y < 0 || w <= 0 || h <= 0
+                || x + w > WorldBoxWidth || y + h > worldBoxHeight)
+            return "Rectangle rejected: " +
+                    getRectangleRepresentation(operationInput);
 
-        data.insert(new KVPair<>(operationInput.get(1), new Rectangle(x, y, w, h)));
+        data.insert(new KVPair<>(operationInput.get(1),
+                new Rectangle(x, y, w, h)));
 
-        return "Rectangle inserted: " + getRectangleRepresentation(operationInput);
+        return "Rectangle inserted: " +
+                getRectangleRepresentation(operationInput);
     }
 
 
@@ -100,24 +110,31 @@ public class RectangleCommandProcessor implements Processor {
         KVPair<String, Rectangle> pair; //Removed value
 
         if (operationInput.size() == 2) { //remove by key only
-            //Regex match starting with letter, then any character or digit or underscore
+            //Regex match starting with letter,
+            // then any character or digit or underscore
             if (!validateKey(operationInput.get(1)))
-                return "Rectangle not found: " + getRectangleRepresentation(operationInput);
+                return "Rectangle not found: " +
+                        getRectangleRepresentation(operationInput);
 
             pair = data.remove(operationInput.get(1));
         } else { //remove by value
-            int x = Integer.parseInt(operationInput.get(1)), y = Integer.parseInt(operationInput.get(2)),
-                    w = Integer.parseInt(operationInput.get(3)), h = Integer.parseInt(operationInput.get(4));
+            int x = Integer.parseInt(operationInput.get(1)),
+                    y = Integer.parseInt(operationInput.get(2)),
+                    w = Integer.parseInt(operationInput.get(3)),
+                    h = Integer.parseInt(operationInput.get(4));
 
             //Reject if coordinates or height or width < 0
-            if (x < 0 || y < 0 || w <= 0 || h <= 0 || x + w > WorldBoxWidth || y + h > worldBoxHeight)
-                return "Rectangle not found: " + getRectangleRepresentation(operationInput);
+            if (x < 0 || y < 0 || w <= 0 || h <= 0
+                    || x + w > WorldBoxWidth || y + h > worldBoxHeight)
+                return "Rectangle not found: " +
+                        getRectangleRepresentation(operationInput);
 
             pair = data.remove(x, y, w, h);
         }
 
         return ((pair != null) ?
-                "Rectangle removed: " : "Rectangle not found: ") + getRectangleRepresentation(operationInput);
+                "Rectangle removed: " : "Rectangle not found: ") +
+                getRectangleRepresentation(operationInput);
     }
 
 
@@ -128,19 +145,22 @@ public class RectangleCommandProcessor implements Processor {
      * @return result of the operation
      */
     private String processRegionSearch(List<String> operationInput) {
-        StringBuilder output = new StringBuilder("Rectangles intersecting region "
+        StringBuilder sb = new StringBuilder("Rectangles intersecting region "
                 + getRectangleRepresentation(operationInput) + ":\n");
 
-        int x = Integer.parseInt(operationInput.get(1)), y = Integer.parseInt(operationInput.get(2)),
-                w = Integer.parseInt(operationInput.get(3)), h = Integer.parseInt(operationInput.get(4));
+        int x = Integer.parseInt(operationInput.get(1)),
+                y = Integer.parseInt(operationInput.get(2)),
+                w = Integer.parseInt(operationInput.get(3)),
+                h = Integer.parseInt(operationInput.get(4));
 
         //Reject if height or width < 0
         if (w <= 0 || h <= 0)
-            return "Rectangle rejected: " + getRectangleRepresentation(operationInput);
+            return "Rectangle rejected: " +
+                    getRectangleRepresentation(operationInput);
 
         //No need to perform actual search if region outside world box
         if (x + w < 0 || y + h < 0)
-            return output.toString();
+            return sb.toString();
 
         //Adjust x, y to start from (0, 0)
         if (x < 0) {
@@ -157,13 +177,15 @@ public class RectangleCommandProcessor implements Processor {
         w = Math.min(w, WorldBoxWidth);
         h = Math.min(h, worldBoxHeight);
 
-        List<KVPair<String, Rectangle>> rectangles = data.regionSearch(x, y, w, h);
+        List<KVPair<String, Rectangle>> rectangles =
+                data.regionSearch(x, y, w, h);
+
         if (rectangles != null && rectangles.size() > 0) {
             for (KVPair<String, Rectangle> pair : rectangles)
-                output.append("(").append(pair).append(")\n");
+                sb.append("(").append(pair).append(")\n");
         }
 
-        return output.toString();
+        return sb.toString();
     }
 
 
@@ -176,11 +198,13 @@ public class RectangleCommandProcessor implements Processor {
     private String processIntersections() {
         StringBuilder output = new StringBuilder("Intersecting pairs:");
 
-        List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>> rectangles = data.intersections();
+        List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>>
+                rectangles = data.intersections();
 
         //print out intersections
         if (rectangles != null && rectangles.size() > 0) {
-            for (Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>> pair : rectangles) {
+            for (Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>
+                    pair : rectangles) {
                 output.append("(").append(pair).append(")\n");
             }
         }

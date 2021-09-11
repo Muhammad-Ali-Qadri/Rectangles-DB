@@ -12,8 +12,10 @@ import java.util.Objects;
  * @author Muhammad Ali Qadri
  */
 
-//Another Implementation choice is to require K to implement Comparable not KVPair
-public class KVPair<K extends Comparable<? super K>, V> implements Comparable<KVPair<K, V>> {
+//Another Implementation choice is to require K to implement Comparable
+// not KVPair
+public class KVPair<K extends Comparable<? super K>, V>
+        implements Comparable<KVPair<K, V>> {
 
     // the object to be a key
     private final K key;
@@ -93,14 +95,7 @@ public class KVPair<K extends Comparable<? super K>, V> implements Comparable<KV
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         KVPair<?, ?> kvPair = (KVPair<?, ?>) o;
-        return Objects.equals(key, kvPair.key) && Objects.equals(value, kvPair.value);
-    }
-
-    /**
-     * Provide hashcode for this object.
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(key, value);
+        return Objects.equals(key, kvPair.key) && Objects.equals(value,
+                kvPair.value);
     }
 }

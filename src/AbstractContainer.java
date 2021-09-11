@@ -8,7 +8,8 @@ import java.util.Iterator;
  * @param <V> Value
  * @author Muhammad Ali Qadri
  */
-public abstract class AbstractContainer<K extends Comparable<? super K>, V> implements Container<K, V> {
+public abstract class AbstractContainer<K extends Comparable<? super K>, V>
+        implements Container<K, V> {
 
     /**
      * {@inheritDoc}

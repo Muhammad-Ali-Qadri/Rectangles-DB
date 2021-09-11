@@ -3,6 +3,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/**
+ * This test class is responsible for testing each scenario of each method in
+ * the KVPair class
+ *
+ * @author Muhammad Ali Qadri
+ */
 public class KVPairTest {
 
     KVPair<String, String> pair_A_1; //A pair with key "A" and value "1"
@@ -92,7 +98,8 @@ public class KVPairTest {
 
     /**
      * <p>Test if pair_A_1 is equal to a different KVPair object
-     * with same key and value. Provokes the <code>.equals()</code> method</p>
+     * with same key and value. Provokes the <code>.equals()</code>
+     * method</p>
      *
      * <p><b>Pass</b> - true is returned</p>
      */

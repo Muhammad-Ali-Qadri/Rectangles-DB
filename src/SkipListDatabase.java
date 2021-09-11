@@ -55,12 +55,14 @@ public class SkipListDatabase implements Database {
      * {@inheritDoc}
      */
     @Override
-    public List<KVPair<String, Rectangle>> regionSearch(int x, int y, int w, int h) {
+    public List<KVPair<String, Rectangle>> regionSearch(int x, int y
+            , int w, int h) {
         Rectangle region = new Rectangle(x, y, w, h);
         List<KVPair<String, Rectangle>> rectangles = new ArrayList<>();
 
         for (KVPair<String, Rectangle> pair : list) {
-            if (region.intersects(pair.getValue()) || region.contains(pair.getValue()))
+            if (region.intersects(pair.getValue())
+                    || region.contains(pair.getValue()))
                 rectangles.add(pair);
         }
 
@@ -71,17 +73,17 @@ public class SkipListDatabase implements Database {
      * {@inheritDoc}
      */
     @Override
-    public List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>> intersections() {
+    public List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>>
+    intersections() {
 
-        List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>> intersectingPairs = new ArrayList<>();
+        List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>>
+                intersectingPairs = new ArrayList<>();
 
         for (KVPair<String, Rectangle> outer : list) {
             for (KVPair<String, Rectangle> inner : list) {
-                Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>> pair = new Pair<>(outer, inner);
-
-                if (!outer.equals(inner) && outer.getValue().intersects(inner.getValue())
-                        && !intersectingPairs.contains(pair))
-                    intersectingPairs.add(pair);
+                if (!outer.equals(inner) &&
+                        outer.getValue().intersects(inner.getValue()))
+                    intersectingPairs.add(new Pair<>(outer, inner));
             }
         }
 

@@ -2,5 +2,6 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="/Project 1/src"/>
+	<classpathentry kind="var" path="MAVEN_REPOSITORY/junit/junit/4.13.1/junit-4.13.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

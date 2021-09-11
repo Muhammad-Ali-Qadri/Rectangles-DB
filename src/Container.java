@@ -9,7 +9,8 @@ import java.util.List;
  * @param <V> Value
  * @author Muhammad Ali Qadri
  */
-public interface Container<K extends Comparable<? super K>, V> extends Iterable<KVPair<K, V>> {
+public interface Container<K extends Comparable<? super K>, V>
+        extends Iterable<KVPair<K, V>> {
 
     /**
      * Searches for the value using the key which is a Comparable object.

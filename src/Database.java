@@ -68,7 +68,8 @@ public interface Database {
      *
      * @return The rectangle pairs that intersect
      */
-    List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>> intersections();
+    List<Pair<KVPair<String, Rectangle>,
+            KVPair<String, Rectangle>>> intersections();
 
 
     /**

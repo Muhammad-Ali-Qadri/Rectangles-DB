@@ -12,7 +12,7 @@ public class Pair<A, B> {
     public final B val2;
 
     public Pair(A v1, B v2) {
-        if(v1 == null || v2 == null) throw new IllegalArgumentException();
+        if (v1 == null || v2 == null) throw new IllegalArgumentException();
 
         val1 = v1;
         val2 = v2;
@@ -41,16 +41,9 @@ public class Pair<A, B> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pair<?, ?> pair = (Pair<?, ?>) o;
-        return ((Objects.equals(val1, pair.val1) && Objects.equals(val2, pair.val2))
-                || (Objects.equals(val2, pair.val1) && Objects.equals(val1, pair.val2)));
-    }
-
-
-    /**
-     * Hashcode of this object
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(val1, val2);
+        return ((Objects.equals(val1, pair.val1) && Objects.equals(val2,
+                pair.val2))
+                || (Objects.equals(val2, pair.val1) && Objects.equals(val1,
+                pair.val2)));
     }
 }
