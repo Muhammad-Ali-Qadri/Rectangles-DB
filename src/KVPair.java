@@ -1,5 +1,3 @@
-package SkipLists;
-
 import java.util.Objects;
 
 /**
@@ -31,7 +29,7 @@ public class KVPair<K extends Comparable<? super K>, V> implements Comparable<KV
      * @throws IllegalArgumentException if @params is null
      */
     public KVPair(K strKey, V val) {
-        if(strKey == null || val == null) throw new IllegalArgumentException();
+        if (strKey == null || val == null) throw new IllegalArgumentException();
 
         this.key = strKey;
         this.value = val;
@@ -58,19 +56,15 @@ public class KVPair<K extends Comparable<? super K>, V> implements Comparable<KV
     }
 
 
-
     /**
      * Implements the compareTo method from the Comparable interface.
      * This will be used to easily compare two KVPair objects.
      *
-     * @param pair2
-     *            the KVPair to compare to
-     * @return
-     *         negative if the invoking KVPair
-     *         is before pair2, zero if they are
-     *         equal in position and positive if
-     *         the invoking string is after pair2
-     *
+     * @param pair2 the KVPair to compare to
+     * @return negative if the invoking KVPair
+     * is before pair2, zero if they are
+     * equal in position and positive if
+     * the invoking string is after pair2
      */
     @Override
     public int compareTo(KVPair<K, V> pair2) {
@@ -84,8 +78,7 @@ public class KVPair<K extends Comparable<? super K>, V> implements Comparable<KV
      */
     @Override
     public String toString() {
-        return "(" + key + ", " + value
-                + ")";
+        return key + ", " + value;
     }
 
 
@@ -105,7 +98,7 @@ public class KVPair<K extends Comparable<? super K>, V> implements Comparable<KV
 
     /**
      * Provide hashcode for this object.
-     * */
+     */
     @Override
     public int hashCode() {
         return Objects.hash(key, value);

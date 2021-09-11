@@ -1,9 +1,7 @@
-package SkipLists;
-
-import java.util.ArrayList;
 import java.util.List;
 
-/** This interface holds the generic functionality a container should have
+/**
+ * This interface holds the generic functionality a container should have
  * for a key-value based container. The basic functionality includes
  * the functions present in this class. The container also should be iterable.
  *
@@ -67,9 +65,9 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      */
     int size();
 
-    /**Checks if the current container is empty
-     *
-     * */
+    /**
+     * Checks if the current container is empty
+     */
     boolean isEmpty();
 
     /**
@@ -80,10 +78,11 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      */
     String toString();
 
-    /** Provides the detailed internal element details of this object
+    /**
+     * Provides the detailed internal element details of this object
      *
      * @return The string containing human-readable details of this
      * container.
-     * */
-    String Dump();
+     */
+    String dump();
 }

@@ -1,6 +1,3 @@
-package SkipListsTest;
-
-import SkipLists.KVPair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +13,7 @@ public class KVPairTest {
     /**
      * Set up the pair objects with values to test before
      * every test case execution.
-     * */
+     */
     @Before
     public void setUp() {
         pair_A_1 = new KVPair<>("A", "1");
@@ -29,9 +26,9 @@ public class KVPairTest {
      * <p>Test if KVPair constructor accepts null value for key.</p>
      *
      * <p><b>Pass</b> - If <code>IllegalArgumentException</code> exception is thrown</p>
-     * */
+     */
     @Test(expected = IllegalArgumentException.class)
-    public void testCheckNullKeyConstructor(){
+    public void testCheckNullKeyConstructor() {
         new KVPair<String, String>(null, "null");
         fail();
     }
@@ -41,9 +38,9 @@ public class KVPairTest {
      * <p>Test if KVPair constructor accepts null value for value.</p>
      *
      * <p><b>Pass</b> - If <code>IllegalArgumentException</code> exception is thrown</p>
-     * */
+     */
     @Test(expected = IllegalArgumentException.class)
-    public void testCheckNullValueConstructor(){
+    public void testCheckNullValueConstructor() {
         new KVPair<String, String>("null", null);
         fail();
     }
@@ -53,9 +50,9 @@ public class KVPairTest {
      * <p>Test if pair_A_1 returns correct key</p>
      *
      * <p><b>Pass</b> - If "A" is returned</p>
-     * */
+     */
     @Test
-    public void testA1GetKey(){
+    public void testA1GetKey() {
         assertEquals("A", pair_A_1.getKey());
     }
 
@@ -64,9 +61,9 @@ public class KVPairTest {
      * <p>Test if pair_A_1 returns correct value</p>
      *
      * <p><b>Pass</b> - If "1" is returned</p>
-     * */
+     */
     @Test
-    public void testA1GetValue(){
+    public void testA1GetValue() {
         assertEquals("1", pair_A_1.getValue());
     }
 
@@ -75,10 +72,10 @@ public class KVPairTest {
      * <p>Test if pair_A_1 is converted to correct string format</p>
      *
      * <p><b>Pass</b> - If "(A, 1)" is returned</p>
-     * */
+     */
     @Test
-    public void testA1ToString(){
-        assertEquals("(A, 1)", pair_A_1.toString());
+    public void testA1ToString() {
+        assertEquals("A, 1", pair_A_1.toString());
     }
 
 
@@ -86,9 +83,9 @@ public class KVPairTest {
      * <p>Test if pair_A_1 is equal to itself. Provokes the <code>.equals()</code> method</p>
      *
      * <p><b>Pass</b> - true is returned</p>
-     * */
+     */
     @Test
-    public void testA1EqualsSelf(){
+    public void testA1EqualsSelf() {
         assertEquals(pair_A_1, pair_A_1);
     }
 
@@ -98,9 +95,9 @@ public class KVPairTest {
      * with same key and value. Provokes the <code>.equals()</code> method</p>
      *
      * <p><b>Pass</b> - true is returned</p>
-     * */
+     */
     @Test
-    public void testA1EqualsDifferentA1(){
+    public void testA1EqualsDifferentA1() {
         assertEquals(pair_A_1, new KVPair<String, String>("A", "1"));
     }
 
@@ -110,9 +107,9 @@ public class KVPairTest {
      * entirely. Provokes the <code>.equals()</code> method</p>
      *
      * <p><b>Pass</b> - false is returned</p>
-     * */
+     */
     @Test
-    public void testA1EqualsDifferentObject(){
+    public void testA1EqualsDifferentObject() {
         assertNotEquals(pair_A_1, "A1");
     }
 
@@ -122,9 +119,9 @@ public class KVPairTest {
      * Provokes the <code>.equals()</code> method</p>
      *
      * <p><b>Pass</b> - false is returned</p>
-     * */
+     */
     @Test
-    public void testA1EqualsB1(){
+    public void testA1EqualsB1() {
         assertNotEquals(pair_A_1, pair_B_1);
     }
 
@@ -134,9 +131,9 @@ public class KVPairTest {
      * Provokes the <code>.equals()</code> method</p>
      *
      * <p><b>Pass</b> - false is returned</p>
-     * */
+     */
     @Test
-    public void testA1EqualsA2(){
+    public void testA1EqualsA2() {
         assertNotEquals(pair_A_1, pair_A_2);
     }
 }

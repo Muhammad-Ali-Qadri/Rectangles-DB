@@ -1,8 +1,7 @@
-package SkipLists;
-
 import java.util.Iterator;
 
-/** This abstract class holds the functionality that is central
+/**
+ * This abstract class holds the functionality that is central
  * to all the concrete implementations of the Container class
  *
  * @param <K> Key
@@ -13,15 +12,15 @@ public abstract class AbstractContainer<K extends Comparable<? super K>, V> impl
 
     /**
      * {@inheritDoc}
-     * */
+     */
     @Override
     public boolean isEmpty() {
         return size() == 0;
     }
 
     /**
-    * {@inheritDoc}
-    * */
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -29,10 +28,10 @@ public abstract class AbstractContainer<K extends Comparable<? super K>, V> impl
         sb.append("[");
         Iterator<KVPair<K, V>> it = iterator();
 
-        while (it.hasNext()){
-            sb.append(it.next().toString());
+        while (it.hasNext()) {
+            sb.append("(").append(it.next().toString()).append(")");
 
-            if(it.hasNext())
+            if (it.hasNext())
                 sb.append(", ");
         }
 

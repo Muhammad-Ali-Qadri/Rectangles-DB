@@ -1,8 +1,6 @@
-package SkipLists;
-
 /**
- * The purpose of this class is to parse a text file into its appropriate, line
- * by line commands for the format specified in the project spec.
+ * This is the interface for the processor that will be used
+ * to process any input line
  *
  * @author Muhammad Ali Qadri
  */
@@ -19,8 +17,8 @@ public interface Processor {
      * methods called will themselves write to the console, this method does
      * not, only calling methods that do.
      *
-     * @param input
-     *            a single line from the text file
+     * @param input a single line from the text file
+     * @return The string output of the processing done
      */
     String process(String input);
 }

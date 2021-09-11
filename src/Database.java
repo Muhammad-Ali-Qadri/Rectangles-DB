@@ -1,6 +1,4 @@
-package SkipLists;
-
-import java.awt.Rectangle;
+import java.util.List;
 
 /**
  * This class is responsible for interfacing between the command processor and
@@ -10,9 +8,8 @@ import java.awt.Rectangle;
  * will be overloaded methods for if we are removing by name or by coordinates.
  * Many of these methods will simply call the appropriate version of the
  * SkipList method after some preparation.
- * 
- * @author Muhammad Ali Qadri
  *
+ * @author Muhammad Ali Qadri
  */
 public interface Database {
 
@@ -21,9 +18,8 @@ public interface Database {
      * and dimensions, that is that the coordinates are non-negative and that
      * the rectangle object has some area (not 0, 0, 0, 0). This insert will
      * insert the KVPair specified into the sorted SkipList appropriately
-     * 
-     * @param pair
-     *            the KVPair to be inserted
+     *
+     * @param pair the KVPair to be inserted
      */
     void insert(KVPair<String, Rectangle> pair);
 
@@ -31,69 +27,66 @@ public interface Database {
     /**
      * Removes a rectangle with the name "name" if available. If not an error
      * message is printed to the console.
-     * 
-     * @param name
-     *            the name of the rectangle to be removed
+     *
+     * @param name the name of the rectangle to be removed
+     * @return pair that is removed.
      */
-    void remove(String name);
+    KVPair<String, Rectangle> remove(String name);
 
 
     /**
      * Removes a rectangle with the specified coordinates if available. If not
      * an error message is printed to the console.
-     * 
-     * @param x
-     *            x-coordinate of the rectangle to be removed
-     * @param y
-     *            x-coordinate of the rectangle to be removed
-     * @param w
-     *            width of the rectangle to be removed
-     * @param h
-     *            height of the rectangle to be removed
+     *
+     * @param x x-coordinate of the rectangle to be removed
+     * @param y x-coordinate of the rectangle to be removed
+     * @param w width of the rectangle to be removed
+     * @param h height of the rectangle to be removed
+     * @return pair that is removed.
      */
-    void remove(int x, int y, int w, int h);
+    KVPair<String, Rectangle> remove(int x, int y, int w, int h);
 
 
     /**
      * Displays all the rectangles inside the specified region. The rectangle
      * must have some area inside the area that is created by the region,
      * meaning, Rectangles that only touch a side or corner of the region
-     * specified will not be said to be in the region. You will need a SkipList Iterator for this 
-     * 
-     * @param x
-     *            x-Coordinate of the region
-     * @param y
-     *            y-Coordinate of the region
-     * @param w
-     *            width of the region
-     * @param h
-     *            height of the region
+     * specified will not be said to be in the region.
+     *
+     * @param x x-Coordinate of the region
+     * @param y y-Coordinate of the region
+     * @param w width of the region
+     * @param h height of the region
+     * @return the list of rectangles that are within the region
      */
-    void regionSearch(int x, int y, int w, int h);
-
+    List<KVPair<String, Rectangle>> regionSearch(int x, int y, int w, int h);
 
 
     /**
      * Prints out all the rectangles that Intersect each other by calling the
-     * SkipList method for intersections. You will need to use two SkipList Iterators for this
+     * SkipList method for intersections.
+     *
+     * @return The rectangle pairs that intersect
      */
-    void intersections();
+    List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>> intersections();
 
 
     /**
      * Prints out all the rectangles with the specified name in the SkipList.
      * This method will delegate the searching to the SkipList class completely.
-     * 
-     * @param name
-     *            name of the Rectangle to be searched for
+     *
+     * @param name name of the Rectangle to be searched for
+     * @return list of items that have the name as keu
      */
-    void search(String name);
+    List<KVPair<String, Rectangle>> search(String name);
 
     /**
-     * Prints out a dump of the SkipList which includes information about the
+     * Returns dump of the SkipList which includes information about the
      * size of the SkipList and shows all of the contents of the SkipList. This
      * will all be delegated to the SkipList.
+     *
+     * @return string representation of this databases current state
      */
-    void dump();
+    String dump();
 
 }

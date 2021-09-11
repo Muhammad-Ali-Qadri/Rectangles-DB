@@ -1,7 +1,3 @@
-package SkipListsTest;
-
-import SkipLists.KVPair;
-import SkipLists.SkipList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,27 +28,27 @@ public class SkipListTest {
     }
 
     @Test
-    public void testEmptyIsEmpty(){
+    public void testEmptyIsEmpty() {
         assertTrue(list_empty.isEmpty());
     }
 
     @Test
-    public void testA1B2C3IsEmpty(){
+    public void testA1B2C3IsEmpty() {
         assertFalse(list_A1_B2_C3.isEmpty());
     }
 
     @Test
-    public void testEmptyToString(){
+    public void testEmptyToString() {
         assertEquals("[]:0", list_empty.toString());
     }
 
     @Test
-    public void testA1B2C3ToString(){
+    public void testA1B2C3ToString() {
         assertEquals("[(A, 1), (B, 2), (C, 3)]:3", list_A1_B2_C3.toString());
     }
 
     @Test
-    public void testD1F3G4ToString(){
+    public void testD1F3G4ToString() {
         assertEquals("[(D, 1), (F, 3), (G, 4)]:3", list_D1_F3_G4.toString());
     }
 
@@ -279,48 +275,48 @@ public class SkipListTest {
     }
 
     @Test
-    public void testEmptySize(){
+    public void testEmptySize() {
         assertEquals(0, list_empty.size());
     }
 
     @Test
-    public void testA1B2C3Size(){
+    public void testA1B2C3Size() {
         assertEquals(3, list_A1_B2_C3.size());
     }
 
     @Test
-    public void testEmptyFirst(){
+    public void testEmptyFirst() {
         assertNull(list_empty.first());
     }
 
     @Test
-    public void testA1B2C3First(){
+    public void testA1B2C3First() {
         assertEquals(new KVPair<>("A", "1"), list_A1_B2_C3.first());
     }
 
     @Test
-    public void testEmptyIterable(){
+    public void testEmptyIterable() {
         StringBuilder sb = new StringBuilder();
 
-        for(KVPair<String, String> pair: list_empty)
+        for (KVPair<String, String> pair : list_empty)
             sb.append(pair.toString());
 
         assertEquals("", sb.toString());
     }
 
     @Test
-    public void testD1F3G4Iterable(){
+    public void testD1F3G4Iterable() {
         StringBuilder sb = new StringBuilder();
 
-        for(KVPair<String, String> pair: list_D1_F3_G4)
-            sb.append(pair.toString());
+        for (KVPair<String, String> pair : list_D1_F3_G4)
+            sb.append("(").append(pair.toString()).append(")");
 
         assertEquals("(D, 1)(F, 3)(G, 4)", sb.toString());
     }
 
     @Test
-    public void testA1B2C3Dump(){
-        String dump = list_A1_B2_C3.Dump();
+    public void testA1B2C3Dump() {
+        String dump = list_A1_B2_C3.dump();
 
         assertTrue(dump.contains("(A, 1)"));
         assertTrue(dump.contains("(B, 2)"));
@@ -329,8 +325,8 @@ public class SkipListTest {
     }
 
     @Test
-    public void testEmptyDump(){
-        String dump = list_empty.Dump();
+    public void testEmptyDump() {
+        String dump = list_empty.dump();
 
         assertTrue(dump.contains("Node has depth 0, Value (null)"));
         assertTrue(dump.contains("SkipList size is: 0"));

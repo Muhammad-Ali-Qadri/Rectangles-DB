@@ -1,8 +1,21 @@
-package SkipLists;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+// On my honor:
+// - I have not used source code obtained from another student,
+// or any other unauthorized source, either modified or unmodified.
+// - All source code and documentation used in my program is
+// either my original work, or was derived by me from the
+// source code published in the textbook for this course.
+// - I have not discussed coding details about this project with
+// anyone other than the instructor, ACM/UPE tutors or the TAs assigned
+// to this course. I understand that I may discuss the concepts
+// of this program with other students, and that another student
+// may help me debug my program so long as neither of us writes
+// anything during the discussion or modifies any computer file
+// during the discussion. I have violated neither the spirit nor
+// letter of this restriction.
 
 /**
  * The class containing the main method, the entry point of the application. It
@@ -11,16 +24,14 @@ import java.util.Scanner;
  * to the console as specified in the file.
  *
  * @author Muhammad Ali Qadri
- *
  */
 public class Rectangle1 {
 
     /**
      * The entry point of the application.
      *
-     * @param args
-     *            The name of the command file passed in as a command line
-     *            argument.
+     * @param args The name of the command file passed in as a command line
+     *             argument.
      */
     public static void main(String[] args) {
         // the file object
@@ -28,21 +39,22 @@ public class Rectangle1 {
 
         // Attempts to open the file and scan through it
         try {
-        	// takes the first command line argument and opens that file
+            // takes the first command line argument and opens that file
             file = new File(args[0]);
-           
+
             // creates a scanner object
             Scanner scanner = new Scanner(file);
-           
+
             // creates a command processor object
-            CommandProcessor cmdProc = new CommandProcessor();
+            Processor cmdProc = new RectangleCommandProcessor();
             // reads the entire file and processes the commands
             // line by line
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 // determines if the file has more lines to read
                 if (!line.trim().isEmpty()) {
-                    cmdProc.process(line.trim());
+                    System.out.println(cmdProc.process(line.trim()));
+                    System.out.println();
                 }
             }
             // closes the scanner
