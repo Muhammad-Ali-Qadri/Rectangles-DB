@@ -1,6 +1,7 @@
 package SkipLists;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /** This interface holds the generic functionality a container should have
  * for a key-value based container. The basic functionality includes
@@ -16,9 +17,10 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      * Searches for the value using the key which is a Comparable object.
      *
      * @param key key to be searched for
+     * @return the list of items that have the key
      * @throws IllegalArgumentException @param cannot be null
      */
-    V search(K key);
+    List<KVPair<K, V>> search(K key);
 
     /**
      * Gets the first element in the list.
@@ -77,4 +79,11 @@ public interface Container<K extends Comparable<? super K>, V> extends Iterable<
      * @return returns a positive integer indicating the size of the list
      */
     String toString();
+
+    /** Provides the detailed internal element details of this object
+     *
+     * @return The string containing human-readable details of this
+     * container.
+     * */
+    String Dump();
 }

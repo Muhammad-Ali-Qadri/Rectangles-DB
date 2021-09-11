@@ -5,6 +5,9 @@ import SkipLists.SkipList;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class SkipListTest {
@@ -224,22 +227,44 @@ public class SkipListTest {
 
     @Test
     public void testA1B2C3SearchA() {
-        assertEquals("1", list_A1_B2_C3.search("A"));
+        List<KVPair<String, String>> searchList = new ArrayList<>();
+        searchList.add(new KVPair<>("A", "1"));
+
+        assertEquals(searchList, list_A1_B2_C3.search("A"));
         assertEquals("[(A, 1), (B, 2), (C, 3)]:3", list_A1_B2_C3.toString());
     }
 
     @Test
     public void testA1B2C3SearchB() {
-        assertEquals("2", list_A1_B2_C3.search("B"));
+        List<KVPair<String, String>> searchList = new ArrayList<>();
+        searchList.add(new KVPair<>("B", "2"));
+
+        assertEquals(searchList, list_A1_B2_C3.search("B"));
         assertEquals("[(A, 1), (B, 2), (C, 3)]:3", list_A1_B2_C3.toString());
     }
 
     @Test
     public void testD1F3G4SearchG() {
-        assertEquals("4", list_D1_F3_G4.search("G"));
+        List<KVPair<String, String>> searchList = new ArrayList<>();
+        searchList.add(new KVPair<>("G", "4"));
+
+        assertEquals(searchList, list_D1_F3_G4.search("G"));
         assertEquals("[(D, 1), (F, 3), (G, 4)]:3", list_D1_F3_G4.toString());
     }
 
+    @Test
+    public void testD1F3G4G5G6SearchGDuplicateKey() {
+        list_D1_F3_G4.insert(new KVPair<>("G", "5"));
+        list_D1_F3_G4.insert(new KVPair<>("G", "6"));
+
+        List<KVPair<String, String>> searchList = new ArrayList<>();
+        searchList.add(new KVPair<>("G", "6"));
+        searchList.add(new KVPair<>("G", "5"));
+        searchList.add(new KVPair<>("G", "4"));
+
+        assertEquals(searchList, list_D1_F3_G4.search("G"));
+        assertEquals("[(D, 1), (F, 3), (G, 6), (G, 5), (G, 4)]:5", list_D1_F3_G4.toString());
+    }
 
     @Test
     public void testD1F3G4SearchB() {
@@ -291,5 +316,23 @@ public class SkipListTest {
             sb.append(pair.toString());
 
         assertEquals("(D, 1)(F, 3)(G, 4)", sb.toString());
+    }
+
+    @Test
+    public void testA1B2C3Dump(){
+        String dump = list_A1_B2_C3.Dump();
+
+        assertTrue(dump.contains("(A, 1)"));
+        assertTrue(dump.contains("(B, 2)"));
+        assertTrue(dump.contains("(C, 3)"));
+        assertTrue(dump.contains("SkipList size is: 3"));
+    }
+
+    @Test
+    public void testEmptyDump(){
+        String dump = list_empty.Dump();
+
+        assertTrue(dump.contains("Node has depth 0, Value (null)"));
+        assertTrue(dump.contains("SkipList size is: 0"));
     }
 }

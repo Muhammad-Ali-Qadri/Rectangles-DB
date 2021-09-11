@@ -1,7 +1,9 @@
 package SkipLists;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 /** This class implements the Container interface and represents
@@ -28,7 +30,7 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
      * {@inheritDoc}
      */
     @Override
-    public V search(K key) {
+    public List<KVPair<K, V>> search(K key) {
         if(key == null) throw new IllegalArgumentException();
         if(level == -1) return null; //In case list is empty
 
@@ -40,8 +42,21 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
             while(current.forward[i] != null && current.forward[i].element().getKey().compareTo(key) < 0)
                 current = current.forward[i];
 
-        current = current.forward[0]; //return value if key is found
-        return (current.element().getKey().equals(key)) ? current.element().getValue(): null;
+        current = current.forward[0]; //Move to the found element
+
+        //As all equal keys are placed adjacent to each other
+        //We iterate through the list when first is found till the last and return the list
+        if(current != null && current.element().getKey().equals(key)){
+            List<KVPair<K, V>> foundElements = new ArrayList<>();
+
+            while(current != null && current.element().getKey().equals(key)){
+                foundElements.add(current.pair);
+                current = current.forward[0];
+            }
+
+            return foundElements;
+        }
+        else return null;
     }
 
     /**
@@ -169,6 +184,31 @@ public class SkipList<K extends Comparable<? super K>, V> extends AbstractContai
     @Override
     public Iterator<KVPair<K, V>> iterator() {
         return new SkipListIterator();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     * */
+    @Override
+    public String Dump(){
+        //Builder to append string in
+        StringBuilder sb = new StringBuilder("SkipList dump:\n");
+        SkipNode current = head;
+
+        //Iterate through each node and write their details to sb
+        while(current != null){
+            sb.append("Node has depth ");
+            if(current.pair == null)
+                sb.append(current.level).append(", Value (null)\n");
+            else
+                sb.append(current.level).append(", Value ").append(current.pair).append("\n");
+
+            current = current.forward[0];
+        }
+
+        sb.append("SkipList size is: ").append(size());
+        return sb.toString();
     }
 
 
