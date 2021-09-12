@@ -1,3 +1,7 @@
+package SkipListsTest;
+
+import SkipLists.KVPair;
+import SkipLists.SkipList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,18 +12,19 @@ import static org.junit.Assert.*;
 
 /**
  * This test class is responsible for testing each scenario of each method in
- * the SkipList class
+ * the SkipLists.SkipList class
  *
- * @author Muhammad Ali Qadri 
+ * @author Muhammad Ali Qadri
+ * @version 1
  */
 public class SkipListTest {
 
     //Represents an empty skip list with size and depth 0
-    private SkipList<String, String> list_empty;
+    private SkipList<String, String> listEmpty;
     //Represents a skip list with 3 elements with keys A, B, C respectively
-    private SkipList<String, String> list_A1_B2_C3;
+    private SkipList<String, String> listA1B2C3;
     //Represents a skip list with 3 elements with keys D, F, G respectively
-    private SkipList<String, String> list_D1_F3_G4;
+    private SkipList<String, String> listD1F3G4;
 
     /**
      * Set up variables for testing.
@@ -27,17 +32,17 @@ public class SkipListTest {
      */
     @Before
     public void setUp() {
-        list_empty = new SkipList<>();
+        listEmpty = new SkipList<>();
 
-        list_A1_B2_C3 = new SkipList<>();
-        list_A1_B2_C3.insert(new KVPair<>("A", "1"));
-        list_A1_B2_C3.insert(new KVPair<>("B", "2"));
-        list_A1_B2_C3.insert(new KVPair<>("C", "3"));
+        listA1B2C3 = new SkipList<>();
+        listA1B2C3.insert(new KVPair<>("A", "1"));
+        listA1B2C3.insert(new KVPair<>("B", "2"));
+        listA1B2C3.insert(new KVPair<>("C", "3"));
 
-        list_D1_F3_G4 = new SkipList<>();
-        list_D1_F3_G4.insert(new KVPair<>("D", "1"));
-        list_D1_F3_G4.insert(new KVPair<>("F", "3"));
-        list_D1_F3_G4.insert(new KVPair<>("G", "4"));
+        listD1F3G4 = new SkipList<>();
+        listD1F3G4.insert(new KVPair<>("D", "1"));
+        listD1F3G4.insert(new KVPair<>("F", "3"));
+        listD1F3G4.insert(new KVPair<>("G", "4"));
     }
 
     /**
@@ -45,7 +50,7 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyIsEmpty() {
-        assertTrue(list_empty.isEmpty());
+        assertTrue(listEmpty.isEmpty());
     }
 
     /**
@@ -53,7 +58,7 @@ public class SkipListTest {
      */
     @Test
     public void testA1B2C3IsEmpty() {
-        assertFalse(list_A1_B2_C3.isEmpty());
+        assertFalse(listA1B2C3.isEmpty());
     }
 
     /**
@@ -61,7 +66,7 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyToString() {
-        assertEquals("[]:0", list_empty.toString());
+        assertEquals("[]:0", listEmpty.toString());
     }
 
 
@@ -71,7 +76,7 @@ public class SkipListTest {
     @Test
     public void testA1B2C3ToString() {
         assertEquals("[(A, 1), (B, 2), (C, 3)]:3",
-                list_A1_B2_C3.toString());
+                listA1B2C3.toString());
     }
 
     /**
@@ -80,7 +85,7 @@ public class SkipListTest {
     @Test
     public void testD1F3G4ToString() {
         assertEquals("[(D, 1), (F, 3), (G, 4)]:3",
-                list_D1_F3_G4.toString());
+                listD1F3G4.toString());
     }
 
     /**
@@ -88,9 +93,9 @@ public class SkipListTest {
      */
     @Test
     public void testInsertA1InEmpty() {
-        list_empty.insert(new KVPair<>("A", "1"));
-        assertEquals(1, list_empty.size());
-        assertEquals(new KVPair<>("A", "1"), list_empty.first());
+        listEmpty.insert(new KVPair<>("A", "1"));
+        assertEquals(1, listEmpty.size());
+        assertEquals(new KVPair<>("A", "1"), listEmpty.first());
     }
 
 
@@ -99,13 +104,13 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyInsertA1B2() {
-        list_empty.insert(new KVPair<>("A", "1"));
-        assertEquals(1, list_empty.size());
-        assertEquals(new KVPair<>("A", "1"), list_empty.first());
+        listEmpty.insert(new KVPair<>("A", "1"));
+        assertEquals(1, listEmpty.size());
+        assertEquals(new KVPair<>("A", "1"), listEmpty.first());
 
-        list_empty.insert(new KVPair<>("B", "2"));
-        assertEquals(2, list_empty.size());
-        assertEquals("[(A, 1), (B, 2)]:2", list_empty.toString());
+        listEmpty.insert(new KVPair<>("B", "2"));
+        assertEquals(2, listEmpty.size());
+        assertEquals("[(A, 1), (B, 2)]:2", listEmpty.toString());
     }
 
     /**
@@ -113,13 +118,13 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyInsertA1A1() {
-        list_empty.insert(new KVPair<>("A", "1"));
-        assertEquals(1, list_empty.size());
-        assertEquals(new KVPair<>("A", "1"), list_empty.first());
+        listEmpty.insert(new KVPair<>("A", "1"));
+        assertEquals(1, listEmpty.size());
+        assertEquals(new KVPair<>("A", "1"), listEmpty.first());
 
-        list_empty.insert(new KVPair<>("A", "1"));
-        assertEquals(2, list_empty.size());
-        assertEquals("[(A, 1), (A, 1)]:2", list_empty.toString());
+        listEmpty.insert(new KVPair<>("A", "1"));
+        assertEquals(2, listEmpty.size());
+        assertEquals("[(A, 1), (A, 1)]:2", listEmpty.toString());
     }
 
 
@@ -128,13 +133,13 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyInsertA1A2() {
-        list_empty.insert(new KVPair<>("A", "1"));
-        assertEquals(1, list_empty.size());
-        assertEquals(new KVPair<>("A", "1"), list_empty.first());
+        listEmpty.insert(new KVPair<>("A", "1"));
+        assertEquals(1, listEmpty.size());
+        assertEquals(new KVPair<>("A", "1"), listEmpty.first());
 
-        list_empty.insert(new KVPair<>("A", "2"));
-        assertEquals(2, list_empty.size());
-        assertEquals("[(A, 2), (A, 1)]:2", list_empty.toString());
+        listEmpty.insert(new KVPair<>("A", "2"));
+        assertEquals(2, listEmpty.size());
+        assertEquals("[(A, 2), (A, 1)]:2", listEmpty.toString());
     }
 
 
@@ -143,10 +148,10 @@ public class SkipListTest {
      */
     @Test
     public void testA1B2C3InsertD1() {
-        list_A1_B2_C3.insert(new KVPair<>("D", "4"));
-        assertEquals(4, list_A1_B2_C3.size());
+        listA1B2C3.insert(new KVPair<>("D", "4"));
+        assertEquals(4, listA1B2C3.size());
         assertEquals("[(A, 1), (B, 2), (C, 3), (D, 4)]:4",
-                list_A1_B2_C3.toString());
+                listA1B2C3.toString());
     }
 
     /**
@@ -155,10 +160,10 @@ public class SkipListTest {
      */
     @Test
     public void testD1F3G4InsertE2() {
-        list_D1_F3_G4.insert(new KVPair<>("E", "2"));
-        assertEquals(4, list_D1_F3_G4.size());
+        listD1F3G4.insert(new KVPair<>("E", "2"));
+        assertEquals(4, listD1F3G4.size());
         assertEquals("[(D, 1), (E, 2), (F, 3), (G, 4)]:4",
-                list_D1_F3_G4.toString());
+                listD1F3G4.toString());
     }
 
 
@@ -167,7 +172,7 @@ public class SkipListTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testEmptyInsertNull() {
-        list_empty.insert(null);
+        listEmpty.insert(null);
         fail();
     }
 
@@ -177,7 +182,7 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyRemoveA() {
-        assertNull(list_empty.remove("A"));
+        assertNull(listEmpty.remove("A"));
     }
 
 
@@ -187,9 +192,9 @@ public class SkipListTest {
     @Test
     public void testA1B2C3RemoveA() {
         assertEquals(new KVPair<>("A", "1"),
-                list_A1_B2_C3.remove("A"));
-        assertEquals("[(B, 2), (C, 3)]:2", list_A1_B2_C3.toString());
-        assertEquals(new KVPair<>("B", "2"), list_A1_B2_C3.first());
+                listA1B2C3.remove("A"));
+        assertEquals("[(B, 2), (C, 3)]:2", listA1B2C3.toString());
+        assertEquals(new KVPair<>("B", "2"), listA1B2C3.first());
     }
 
     /**
@@ -198,9 +203,9 @@ public class SkipListTest {
     @Test
     public void testA1B2C3RemoveB() {
         assertEquals(new KVPair<>("B", "2"),
-                list_A1_B2_C3.remove("B"));
-        assertEquals("[(A, 1), (C, 3)]:2", list_A1_B2_C3.toString());
-        assertEquals(new KVPair<>("A", "1"), list_A1_B2_C3.first());
+                listA1B2C3.remove("B"));
+        assertEquals("[(A, 1), (C, 3)]:2", listA1B2C3.toString());
+        assertEquals(new KVPair<>("A", "1"), listA1B2C3.first());
     }
 
     /**
@@ -209,9 +214,9 @@ public class SkipListTest {
     @Test
     public void testA1B2C3RemoveC() {
         assertEquals(new KVPair<>("C", "3"),
-                list_A1_B2_C3.remove("C"));
-        assertEquals("[(A, 1), (B, 2)]:2", list_A1_B2_C3.toString());
-        assertEquals(new KVPair<>("A", "1"), list_A1_B2_C3.first());
+                listA1B2C3.remove("C"));
+        assertEquals("[(A, 1), (B, 2)]:2", listA1B2C3.toString());
+        assertEquals(new KVPair<>("A", "1"), listA1B2C3.first());
     }
 
 
@@ -220,7 +225,7 @@ public class SkipListTest {
      */
     @Test
     public void testA1B2C3RemoveD() {
-        assertNull(list_A1_B2_C3.remove("D"));
+        assertNull(listA1B2C3.remove("D"));
     }
 
     /**
@@ -229,19 +234,19 @@ public class SkipListTest {
     @Test
     public void testD1F3G4RemoveDFG() {
         assertEquals(new KVPair<>("D", "1"),
-                list_D1_F3_G4.remove("D"));
-        assertEquals("[(F, 3), (G, 4)]:2", list_D1_F3_G4.toString());
-        assertEquals(new KVPair<>("F", "3"), list_D1_F3_G4.first());
+                listD1F3G4.remove("D"));
+        assertEquals("[(F, 3), (G, 4)]:2", listD1F3G4.toString());
+        assertEquals(new KVPair<>("F", "3"), listD1F3G4.first());
 
         assertEquals(new KVPair<>("F", "3"),
-                list_D1_F3_G4.remove("F"));
-        assertEquals("[(G, 4)]:1", list_D1_F3_G4.toString());
-        assertEquals(new KVPair<>("G", "4"), list_D1_F3_G4.first());
+                listD1F3G4.remove("F"));
+        assertEquals("[(G, 4)]:1", listD1F3G4.toString());
+        assertEquals(new KVPair<>("G", "4"), listD1F3G4.first());
 
         assertEquals(new KVPair<>("G", "4"),
-                list_D1_F3_G4.remove("G"));
-        assertEquals("[]:0", list_D1_F3_G4.toString());
-        assertNull(list_D1_F3_G4.first());
+                listD1F3G4.remove("G"));
+        assertEquals("[]:0", listD1F3G4.toString());
+        assertNull(listD1F3G4.first());
     }
 
 
@@ -250,7 +255,7 @@ public class SkipListTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testRemoveNullInEmpty() {
-        list_empty.remove(null);
+        listEmpty.remove(null);
         fail();
     }
 
@@ -260,7 +265,7 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyRemoveByValue1() {
-        assertNull(list_empty.removeByValue("1"));
+        assertNull(listEmpty.removeByValue("1"));
     }
 
 
@@ -270,9 +275,9 @@ public class SkipListTest {
     @Test
     public void testA1B2C3RemoveByValue1() {
         assertEquals(new KVPair<>("A", "1"),
-                list_A1_B2_C3.removeByValue("1"));
-        assertEquals("[(B, 2), (C, 3)]:2", list_A1_B2_C3.toString());
-        assertEquals(new KVPair<>("B", "2"), list_A1_B2_C3.first());
+                listA1B2C3.removeByValue("1"));
+        assertEquals("[(B, 2), (C, 3)]:2", listA1B2C3.toString());
+        assertEquals(new KVPair<>("B", "2"), listA1B2C3.first());
     }
 
 
@@ -282,9 +287,9 @@ public class SkipListTest {
     @Test
     public void testA1B2C3RemoveByValue2() {
         assertEquals(new KVPair<>("B", "2"),
-                list_A1_B2_C3.removeByValue("2"));
-        assertEquals("[(A, 1), (C, 3)]:2", list_A1_B2_C3.toString());
-        assertEquals(new KVPair<>("A", "1"), list_A1_B2_C3.first());
+                listA1B2C3.removeByValue("2"));
+        assertEquals("[(A, 1), (C, 3)]:2", listA1B2C3.toString());
+        assertEquals(new KVPair<>("A", "1"), listA1B2C3.first());
     }
 
 
@@ -294,9 +299,9 @@ public class SkipListTest {
     @Test
     public void testA1B2C3RemoveByValue3() {
         assertEquals(new KVPair<>("C", "3"),
-                list_A1_B2_C3.removeByValue("3"));
-        assertEquals("[(A, 1), (B, 2)]:2", list_A1_B2_C3.toString());
-        assertEquals(new KVPair<>("A", "1"), list_A1_B2_C3.first());
+                listA1B2C3.removeByValue("3"));
+        assertEquals("[(A, 1), (B, 2)]:2", listA1B2C3.toString());
+        assertEquals(new KVPair<>("A", "1"), listA1B2C3.first());
     }
 
 
@@ -306,7 +311,7 @@ public class SkipListTest {
      */
     @Test
     public void testA1B2C3RemoveByValue4() {
-        assertNull(list_A1_B2_C3.removeByValue("4"));
+        assertNull(listA1B2C3.removeByValue("4"));
     }
 
 
@@ -316,19 +321,19 @@ public class SkipListTest {
     @Test
     public void testD1F3G4RemoveByValue134() {
         assertEquals(new KVPair<>("D", "1"),
-                list_D1_F3_G4.removeByValue("1"));
-        assertEquals("[(F, 3), (G, 4)]:2", list_D1_F3_G4.toString());
-        assertEquals(new KVPair<>("F", "3"), list_D1_F3_G4.first());
+                listD1F3G4.removeByValue("1"));
+        assertEquals("[(F, 3), (G, 4)]:2", listD1F3G4.toString());
+        assertEquals(new KVPair<>("F", "3"), listD1F3G4.first());
 
         assertEquals(new KVPair<>("F", "3"),
-                list_D1_F3_G4.removeByValue("3"));
-        assertEquals("[(G, 4)]:1", list_D1_F3_G4.toString());
-        assertEquals(new KVPair<>("G", "4"), list_D1_F3_G4.first());
+                listD1F3G4.removeByValue("3"));
+        assertEquals("[(G, 4)]:1", listD1F3G4.toString());
+        assertEquals(new KVPair<>("G", "4"), listD1F3G4.first());
 
         assertEquals(new KVPair<>("G", "4"),
-                list_D1_F3_G4.removeByValue("4"));
-        assertEquals("[]:0", list_D1_F3_G4.toString());
-        assertNull(list_D1_F3_G4.first());
+                listD1F3G4.removeByValue("4"));
+        assertEquals("[]:0", listD1F3G4.toString());
+        assertNull(listD1F3G4.first());
     }
 
 
@@ -338,7 +343,7 @@ public class SkipListTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testRemoveByValueNullInEmpty() {
-        list_empty.removeByValue(null);
+        listEmpty.removeByValue(null);
         fail();
     }
 
@@ -347,7 +352,7 @@ public class SkipListTest {
      */
     @Test
     public void testEmptySearchA() {
-        assertNull(list_empty.search("A"));
+        assertNull(listEmpty.search("A"));
     }
 
 
@@ -359,9 +364,9 @@ public class SkipListTest {
         List<KVPair<String, String>> searchList = new ArrayList<>();
         searchList.add(new KVPair<>("A", "1"));
 
-        assertEquals(searchList, list_A1_B2_C3.search("A"));
+        assertEquals(searchList, listA1B2C3.search("A"));
         assertEquals("[(A, 1), (B, 2), (C, 3)]:3",
-                list_A1_B2_C3.toString());
+                listA1B2C3.toString());
     }
 
 
@@ -373,9 +378,9 @@ public class SkipListTest {
         List<KVPair<String, String>> searchList = new ArrayList<>();
         searchList.add(new KVPair<>("B", "2"));
 
-        assertEquals(searchList, list_A1_B2_C3.search("B"));
+        assertEquals(searchList, listA1B2C3.search("B"));
         assertEquals("[(A, 1), (B, 2), (C, 3)]:3",
-                list_A1_B2_C3.toString());
+                listA1B2C3.toString());
     }
 
 
@@ -387,9 +392,9 @@ public class SkipListTest {
         List<KVPair<String, String>> searchList = new ArrayList<>();
         searchList.add(new KVPair<>("G", "4"));
 
-        assertEquals(searchList, list_D1_F3_G4.search("G"));
+        assertEquals(searchList, listD1F3G4.search("G"));
         assertEquals("[(D, 1), (F, 3), (G, 4)]:3",
-                list_D1_F3_G4.toString());
+                listD1F3G4.toString());
     }
 
     /**
@@ -397,17 +402,17 @@ public class SkipListTest {
      */
     @Test
     public void testD1F3G4G5G6SearchGDuplicateKey() {
-        list_D1_F3_G4.insert(new KVPair<>("G", "5"));
-        list_D1_F3_G4.insert(new KVPair<>("G", "6"));
+        listD1F3G4.insert(new KVPair<>("G", "5"));
+        listD1F3G4.insert(new KVPair<>("G", "6"));
 
         List<KVPair<String, String>> searchList = new ArrayList<>();
         searchList.add(new KVPair<>("G", "6"));
         searchList.add(new KVPair<>("G", "5"));
         searchList.add(new KVPair<>("G", "4"));
 
-        assertEquals(searchList, list_D1_F3_G4.search("G"));
+        assertEquals(searchList, listD1F3G4.search("G"));
         assertEquals("[(D, 1), (F, 3), (G, 6), (G, 5), (G, 4)]:5",
-                list_D1_F3_G4.toString());
+                listD1F3G4.toString());
     }
 
 
@@ -416,9 +421,9 @@ public class SkipListTest {
      */
     @Test
     public void testD1F3G4SearchB() {
-        assertNull(list_D1_F3_G4.search("B"));
+        assertNull(listD1F3G4.search("B"));
         assertEquals("[(D, 1), (F, 3), (G, 4)]:3",
-                list_D1_F3_G4.toString());
+                listD1F3G4.toString());
     }
 
 
@@ -427,7 +432,7 @@ public class SkipListTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void testD1F3G4SearchNull() {
-        list_D1_F3_G4.search(null);
+        listD1F3G4.search(null);
         fail();
     }
 
@@ -437,7 +442,7 @@ public class SkipListTest {
      */
     @Test
     public void testEmptySize() {
-        assertEquals(0, list_empty.size());
+        assertEquals(0, listEmpty.size());
     }
 
 
@@ -447,7 +452,7 @@ public class SkipListTest {
     @Test
     public void testA1B2C3Size() {
         assertEquals(3,
-                list_A1_B2_C3.size());
+                listA1B2C3.size());
     }
 
 
@@ -456,7 +461,7 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyFirst() {
-        assertNull(list_empty.first());
+        assertNull(listEmpty.first());
     }
 
 
@@ -465,7 +470,7 @@ public class SkipListTest {
      */
     @Test
     public void testA1B2C3First() {
-        assertEquals(new KVPair<>("A", "1"), list_A1_B2_C3.first());
+        assertEquals(new KVPair<>("A", "1"), listA1B2C3.first());
     }
 
 
@@ -476,7 +481,7 @@ public class SkipListTest {
     public void testEmptyIterable() {
         StringBuilder sb = new StringBuilder();
 
-        for (KVPair<String, String> pair : list_empty)
+        for (KVPair<String, String> pair : listEmpty)
             sb.append(pair.toString());
 
         assertEquals("", sb.toString());
@@ -490,7 +495,7 @@ public class SkipListTest {
     public void testD1F3G4Iterable() {
         StringBuilder sb = new StringBuilder();
 
-        for (KVPair<String, String> pair : list_D1_F3_G4)
+        for (KVPair<String, String> pair : listD1F3G4)
             sb.append("(").append(pair.toString()).append(")");
 
         assertEquals("(D, 1)(F, 3)(G, 4)", sb.toString());
@@ -501,7 +506,7 @@ public class SkipListTest {
      */
     @Test
     public void testA1B2C3Dump() {
-        String dump = list_A1_B2_C3.dump();
+        String dump = listA1B2C3.dump();
 
         assertTrue(dump.contains("(A, 1)"));
         assertTrue(dump.contains("(B, 2)"));
@@ -515,9 +520,9 @@ public class SkipListTest {
      */
     @Test
     public void testEmptyDump() {
-        String dump = list_empty.dump();
+        String dump = listEmpty.dump();
 
-        assertTrue(dump.contains("Node has depth 0, Value (null)"));
+        assertTrue(dump.contains("Node has depth 1, Value (null)"));
         assertTrue(dump.contains("SkipList size is: 0"));
     }
 }

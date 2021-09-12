@@ -1,3 +1,5 @@
+package SkipLists;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -5,12 +7,13 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * This class implements the Container interface and represents
+ * This class implements the SkipLists.Container interface and represents
  * the skip list data structure to fulfil the interface functionalities
  *
  * @param <K> Key
  * @param <V> Value
  * @author Muhammad Ali Qadri
+ * @version 1
  */
 public class SkipList<K extends Comparable<? super K>, V>
         extends AbstractContainer<K, V> {
@@ -203,22 +206,22 @@ public class SkipList<K extends Comparable<? super K>, V>
     @Override
     public String dump() {
         //Builder to append string in
-        StringBuilder sb = new StringBuilder("SkipList dump:\n");
+        StringBuilder sb = new StringBuilder("SkipList dump:");
         SkipNode current = head;
 
         //Iterate through each node and write their details to sb
         while (current != null) {
-            sb.append("Node has depth ");
+            sb.append("\nNode has depth ");
             if (current.pair == null)
-                sb.append(current.level).append(", Value (null)\n");
+                sb.append(current.level + 1).append(", Value (null)");
             else
-                sb.append(current.level).append(", Value (")
-                        .append(current.pair).append(")\n");
+                sb.append(current.level + 1).append(", Value (")
+                        .append(current.pair).append(")");
 
             current = current.forward[0];
         }
 
-        sb.append("SkipList size is: ").append(size());
+        sb.append("\nSkipList size is: ").append(size());
         return sb.toString();
     }
 
@@ -258,13 +261,13 @@ public class SkipList<K extends Comparable<? super K>, V>
     }
 
     /**
-     * This class implements a SkipNode for the SkipList data structure.
+     * This class implements a SkipNode for the SkipLists.SkipList data structure.
      *
      * @author Muhammad Ali Qadri
      */
     private class SkipNode {
 
-        // the KVPair to hold
+        // the SkipLists.KVPair to hold
         private final KVPair<K, V> pair;
         // what is this
         private final SkipNode[] forward;
@@ -272,10 +275,10 @@ public class SkipList<K extends Comparable<? super K>, V>
         private int level;
 
         /**
-         * Initializes the fields with the required KVPair and the number of
-         * levels from the random level method in the SkipList.
+         * Initializes the fields with the required SkipLists.KVPair and the number of
+         * levels from the random level method in the SkipLists.SkipList.
          *
-         * @param tempPair the KVPair to be inserted
+         * @param tempPair the SkipLists.KVPair to be inserted
          * @param level    the number of levels that the SkipNode should have
          */
         @SuppressWarnings("unchecked")
@@ -288,9 +291,9 @@ public class SkipList<K extends Comparable<? super K>, V>
 
 
         /**
-         * Returns the KVPair stored in the SkipList.
+         * Returns the SkipLists.KVPair stored in the SkipLists.SkipList.
          *
-         * @return the KVPair
+         * @return the SkipLists.KVPair
          */
         public KVPair<K, V> element() {
             return pair;
@@ -299,8 +302,8 @@ public class SkipList<K extends Comparable<? super K>, V>
     }
 
     /**
-     * This class implements an iterator for the SkipList data structure.
-     * It will be used to iterate the nodes of the SkipList and
+     * This class implements an iterator for the SkipLists.SkipList data structure.
+     * It will be used to iterate the nodes of the SkipLists.SkipList and
      * efficiently be used in any foreach loop or wherever required
      *
      * @author Muhammad Ali Qadri

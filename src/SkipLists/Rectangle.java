@@ -1,7 +1,10 @@
+package SkipLists;
+
 /**
- * Change the implementation of some methods of java.awt.Rectangle
+ * Change the implementation of some methods of java.awt.SkipLists.Rectangle
  *
  * @author Muhammad Ali Qadri
+ * @version 1
  */
 public class Rectangle extends java.awt.Rectangle {
 

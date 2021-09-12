@@ -1,27 +1,34 @@
+package SkipLists;
+
 import java.util.List;
 
 /**
  * This class is responsible for interfacing between the command processor and
- * the SkipList. The responsibility of this class is to further interpret
+ * the SkipLists.SkipList.
+ * The responsibility of this class is to further interpret
  * variations of commands and do some error checking of those commands. This
  * class further interpreting the command means that the two types of remove
  * will be overloaded methods for if we are removing by name or by coordinates.
  * Many of these methods will simply call the appropriate version of the
- * SkipList method after some preparation.
+ * SkipLists.SkipList method after some preparation.
  *
  * @author Muhammad Ali Qadri
+ * @version 1
  */
 public interface Database {
 
     /**
-     * Inserts the KVPair in the SkipList if the rectangle has valid coordinates
+     * Inserts the SkipLists.KVPair in the SkipLists.SkipList if
+     * the rectangle has valid coordinates
      * and dimensions, that is that the coordinates are non-negative and that
      * the rectangle object has some area (not 0, 0, 0, 0). This insert will
-     * insert the KVPair specified into the sorted SkipList appropriately
+     * insert the SkipLists.KVPair specified into the sorted SkipLists.SkipList
+     * appropriately
      *
-     * @param pair the KVPair to be inserted
+     * @param pair the SkipLists.KVPair to be inserted
+     * @return True if successful insert
      */
-    void insert(KVPair<String, Rectangle> pair);
+    Boolean insert(KVPair<String, Rectangle> pair);
 
 
     /**
@@ -38,13 +45,10 @@ public interface Database {
      * Removes a rectangle with the specified coordinates if available. If not
      * an error message is printed to the console.
      *
-     * @param x x-coordinate of the rectangle to be removed
-     * @param y x-coordinate of the rectangle to be removed
-     * @param w width of the rectangle to be removed
-     * @param h height of the rectangle to be removed
+     * @param rectangle the rectangle to remove from this object
      * @return pair that is removed.
      */
-    KVPair<String, Rectangle> remove(int x, int y, int w, int h);
+    KVPair<String, Rectangle> removeByValue(Rectangle rectangle);
 
 
     /**
@@ -64,7 +68,7 @@ public interface Database {
 
     /**
      * Prints out all the rectangles that Intersect each other by calling the
-     * SkipList method for intersections.
+     * SkipLists.SkipList method for intersections.
      *
      * @return The rectangle pairs that intersect
      */
@@ -73,21 +77,32 @@ public interface Database {
 
 
     /**
-     * Prints out all the rectangles with the specified name in the SkipList.
-     * This method will delegate the searching to the SkipList class completely.
+     * Prints out all the rectangles with the specified
+     * name in the SkipLists.SkipList.
+     * This method will delegate the searching to the SkipLists.SkipList
+     * class completely.
      *
-     * @param name name of the Rectangle to be searched for
+     * @param name name of the SkipLists.Rectangle to be searched for
      * @return list of items that have the name as keu
      */
     List<KVPair<String, Rectangle>> search(String name);
 
     /**
-     * Returns dump of the SkipList which includes information about the
-     * size of the SkipList and shows all of the contents of the SkipList. This
-     * will all be delegated to the SkipList.
+     * Returns dump of the SkipLists.SkipList which includes information
+     * about the size of the SkipLists.SkipList and shows all of the contents
+     * of the SkipLists.SkipList. This
+     * will all be delegated to the SkipLists.SkipList.
      *
      * @return string representation of this databases current state
      */
     String dump();
 
+
+    /**
+     * Checks if the input is a valid rectangle for SkipLists Database.
+     *
+     * @param rectangle the possible rectangle to check
+     * @return boolean value of validation result
+     */
+    Boolean validateRectangle(Rectangle rectangle);
 }

@@ -1,8 +1,11 @@
+package SkipLists;
+
 /**
  * This is the interface for the processor that will be used
  * to process any input line
  *
  * @author Muhammad Ali Qadri
+ * @version 1
  */
 
 public interface Processor {

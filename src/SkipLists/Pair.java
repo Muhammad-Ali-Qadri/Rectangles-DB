@@ -1,3 +1,5 @@
+package SkipLists;
+
 import java.util.Objects;
 
 /**
@@ -6,11 +8,24 @@ import java.util.Objects;
  * @param <A> Any type representing the first element in this pair
  * @param <B> Any type representing the second element in this pair
  * @author Muhammad Ali Qadri
+ * @version 1
  */
 public class Pair<A, B> {
+    /**
+     * Represents the first object in the pair with type < A >
+     */
     public final A val1;
+    /**
+     * Represents the second object in the pair with type < B >
+     */
     public final B val2;
 
+    /**
+     * Constructs this class and initializes values with respective input values
+     *
+     * @param v1 the first value to be added in this object with type < A >
+     * @param v2 the first value to be added in this object with type < B >
+     */
     public Pair(A v1, B v2) {
         if (v1 == null || v2 == null) throw new IllegalArgumentException();
 

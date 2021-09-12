@@ -1,12 +1,15 @@
+package SkipLists;
+
 import java.util.Iterator;
 
 /**
  * This abstract class holds the functionality that is central
- * to all the concrete implementations of the Container class
+ * to all the concrete implementations of the SkipLists.Container class
  *
  * @param <K> Key
  * @param <V> Value
  * @author Muhammad Ali Qadri
+ * @version 1
  */
 public abstract class AbstractContainer<K extends Comparable<? super K>, V>
         implements Container<K, V> {
