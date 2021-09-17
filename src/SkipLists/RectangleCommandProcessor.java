@@ -37,7 +37,7 @@ public class RectangleCommandProcessor implements Processor {
      */
     @Override
     public String process(String input) {
-        if(input == null){
+        if (input == null) {
             throw new IllegalArgumentException();
         }
         //stores all the words form input
@@ -81,10 +81,10 @@ public class RectangleCommandProcessor implements Processor {
      */
     private String processInsertion(List<String> operationInput) {
         //Parse all input values
-        int x = Integer.parseInt(operationInput.get(2)),
-                y = Integer.parseInt(operationInput.get(3)),
-                w = Integer.parseInt(operationInput.get(4)),
-                h = Integer.parseInt(operationInput.get(5));
+        int x = Integer.parseInt(operationInput.get(2));
+        int y = Integer.parseInt(operationInput.get(3));
+        int w = Integer.parseInt(operationInput.get(4));
+        int h = Integer.parseInt(operationInput.get(5));
 
         KVPair<String, Rectangle> pair = new KVPair<>(operationInput.get(1),
                 new Rectangle(x, y, w, h));
@@ -109,15 +109,16 @@ public class RectangleCommandProcessor implements Processor {
             pair = data.remove(operationInput.get(1));
         }
         else { //remove by value
-            int x = Integer.parseInt(operationInput.get(1)),
-                    y = Integer.parseInt(operationInput.get(2)),
-                    w = Integer.parseInt(operationInput.get(3)),
-                    h = Integer.parseInt(operationInput.get(4));
+            int x = Integer.parseInt(operationInput.get(1));
+            int y = Integer.parseInt(operationInput.get(2));
+            int w = Integer.parseInt(operationInput.get(3));
+            int h = Integer.parseInt(operationInput.get(4));
 
             Rectangle rect = new Rectangle(x, y, w, h);
-            if (!data.validateRectangle(rect))
+            if (!data.validateRectangle(rect)) {
                 return "Rectangle rejected: " +
                        getRectangleRepresentation(operationInput);
+            }
 
             pair = data.removeByValue(rect);
         }
@@ -136,10 +137,10 @@ public class RectangleCommandProcessor implements Processor {
      * @return result of the operation
      */
     private String processRegionSearch(List<String> operationInput) {
-        int x = Integer.parseInt(operationInput.get(1)),
-                y = Integer.parseInt(operationInput.get(2)),
-                w = Integer.parseInt(operationInput.get(3)),
-                h = Integer.parseInt(operationInput.get(4));
+        int x = Integer.parseInt(operationInput.get(1));
+        int y = Integer.parseInt(operationInput.get(2));
+        int w = Integer.parseInt(operationInput.get(3));
+        int h = Integer.parseInt(operationInput.get(4));
 
         List<KVPair<String, Rectangle>> rectangles =
                 data.regionSearch(x, y, w, h);
@@ -218,8 +219,9 @@ public class RectangleCommandProcessor implements Processor {
 
             return output.toString();
         }
-        else
+        else {
             return "Rectangle not found: " + key;
+        }
     }
 
     /**
@@ -241,18 +243,16 @@ public class RectangleCommandProcessor implements Processor {
     private String getRectangleRepresentation(List<String> stringInputs) {
         StringBuilder sb = new StringBuilder();
         sb.append("(");
+
         for (int i = 1; i < stringInputs.size(); i++) {
             sb.append(stringInputs.get(i));
-            if (i != stringInputs.size() - 1)
+            if (i != stringInputs.size() - 1) {
                 sb.append(", ");
+            }
         }
 
         sb.append(")");
 
         return sb.toString();
-    }
-
-    private Boolean validateKey(String key) {
-        return Pattern.compile("[a-zA-Z][\\w_]?").matcher(key).find();
     }
 }

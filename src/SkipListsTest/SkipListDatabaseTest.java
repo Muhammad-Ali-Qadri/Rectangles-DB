@@ -589,6 +589,28 @@ public class SkipListDatabaseTest {
     }
 
 
+
+    /**
+     * Tests if region search is performed for a valid outside region (-1025,
+     * -1025, 20, 10) on an empty database
+     */
+    @Test
+    public void testEmptyInValidOutsideRegionSearch() {
+        assertEquals(0,
+                rectEmpty.regionSearch(-1025, -1025, 20, 10).size());
+    }
+
+
+    /**
+     * Tests if region search is performed for a valid outside region (-1025,
+     * -1025, 2000, 2000) on an empty database
+     */
+    @Test
+    public void testEmptyValidBigInsideRegionSearch() {
+        assertEquals(0,
+                rectEmpty.regionSearch(-1025, -1025, 2000, 2000).size());
+    }
+
     /**
      * Tests if region search is performed for a valid region (0, 0, 20, 20)
      * on an empty database

@@ -34,18 +34,23 @@ public class SkipList<K extends Comparable<? super K>, V>
      */
     @Override
     public List<KVPair<K, V>> search(K key) {
-        if (key == null) throw new IllegalArgumentException();
-        if (level == -1) return null; //In case list is empty
+        if (key == null) {
+            throw new IllegalArgumentException();
+        }
+        if (level == -1) {
+            return null; //In case list is empty
+        }
 
         //Find the value by iterating the list from head and the highest level
         SkipNode current = head;
 
         //Find the node pointing to the key
-        for (int i = level; i > -1; i--)
+        for (int i = level; i > -1; i--) {
             while (current.forward[i] != null &&
-                    current.forward[i].element().getKey().compareTo(key) < 0)
+                   current.forward[i].element().getKey().compareTo(key) < 0) {
                 current = current.forward[i];
-
+            }
+        }
         current = current.forward[0]; //Move to the found element
 
         //As all equal keys are placed adjacent to each other
@@ -60,7 +65,10 @@ public class SkipList<K extends Comparable<? super K>, V>
             }
 
             return foundElements;
-        } else return null;
+        }
+        else {
+            return null;
+        }
     }
 
     /**
@@ -87,7 +95,9 @@ public class SkipList<K extends Comparable<? super K>, V>
     @Override
     @SuppressWarnings("unchecked")
     public void insert(KVPair<K, V> it) {
-        if (it == null) throw new IllegalArgumentException();
+        if (it == null) {
+            throw new IllegalArgumentException();
+        }
 
         int newLevel = randomLevel();
         if (newLevel > level) { //Adjust header if new node is deeper
@@ -103,8 +113,8 @@ public class SkipList<K extends Comparable<? super K>, V>
         //Find insertion point for the new item
         for (int i = level; i > -1; i--) {
             while (current.forward[i] != null &&
-                    current.forward[i].element().getKey()
-                            .compareTo(it.getKey()) < 0) {
+                   current.forward[i].element().getKey()
+                           .compareTo(it.getKey()) < 0) {
                 current = current.forward[i];
             }
             update[i] = current;
@@ -129,8 +139,12 @@ public class SkipList<K extends Comparable<? super K>, V>
     @Override
     @SuppressWarnings("unchecked")
     public KVPair<K, V> remove(K key) {
-        if (key == null) throw new IllegalArgumentException();
-        if (isEmpty()) return null;
+        if (key == null) {
+            throw new IllegalArgumentException();
+        }
+        if (isEmpty()) {
+            return null;
+        }
 
         //The nodes who will point to the deleted node`s forward nodes
         SkipNode[] update = (SkipNode[]) Array.newInstance(SkipNode.class,
@@ -140,7 +154,7 @@ public class SkipList<K extends Comparable<? super K>, V>
         //Find deletion point
         for (int i = level; i > -1; i--) {
             while (current.forward[i] != null &&
-                    current.forward[i].element().getKey().compareTo(key) < 0) {
+                   current.forward[i].element().getKey().compareTo(key) < 0) {
                 current = current.forward[i];
             }
             update[i] = current;
@@ -149,16 +163,19 @@ public class SkipList<K extends Comparable<? super K>, V>
         current = current.forward[0];
 
         //key does not exist
-        if (current == null || !current.element().getKey().equals(key))
+        if (current == null || !current.element().getKey().equals(key)) {
             return null;
+        }
 
         //Disconnect all previous nodes connected to value
-        for (int i = 0; i < update.length; i++)
+        for (int i = 0; i < update.length; i++) {
             update[i].forward[i] = null;
+        }
 
         //Connect all previous nodes connected to nodes value was pointing to
-        for (int i = 0; i < current.forward.length; i++)
+        for (int i = 0; i < current.forward.length; i++) {
             update[i].forward[i] = current.forward[i];
+        }
 
         size--;
         return current.element();
@@ -171,8 +188,12 @@ public class SkipList<K extends Comparable<? super K>, V>
     @Override
     public KVPair<K, V> removeByValue(V val) {
         //Checks for null input and empty list
-        if (val == null) throw new IllegalArgumentException();
-        if (isEmpty()) return null;
+        if (val == null) {
+            throw new IllegalArgumentException();
+        }
+        if (isEmpty()) {
+            return null;
+        }
 
         K key = null;
 
@@ -212,11 +233,13 @@ public class SkipList<K extends Comparable<? super K>, V>
         //Iterate through each node and write their details to sb
         while (current != null) {
             sb.append("\nNode has depth ");
-            if (current.pair == null)
+            if (current.pair == null) {
                 sb.append(current.level + 1).append(", Value (null)");
-            else
+            }
+            else {
                 sb.append(current.level + 1).append(", Value (")
                         .append(current.pair).append(")");
+            }
 
             current = current.forward[0];
         }
@@ -256,7 +279,10 @@ public class SkipList<K extends Comparable<? super K>, V>
     private int randomLevel() {
         int lev = 0;
         Random value = new Random();
-        while (Math.abs(value.nextInt()) % 2 == 0) lev++;
+        while (Math.abs(value.nextInt()) % 2 == 0) {
+            lev++;
+        }
+
         return lev; // returns a random level
     }
 
@@ -272,7 +298,7 @@ public class SkipList<K extends Comparable<? super K>, V>
         // what is this
         private final SkipNode[] forward;
         // the number of levels
-        private int level;
+        private final int level;
 
         /**
          * Initializes the fields with the required SkipLists.KVPair and the number of
@@ -317,8 +343,9 @@ public class SkipList<K extends Comparable<? super K>, V>
         public SkipListIterator() {
             //Points to head, or the next element
             current = head;
-            if (current.forward[0] != null)
+            if (current.forward[0] != null) {
                 current = current.forward[0];
+            }
         }
 
         /**

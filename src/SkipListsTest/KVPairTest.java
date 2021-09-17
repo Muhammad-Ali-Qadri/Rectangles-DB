@@ -148,5 +148,30 @@ public class KVPairTest {
         assertNotEquals(pairA1, pairA2);
     }
 
-    //TODO: Test compare to method
+
+    /** Test if A1 compares to A2
+     *
+     * */
+    @Test
+    public void testA1CompareToA2(){
+        assertEquals(0, pairA1.compareTo(pairA2));
+    }
+
+
+    /** Test if A1 compares to B1
+     *
+     * */
+    @Test
+    public void testA1CompareToB1(){
+        assertEquals(-1, pairA1.compareTo(pairB1));
+    }
+
+
+    /** Test if A1 compares to B1
+     *
+     * */
+    @Test
+    public void testB1CompareToA1(){
+        assertEquals(1, pairB1.compareTo(pairA1));
+    }
 }

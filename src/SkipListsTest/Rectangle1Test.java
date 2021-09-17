@@ -3,6 +3,7 @@ package SkipListsTest;
 import SkipLists.Rectangle1;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.*;
@@ -21,6 +22,14 @@ public class Rectangle1Test {
     //The original output value
     private final PrintStream originalOut = System.out;
 
+
+    /**
+     * Check that Rectangle1 class can be created
+     * */
+    @BeforeClass
+    public static void Rectangle1Creation() {
+        assertNotNull(new Rectangle1());
+    }
 
     /**
      * Set the system.setOut to write to the outContent variable before each

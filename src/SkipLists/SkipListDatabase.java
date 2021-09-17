@@ -41,14 +41,16 @@ public class SkipListDatabase implements Database {
      */
     @Override
     public Boolean insert(KVPair<String, Rectangle> pair) {
-        if (pair == null || pair.getValue() == null)
+        if (pair == null || pair.getValue() == null) {
             throw new IllegalArgumentException();
+        }
 
         //Reject if invalid key
         //Reject if coordinates or height or width < 0
         if ((!validateKey(pair.getKey()))
-                || !validateRectangle(pair.getValue()))
+            || !validateRectangle(pair.getValue())) {
             return false;
+        }
 
         list.insert(pair);
 
@@ -60,11 +62,13 @@ public class SkipListDatabase implements Database {
      */
     @Override
     public KVPair<String, Rectangle> remove(String name) {
-        if (name == null)
+        if (name == null) {
             throw new IllegalArgumentException();
+        }
 
-        if (!validateKey(name))
+        if (!validateKey(name)) {
             return null;
+        }
 
         return list.remove(name);
     }
@@ -74,11 +78,13 @@ public class SkipListDatabase implements Database {
      */
     @Override
     public KVPair<String, Rectangle> removeByValue(Rectangle rectangle) {
-        if (rectangle == null)
+        if (rectangle == null) {
             throw new IllegalArgumentException();
+        }
 
-        if (list.isEmpty() || !validateRectangle(rectangle))
+        if (list.isEmpty() || !validateRectangle(rectangle)) {
             return null;
+        }
 
         return list.removeByValue(rectangle);
     }
@@ -91,12 +97,14 @@ public class SkipListDatabase implements Database {
             , int w, int h) {
 
         //Reject if height or width < 0
-        if (w <= 0 || h <= 0)
+        if (w <= 0 || h <= 0) {
             return null;
+        }
 
         //No need to perform actual search if region outside world box
-        if (x + w < 0 || y + h < 0)
+        if (x + w < 0 || y + h < 0) {
             return new ArrayList<>();
+        }
 
         //Adjust x, y, width and height of region
         if (x < 0) {
@@ -118,9 +126,10 @@ public class SkipListDatabase implements Database {
         //Find the rectangles that intersect or are contained within the region
         for (KVPair<String, Rectangle> pair : list) {
             if (region.intersects(pair.getValue())
-                    || pair.getValue().intersects(region)
-                    || region.contains(pair.getValue()))
+                || pair.getValue().intersects(region)
+                || region.contains(pair.getValue())) {
                 rectangles.add(pair);
+            }
         }
 
         return rectangles;
@@ -143,9 +152,10 @@ public class SkipListDatabase implements Database {
                 // intersect each-other, and rectangles are not nested within
                 // each-other then true, otherwise false.
                 if (outer.getValue() != inner.getValue()
-                        && ((outer.getValue().intersects(inner.getValue())
-                        || inner.getValue().intersects(outer.getValue()))))
+                    && ((outer.getValue().intersects(inner.getValue())
+                         || inner.getValue().intersects(outer.getValue())))) {
                     intersectingPairs.add(new Pair<>(outer, inner));
+                }
             }
         }
 
@@ -157,10 +167,13 @@ public class SkipListDatabase implements Database {
      */
     @Override
     public List<KVPair<String, Rectangle>> search(String name) {
-        if (name == null) throw new IllegalArgumentException();
+        if (name == null) {
+            throw new IllegalArgumentException();
+        }
 
-        if (!validateKey(name))
+        if (!validateKey(name)) {
             return null;
+        }
 
         return list.search(name);
     }
@@ -192,9 +205,10 @@ public class SkipListDatabase implements Database {
     public Boolean validateRectangle(Rectangle rectangle) { //TODO: Write unit
         // tests for this
 
-        return (rectangle != null) && !(rectangle.x < 0 || rectangle.y < 0
-                || rectangle.width <= 0 || rectangle.height <= 0
-                || rectangle.x + rectangle.width > WorldBoxWidth
-                || rectangle.y + rectangle.height > worldBoxHeight);
+        return (rectangle != null)
+               && !(rectangle.x < 0 || rectangle.y < 0
+                    || rectangle.width <= 0 || rectangle.height <= 0
+                    || rectangle.x + rectangle.width > WorldBoxWidth
+                    || rectangle.y + rectangle.height > worldBoxHeight);
     }
 }

@@ -34,7 +34,9 @@ public class KVPair<K extends Comparable<? super K>, V>
      * @throws IllegalArgumentException if @params is null
      */
     public KVPair(K strKey, V val) {
-        if (strKey == null || val == null) throw new IllegalArgumentException();
+        if (strKey == null || val == null) {
+            throw new IllegalArgumentException();
+        }
 
         this.key = strKey;
         this.value = val;
@@ -95,8 +97,12 @@ public class KVPair<K extends Comparable<? super K>, V>
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         KVPair<?, ?> kvPair = (KVPair<?, ?>) o;
         return Objects.equals(key, kvPair.key) && Objects.equals(value,
                 kvPair.value);

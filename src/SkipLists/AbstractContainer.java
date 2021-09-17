@@ -35,8 +35,9 @@ public abstract class AbstractContainer<K extends Comparable<? super K>, V>
         while (it.hasNext()) {
             sb.append("(").append(it.next().toString()).append(")");
 
-            if (it.hasNext())
+            if (it.hasNext()) {
                 sb.append(", ");
+            }
         }
 
         sb.append("]:");
