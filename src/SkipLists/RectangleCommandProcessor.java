@@ -37,6 +37,9 @@ public class RectangleCommandProcessor implements Processor {
      */
     @Override
     public String process(String input) {
+        if(input == null){
+            throw new IllegalArgumentException();
+        }
         //stores all the words form input
         List<String> allInputs = new ArrayList<>();
         //finds all the words in the input statement
@@ -50,15 +53,20 @@ public class RectangleCommandProcessor implements Processor {
         //allInputs.get(0) is the command to operate
         if (allInputs.get(0).equalsIgnoreCase("insert")) {
             result.append(processInsertion(allInputs));
-        } else if (allInputs.get(0).equalsIgnoreCase("remove")) {
+        }
+        else if (allInputs.get(0).equalsIgnoreCase("remove")) {
             result.append(processRemove(allInputs));
-        } else if (allInputs.get(0).equalsIgnoreCase("regionSearch")) {
+        }
+        else if (allInputs.get(0).equalsIgnoreCase("regionSearch")) {
             result.append(processRegionSearch(allInputs));
-        } else if (allInputs.get(0).equalsIgnoreCase("intersections")) {
+        }
+        else if (allInputs.get(0).equalsIgnoreCase("intersections")) {
             result.append(processIntersections());
-        } else if (allInputs.get(0).equalsIgnoreCase("search")) {
+        }
+        else if (allInputs.get(0).equalsIgnoreCase("search")) {
             result.append(processSearch(allInputs.get(1)));
-        } else if (allInputs.get(0).equalsIgnoreCase("dump")) {
+        }
+        else if (allInputs.get(0).equalsIgnoreCase("dump")) {
             result.append(processDump());
         }
 
@@ -99,7 +107,8 @@ public class RectangleCommandProcessor implements Processor {
 
         if (operationInput.size() == 2) { //remove by key only
             pair = data.remove(operationInput.get(1));
-        } else { //remove by value
+        }
+        else { //remove by value
             int x = Integer.parseInt(operationInput.get(1)),
                     y = Integer.parseInt(operationInput.get(2)),
                     w = Integer.parseInt(operationInput.get(3)),
@@ -108,7 +117,7 @@ public class RectangleCommandProcessor implements Processor {
             Rectangle rect = new Rectangle(x, y, w, h);
             if (!data.validateRectangle(rect))
                 return "Rectangle rejected: " +
-                        getRectangleRepresentation(operationInput);
+                       getRectangleRepresentation(operationInput);
 
             pair = data.removeByValue(rect);
         }
@@ -116,7 +125,7 @@ public class RectangleCommandProcessor implements Processor {
         return ((pair != null) ?
                 "Rectangle removed: (" + pair + ")" :
                 "Rectangle not removed: " +
-                        getRectangleRepresentation(operationInput));
+                getRectangleRepresentation(operationInput));
     }
 
 
@@ -137,11 +146,12 @@ public class RectangleCommandProcessor implements Processor {
 
         if (rectangles == null) {
             return "Rectangle rejected: " +
-                    getRectangleRepresentation(operationInput);
-        } else {
-            StringBuilder sb = new StringBuilder("Rectangles intersecting " +
-                    "region " + getRectangleRepresentation(operationInput) +
-                    ":");
+                   getRectangleRepresentation(operationInput);
+        }
+        else {
+            StringBuilder sb =
+                    new StringBuilder("Rectangles intersecting region "
+                          + getRectangleRepresentation(operationInput) + ":");
 
             if (rectangles.size() > 0) {
                 sb.append("\n");
@@ -207,7 +217,8 @@ public class RectangleCommandProcessor implements Processor {
             }
 
             return output.toString();
-        } else
+        }
+        else
             return "Rectangle not found: " + key;
     }
 

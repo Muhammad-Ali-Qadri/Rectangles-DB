@@ -22,6 +22,7 @@ public interface Processor {
      *
      * @param input a single line from the text file
      * @return The string output of the processing done
+     * @throws IllegalArgumentException if input parameter is null
      */
     String process(String input);
 }

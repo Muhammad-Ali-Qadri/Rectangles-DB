@@ -8,6 +8,14 @@ package SkipLists;
  */
 public class Rectangle extends java.awt.Rectangle {
 
+    /**
+     * Initialize the rectangle
+     *
+     * @param x the x coordinate of the rectangle
+     * @param y the y coordinate of the rectangle
+     * @param w the width of the rectangle
+     * @param h the height of the rectangle
+     */
     public Rectangle(int x, int y, int w, int h) {
         super(x, y, w, h);
     }
