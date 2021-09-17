@@ -38,7 +38,12 @@ public class Rectangle1 {
      */
     public static void main(String[] args) {
         // the file object
-        File file = null;
+        File file;
+
+        if (args[0] == null) {
+            System.out.println("File expected");
+            return;
+        }
 
         // Attempts to open the file and scan through it
         try {
