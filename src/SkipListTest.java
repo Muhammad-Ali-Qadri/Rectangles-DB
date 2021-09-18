@@ -1,7 +1,3 @@
-package SkipListsTest;
-
-import SkipLists.KVPair;
-import SkipLists.SkipList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +8,7 @@ import static org.junit.Assert.*;
 
 /**
  * This test class is responsible for testing each scenario of each method in
- * the SkipLists.SkipList class
+ * the SkipList class
  *
  * @author Muhammad Ali Qadri
  * @version 1

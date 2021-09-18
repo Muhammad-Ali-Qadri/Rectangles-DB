@@ -1,5 +1,3 @@
-package SkipLists;
-
 import java.util.List;
 
 /**
@@ -33,20 +31,20 @@ public interface Container<K extends Comparable<? super K>, V>
 
 
     /**
-     * Inserts the SkipLists.KVPair in the SkipLists.SkipList at its appropriate spot as designated
+     * Inserts the KVPair in the SkipList at its appropriate spot as designated
      * by its lexicographical order.
      *
-     * @param it the SkipLists.KVPair to be inserted
+     * @param it the KVPair to be inserted
      * @throws IllegalArgumentException @param cannot be null
      */
     void insert(KVPair<K, V> it);
 
 
     /**
-     * Removes the SkipLists.KVPair that is passed in as a parameter and returns true if
+     * Removes the KVPair that is passed in as a parameter and returns true if
      * the pair was valid and false if not.
      *
-     * @param key the SkipLists.KVPair to be removed
+     * @param key the KVPair to be removed
      * @return returns the removed pair if the pair was valid and null if not
      * @throws IllegalArgumentException @param cannot be null
      */
@@ -54,9 +52,9 @@ public interface Container<K extends Comparable<? super K>, V>
 
 
     /**
-     * Removes a SkipLists.KVPair with the specified value.
+     * Removes a KVPair with the specified value.
      *
-     * @param val the value of the SkipLists.KVPair to be removed
+     * @param val the value of the KVPair to be removed
      * @return returns true if the removal was successful
      * @throws IllegalArgumentException @param cannot be null
      */

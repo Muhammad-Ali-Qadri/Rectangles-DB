@@ -1,5 +1,3 @@
-package SkipLists;
-
 /**
  * This is the interface for the processor that will be used
  * to process any input line

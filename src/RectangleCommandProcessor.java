@@ -1,7 +1,4 @@
-package SkipLists;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -152,7 +149,7 @@ public class RectangleCommandProcessor implements Processor {
         else {
             StringBuilder sb =
                     new StringBuilder("Rectangles intersecting region "
-                          + getRectangleRepresentation(operationInput) + ":");
+                                      + getRectangleRepresentation(operationInput) + ":");
 
             if (rectangles.size() > 0) {
                 sb.append("\n");

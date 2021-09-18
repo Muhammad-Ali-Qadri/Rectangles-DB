@@ -1,6 +1,3 @@
-package SkipListsTest;
-
-import SkipLists.Rectangle1;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -25,7 +22,7 @@ public class Rectangle1Test {
 
     /**
      * Check that Rectangle1 class can be created
-     * */
+     */
     @BeforeClass
     public static void Rectangle1Creation() {
         assertNotNull(new Rectangle1());

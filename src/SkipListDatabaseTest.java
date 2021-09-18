@@ -1,9 +1,3 @@
-package SkipListsTest;
-
-import SkipLists.KVPair;
-import SkipLists.Pair;
-import SkipLists.Rectangle;
-import SkipLists.SkipListDatabase;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,18 +8,18 @@ import static org.junit.Assert.*;
 
 /**
  * This test class is responsible for testing each scenario of each method in
- * the SkipLists.SkipListDatabase class
+ * the SkipListDatabase class
  *
  * @author Muhammad Ali Qadri
  * @version 1
  */
 public class SkipListDatabaseTest {
 
-    //SkipLists.Database to store rectangles and test them out
+    //Database to store rectangles and test them out
     private SkipListDatabase rect3;
-    //Empty SkipLists.Database to store new rectangles and test them out
+    //Empty Database to store new rectangles and test them out
     private SkipListDatabase rectEmpty;
-    //Empty SkipLists.Database to store new rectangles and test them out,
+    //Empty Database to store new rectangles and test them out,
     // only contains the middle rectangle
     private SkipListDatabase rectMid;
     //A KV pair with key: "A", x = 0, y = 0, width = 10, height = 10, also
@@ -587,7 +581,6 @@ public class SkipListDatabaseTest {
         assertEquals(0,
                 rectEmpty.regionSearch(1025, 1025, 20, 10).size());
     }
-
 
 
     /**

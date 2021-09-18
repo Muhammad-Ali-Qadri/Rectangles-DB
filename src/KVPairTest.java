@@ -1,6 +1,3 @@
-package SkipListsTest;
-
-import SkipLists.KVPair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,7 +5,7 @@ import static org.junit.Assert.*;
 
 /**
  * This test class is responsible for testing each scenario of each method in
- * the SkipLists.KVPair class
+ * the KVPair class
  *
  * @author Muhammad Ali Qadri
  * @version 1
@@ -33,7 +30,7 @@ public class KVPairTest {
 
 
     /**
-     * <p>Test if SkipLists.KVPair constructor accepts null value for key.</p>
+     * <p>Test if KVPair constructor accepts null value for key.</p>
      *
      * <p><b>Pass</b> - If <code>IllegalArgumentException</code> exception is thrown</p>
      */
@@ -45,7 +42,7 @@ public class KVPairTest {
 
 
     /**
-     * <p>Test if SkipLists.KVPair constructor accepts null value for value.</p>
+     * <p>Test if KVPair constructor accepts null value for value.</p>
      *
      * <p><b>Pass</b> - If <code>IllegalArgumentException</code> exception is thrown</p>
      */
@@ -101,7 +98,7 @@ public class KVPairTest {
 
 
     /**
-     * <p>Test if pair_A_1 is equal to a different SkipLists.KVPair object
+     * <p>Test if pair_A_1 is equal to a different KVPair object
      * with same key and value. Provokes the <code>.equals()</code>
      * method</p>
      *
@@ -149,29 +146,29 @@ public class KVPairTest {
     }
 
 
-    /** Test if A1 compares to A2
-     *
-     * */
+    /**
+     * Test if A1 compares to A2
+     */
     @Test
-    public void testA1CompareToA2(){
+    public void testA1CompareToA2() {
         assertEquals(0, pairA1.compareTo(pairA2));
     }
 
 
-    /** Test if A1 compares to B1
-     *
-     * */
+    /**
+     * Test if A1 compares to B1
+     */
     @Test
-    public void testA1CompareToB1(){
+    public void testA1CompareToB1() {
         assertEquals(-1, pairA1.compareTo(pairB1));
     }
 
 
-    /** Test if A1 compares to B1
-     *
-     * */
+    /**
+     * Test if A1 compares to B1
+     */
     @Test
-    public void testB1CompareToA1(){
+    public void testB1CompareToA1() {
         assertEquals(1, pairB1.compareTo(pairA1));
     }
 }

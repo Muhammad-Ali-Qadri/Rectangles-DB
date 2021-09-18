@@ -1,7 +1,5 @@
-package SkipLists;
-
 /**
- * Change the implementation of some methods of java.awt.SkipLists.Rectangle
+ * Change the implementation of some methods of java.awt.Rectangle
  *
  * @author Muhammad Ali Qadri
  * @version 1

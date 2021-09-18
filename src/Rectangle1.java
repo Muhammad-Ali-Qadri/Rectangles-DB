@@ -1,5 +1,3 @@
-package SkipLists;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -22,7 +20,7 @@ import java.util.Scanner;
 /**
  * The class containing the main method, the entry point of the application. It
  * will take a command line file argument which include the commands to be read
- * and creates the appropriate SkipLists.SkipList object and outputs the correct results
+ * and creates the appropriate SkipList object and outputs the correct results
  * to the console as specified in the file.
  *
  * @author Muhammad Ali Qadri

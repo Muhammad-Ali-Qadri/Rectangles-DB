@@ -1,5 +1,3 @@
-package SkipLists;
-
 import java.util.Objects;
 
 /**

@@ -1,17 +1,15 @@
-package SkipLists;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
 /**
  * This class is responsible for interfacing between the command processor and
- * the SkipLists.SkipList. The responsibility of this class is to further interpret
+ * the SkipList. The responsibility of this class is to further interpret
  * variations of commands and do some error checking of those commands. This
  * class further interpreting the command means that the two types of remove
  * will be overloaded methods for if we are removing by name or by coordinates.
  * Many of these methods will simply call the appropriate version of the
- * SkipLists.SkipList method after some preparation.
+ * SkipList method after some preparation.
  *
  * @author Muhammad Ali Qadri
  * @version 1
@@ -22,15 +20,15 @@ public class SkipListDatabase implements Database {
     private static final int WorldBoxWidth = 1024;
     private static final int worldBoxHeight = 1024;
 
-    // this is the SkipLists.SkipList object that we are using
+    // this is the SkipList object that we are using
     // a string for the name of the rectangle and then
-    // a rectangle object, these are stored in a SkipLists.KVPair,
-    // see the SkipLists.KVPair class for more information
+    // a rectangle object, these are stored in a KVPair,
+    // see the KVPair class for more information
     private final SkipList<String, Rectangle> list;
 
     /**
-     * Constructor for SkipLists.Database class, will be responsible
-     * for initializing the SkipLists.SkipList.
+     * Constructor for Database class, will be responsible
+     * for initializing the SkipList.
      */
     public SkipListDatabase() {
         list = new SkipList<>();

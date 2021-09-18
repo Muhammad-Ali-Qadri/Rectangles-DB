@@ -1,10 +1,8 @@
-package SkipLists;
-
 import java.util.Iterator;
 
 /**
  * This abstract class holds the functionality that is central
- * to all the concrete implementations of the SkipLists.Container class
+ * to all the concrete implementations of the Container class
  *
  * @param <K> Key
  * @param <V> Value

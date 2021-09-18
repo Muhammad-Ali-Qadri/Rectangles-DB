@@ -1,7 +1,3 @@
-package SkipListsTest;
-
-import SkipLists.Processor;
-import SkipLists.RectangleCommandProcessor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,7 +5,7 @@ import static org.junit.Assert.*;
 
 /**
  * This test class is responsible for testing each scenario of each method in
- * the SkipLists.RectangleCommandProcessor class
+ * the RectangleCommandProcessor class
  *
  * @author Muhammad Ali Qadri
  * @version 1

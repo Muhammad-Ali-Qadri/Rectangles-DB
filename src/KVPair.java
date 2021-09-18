@@ -1,13 +1,11 @@
-package SkipLists;
-
 import java.util.Objects;
 
 /**
  * This class holds a generic Key-value pair implementation with the compareTo
  * method from the Comparable class implemented as well. The purpose of this
- * class is to hold generic SkipLists.KVPair object which will be stored in the SkipLists.SkipList.
+ * class is to hold generic KVPair object which will be stored in the SkipList.
  * There is also a toString method for easily translating the objects contained
- * in the SkipLists.KVPair into a human readable string.
+ * in the KVPair into a human readable string.
  *
  * @param <K> Key to be used
  * @param <V> Value to be associated with the key
@@ -16,7 +14,7 @@ import java.util.Objects;
  */
 
 //Another Implementation choice is to require K to implement Comparable
-// not SkipLists.KVPair
+// not KVPair
 public class KVPair<K extends Comparable<? super K>, V>
         implements Comparable<KVPair<K, V>> {
 
@@ -29,8 +27,8 @@ public class KVPair<K extends Comparable<? super K>, V>
      * The constructor assigns value to the key and value fields from user
      * specified objects.
      *
-     * @param strKey the key for the SkipLists.KVPair
-     * @param val    the value for the SkipLists.KVPair
+     * @param strKey the key for the KVPair
+     * @param val    the value for the KVPair
      * @throws IllegalArgumentException if @params is null
      */
     public KVPair(K strKey, V val) {
@@ -44,9 +42,9 @@ public class KVPair<K extends Comparable<? super K>, V>
 
 
     /**
-     * Returns the key of this SkipLists.KVPair
+     * Returns the key of this KVPair
      *
-     * @return the key of the SkipLists.KVPair
+     * @return the key of the KVPair
      */
     public K getKey() {
         return key;
@@ -54,9 +52,9 @@ public class KVPair<K extends Comparable<? super K>, V>
 
 
     /**
-     * Returns the value of this SkipLists.KVPair
+     * Returns the value of this KVPair
      *
-     * @return the value that the SkipLists.KVPair holds
+     * @return the value that the KVPair holds
      */
     public V getValue() {
         return value;
@@ -65,10 +63,10 @@ public class KVPair<K extends Comparable<? super K>, V>
 
     /**
      * Implements the compareTo method from the Comparable interface.
-     * This will be used to easily compare two SkipLists.KVPair objects.
+     * This will be used to easily compare two KVPair objects.
      *
-     * @param pair2 the SkipLists.KVPair to compare to
-     * @return negative if the invoking SkipLists.KVPair
+     * @param pair2 the KVPair to compare to
+     * @return negative if the invoking KVPair
      * is before pair2, zero if they are
      * equal in position and positive if
      * the invoking string is after pair2
@@ -79,9 +77,9 @@ public class KVPair<K extends Comparable<? super K>, V>
     }
 
     /**
-     * Returns the SkipLists.KVPair in a human-readable format.
+     * Returns the KVPair in a human-readable format.
      *
-     * @return A human-readable string representing the SkipLists.KVPair object
+     * @return A human-readable string representing the KVPair object
      */
     @Override
     public String toString() {
