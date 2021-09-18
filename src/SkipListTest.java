@@ -477,8 +477,9 @@ public class SkipListTest {
     public void testEmptyIterable() {
         StringBuilder sb = new StringBuilder();
 
-        for (KVPair<String, String> pair : listEmpty)
+        for (KVPair<String, String> pair : listEmpty) {
             sb.append(pair.toString());
+        }
 
         assertEquals("", sb.toString());
     }
@@ -491,8 +492,9 @@ public class SkipListTest {
     public void testD1F3G4Iterable() {
         StringBuilder sb = new StringBuilder();
 
-        for (KVPair<String, String> pair : listD1F3G4)
+        for (KVPair<String, String> pair : listD1F3G4) {
             sb.append("(").append(pair.toString()).append(")");
+        }
 
         assertEquals("(D, 1)(F, 3)(G, 4)", sb.toString());
     }

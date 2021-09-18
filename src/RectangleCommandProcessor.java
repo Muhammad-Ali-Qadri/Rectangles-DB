@@ -42,8 +42,9 @@ public class RectangleCommandProcessor implements Processor {
         //finds all the words in the input statement
         Matcher matcher = Pattern.compile("[\\S]+").matcher(input);
 
-        while (matcher.find())
+        while (matcher.find()) {
             allInputs.add(matcher.group());
+        }
 
         StringBuilder result = new StringBuilder();
 
@@ -148,8 +149,8 @@ public class RectangleCommandProcessor implements Processor {
         }
         else {
             StringBuilder sb =
-                    new StringBuilder("Rectangles intersecting region "
-                                      + getRectangleRepresentation(operationInput) + ":");
+                    new StringBuilder("Rectangles intersecting region ");
+            sb.append(getRectangleRepresentation(operationInput)).append(":");
 
             if (rectangles.size() > 0) {
                 sb.append("\n");
@@ -180,7 +181,7 @@ public class RectangleCommandProcessor implements Processor {
                 rectangles = data.intersections();
 
         //print out intersections
-        if (rectangles != null && rectangles.size() > 0) {
+        if (rectangles != null) {
             String prefix = "\n";
             for (Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>
                     pair : rectangles) {
@@ -205,7 +206,7 @@ public class RectangleCommandProcessor implements Processor {
         List<KVPair<String, Rectangle>> rectangles = data.search(key);
 
         //Print out rectangles found from search
-        if (rectangles != null && rectangles.size() > 0) {
+        if (rectangles != null) {
             output.append("Rectangles found:\n");
             String prefix = "";
             for (KVPair<String, Rectangle> pair : rectangles) {

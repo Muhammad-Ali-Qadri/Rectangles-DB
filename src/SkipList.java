@@ -74,7 +74,7 @@ public class SkipList<K extends Comparable<? super K>, V>
      */
     @Override
     public KVPair<K, V> first() {
-        return (head == null || head.forward[0] == null) ?
+        return (head.forward[0] == null) ?
                 null : head.forward[0].element();
     }
 

@@ -585,12 +585,23 @@ public class SkipListDatabaseTest {
 
     /**
      * Tests if region search is performed for a valid outside region (-1025,
-     * -1025, 20, 10) on an empty database
+     * -1025, 20, 10000) on an empty database
      */
     @Test
-    public void testEmptyInValidOutsideRegionSearch() {
+    public void testEmptyInValidOutsideWidthRegionSearch() {
         assertEquals(0,
-                rectEmpty.regionSearch(-1025, -1025, 20, 10).size());
+                rectEmpty.regionSearch(-1025, -1025, 20, 10000).size());
+    }
+
+
+    /**
+     * Tests if region search is performed for a valid outside region (-1025,
+     * -1025, 2000, 10) on an empty database
+     */
+    @Test
+    public void testEmptyInValidOutsideHeightRegionSearch() {
+        assertEquals(0,
+                rectEmpty.regionSearch(-1025, -1025, 2000, 10).size());
     }
 
 
@@ -1164,18 +1175,7 @@ public class SkipListDatabaseTest {
                         new Rectangle(10, 10, 990, 990)))));
     }
 
-
-//    /**Tests if intersection is performed for database with 2 rectangle (10,
-//     * 10, 990, 990) and (10, 10, 15, 15)*/
-//    @Test
-//    public void testRectMidWithUpperLeftInsideMidIntersection(){
-//        rect_mid.insert(new KVPair<>("ULIN",
-//                new Rectangle(10, 10, 15, 15)));
-//
-//        assertEquals(0, rect_mid.intersections().size());
-//    }
-
-
+    
     /**
      * Tests if intersection is performed for database with 2 rectangle (10,
      * 10, 990, 990) and (1000, 100, 15, 15)
@@ -1200,62 +1200,6 @@ public class SkipListDatabaseTest {
 
         assertEquals(0, rectMid.intersections().size());
     }
-
-
-//    /**Tests if intersection is performed for database with 2 rectangle (10,
-//     * 10, 990, 990) and (990, 990, 10, 10)*/
-//    @Test
-//    public void testRectMidWithBottomRightInsideMidIntersection(){
-//
-//        rect_mid.insert(new KVPair<>("BRIN",
-//                new Rectangle(990, 990, 10, 10)));
-//
-//        assertEquals(0, rect_mid.intersections().size());
-//    }
-
-
-//    /**Tests if intersection is performed for database with 2 rectangle (10,
-//     * 10, 990, 990) and (20, 20, 10, 10)*/
-//    @Test
-//    public void testRectMidWithInsideMidIntersection(){
-//
-//        rect_mid.insert(new KVPair<>("IN",
-//                new Rectangle(20, 20, 10, 10)));
-//
-//        assertEquals(0, rect_mid.intersections().size());
-//    }
-
-
-//    /**Tests if intersection is performed for database with 6 rectangle (10,
-//     * 10, 990, 990), (990, 100, 15, 15), (0, 0, 10, 10), (1000, 1000, 24, 24)
-//     *, (990, 10, 10, 10) and (0, 990, 15, 15)*/
-//    @Test
-//    public void testRectMidWithMultipleIntersection(){
-//
-//        rect_3.insert(new KVPair<>("MRI",
-//                new Rectangle(990, 100, 15, 15)));
-//
-//        rect_3.insert(new KVPair<>("BLI",
-//                new Rectangle(0, 990, 15, 15)));
-//
-//        rect_3.insert(new KVPair<>("URIN",
-//                new Rectangle(990, 10, 10, 10)));
-//
-//        List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>> pairs =
-//                rect_3.intersections();
-//
-//        assertEquals(4, pairs.size());
-//
-//        assertTrue(pairs.contains(new Pair<>(new KVPair<>("BLI",
-//                new Rectangle(0, 990, 15, 15)),
-//                new KVPair<>("B",
-//                        new Rectangle(10, 10, 990, 990)))));
-//
-//        assertTrue(pairs.contains(new Pair<>(new KVPair<>("MRI",
-//                new Rectangle(990, 100, 15, 15)),
-//                new KVPair<>("B",
-//                        new Rectangle(10, 10, 990, 990)))));
-//    }
 
 
     /**
@@ -1295,5 +1239,14 @@ public class SkipListDatabaseTest {
         assertTrue(dump.contains("Value (B, 10, 10, 990, 990)"));
         assertTrue(dump.contains("Value (C, 1000, 1000, 24, 24)"));
         assertTrue(dump.contains("SkipList size is: 3"));
+    }
+
+
+    /**
+     * Test if rectangle null is validated
+     */
+    @Test
+    public void testValidateRectangle() {
+        assertFalse(rectEmpty.validateRectangle(null));
     }
 }

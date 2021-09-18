@@ -32,7 +32,8 @@ public class KVPairTest {
     /**
      * <p>Test if KVPair constructor accepts null value for key.</p>
      *
-     * <p><b>Pass</b> - If <code>IllegalArgumentException</code> exception is thrown</p>
+     * <p><b>Pass</b> - If <code>IllegalArgumentException</code>
+     * exception is thrown</p>
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCheckNullKeyConstructor() {
@@ -44,7 +45,8 @@ public class KVPairTest {
     /**
      * <p>Test if KVPair constructor accepts null value for value.</p>
      *
-     * <p><b>Pass</b> - If <code>IllegalArgumentException</code> exception is thrown</p>
+     * <p><b>Pass</b> - If <code>IllegalArgumentException</code>
+     * exception is thrown</p>
      */
     @Test(expected = IllegalArgumentException.class)
     public void testCheckNullValueConstructor() {
@@ -87,7 +89,8 @@ public class KVPairTest {
 
 
     /**
-     * <p>Test if pair_A_1 is equal to itself. Provokes the <code>.equals()</code> method</p>
+     * <p>Test if pair_A_1 is equal to itself. Provokes the
+     * <code>.equals()</code> method</p>
      *
      * <p><b>Pass</b> - true is returned</p>
      */
@@ -118,9 +121,20 @@ public class KVPairTest {
      */
     @Test
     public void testA1EqualsDifferentObject() {
-        assertNotEquals(pairA1, "A1");
+        assertFalse(pairA1.equals("A1"));
     }
 
+
+    /**
+     * <p>Test if pair_A_1 is equal to a null
+     * entirely. Provokes the <code>.equals()</code> method</p>
+     *
+     * <p><b>Pass</b> - false is returned</p>
+     */
+    @Test
+    public void testA1EqualsNullObject() {
+        assertFalse(pairA1.equals(null));
+    }
 
     /**
      * <p>Test if pair_A_1 is equal to pair_B_1.
@@ -171,4 +185,15 @@ public class KVPairTest {
     public void testB1CompareToA1() {
         assertEquals(1, pairB1.compareTo(pairA1));
     }
+
+
+    /**
+     * Test if A1 hashcode is equal to a different A1
+     */
+    @Test
+    public void testA1HashCode() {
+        assertEquals(pairA1.hashCode(), new KVPair<>("A", "1").hashCode());
+    }
+
+
 }

@@ -10,6 +10,9 @@ import static org.junit.Assert.*;
 /**
  * This class is used to test the Rectangle1 class and its ability to read
  * commands from file and write them to output
+ *
+ * @author Muhammad Ali Qadri
+ * @version 1.0
  */
 public class Rectangle1Test {
 
@@ -24,7 +27,7 @@ public class Rectangle1Test {
      * Check that Rectangle1 class can be created
      */
     @BeforeClass
-    public static void Rectangle1Creation() {
+    public static void rectangle1Creation() {
         assertNotNull(new Rectangle1());
     }
 
@@ -95,7 +98,8 @@ public class Rectangle1Test {
 
 
     /**
-     * Test if valid file "testInsertFile" gives empty console output
+     * Test if valid file "testInsertFile" gives console output for inserting
+     * a rectangle
      *
      * @throws IOException if the file for test cannot be written on
      */
@@ -106,6 +110,33 @@ public class Rectangle1Test {
 
         FileWriter fr = new FileWriter(fileName);
         fr.write("insert A1 1 1 1 1");
+        fr.close();
+
+        String[] str = new String[1];
+        str[0] = fileName;
+        Rectangle1.main(str);
+
+        deleteFile(fileName);
+
+        assertTrue(outContent.toString().
+                contains("Rectangle inserted: (A1, 1, 1, 1, 1)"));
+    }
+
+
+
+    /**
+     * Test if valid file "testInsertFile" gives console output for inserting
+     * a rectangle
+     *
+     * @throws IOException if the file for test cannot be written on
+     */
+    @Test
+    public void testInsertFileWithEmptyNextLine() throws IOException {
+        String fileName = "testInsertFileWithEmptyNextLine.txt";
+        createFile(fileName);
+
+        FileWriter fr = new FileWriter(fileName);
+        fr.write("insert A1 1 1 1 1\r\n  ");
         fr.close();
 
         String[] str = new String[1];

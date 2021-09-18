@@ -105,4 +105,13 @@ public class KVPair<K extends Comparable<? super K>, V>
         return Objects.equals(key, kvPair.key) && Objects.equals(value,
                 kvPair.value);
     }
+
+
+    /**
+     * Generate hashcode for this object
+     * */
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, value);
+    }
 }

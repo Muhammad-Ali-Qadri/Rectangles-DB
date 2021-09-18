@@ -37,8 +37,19 @@ public class PairTest {
      * Test if class constructor throws exception when null inputs are passed
      */
     @Test(expected = IllegalArgumentException.class)
-    public void testCreateNull() {
-        new Pair<String, String>(null, null);
+    public void testCreateNullFirst() {
+        new Pair<String, String>(null, "null");
+        fail();
+    }
+
+
+
+    /**
+     * Test if class constructor throws exception when null inputs are passed
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateNullSecond() {
+        new Pair<String, String>("null", null);
         fail();
     }
 
@@ -51,12 +62,22 @@ public class PairTest {
         assertEquals("A | 1", pairA1.toString());
     }
 
+
+    /**
+     * Test if Equals method works with null
+     */
+    @Test
+    public void testA1EqualsNull() {
+        assertFalse(pairA1.equals(null));
+    }
+
+
     /**
      * Test if Equals method works with a different object
      */
     @Test
     public void testA1EqualsDifferentObject() {
-        assertNotEquals(pairA1, pairA1.toString());
+        assertFalse(pairA1.equals(pairA1.toString()));
     }
 
 
@@ -130,5 +151,32 @@ public class PairTest {
     @Test
     public void testA1EqualsB2() {
         assertNotEquals(pairA1, pairB2);
+    }
+
+
+    /**
+     * Test if getter returns correct first value for A1
+     */
+    @Test
+    public void testA1GetA() {
+        assertEquals("A", pairA1.getVal1());
+    }
+
+
+    /**
+     * Test if getter returns correct second value for A1
+     */
+    @Test
+    public void testA1Get1() {
+        assertEquals("1", pairA1.getVal2());
+    }
+
+
+    /**
+     * Test if hashcode of similar objects are equal
+     */
+    @Test
+    public void testA1HashCode() {
+        assertEquals(pairA1.hashCode(), new Pair<>("A", "1").hashCode());
     }
 }

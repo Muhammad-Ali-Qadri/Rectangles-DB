@@ -12,11 +12,11 @@ public class Pair<A, B> {
     /**
      * Represents the first object in the pair with type < A >
      */
-    public final A val1;
+    private final A val1;
     /**
      * Represents the second object in the pair with type < B >
      */
-    public final B val2;
+    private final B val2;
 
     /**
      * Constructs this class and initializes values with respective input values
@@ -33,6 +33,25 @@ public class Pair<A, B> {
         val2 = v2;
     }
 
+
+    /**
+     * Gets the value in Val1 field
+     *
+     * @return object of Type A stored in Val1 field
+     */
+    public A getVal1() {
+        return val1;
+    }
+
+
+    /**
+     * Gets the value in Val2 field
+     *
+     * @return object of Type B stored in Val2 field
+     */
+    public B getVal2() {
+        return val2;
+    }
 
     /**
      * Returns the string representation of this object
@@ -64,5 +83,14 @@ public class Pair<A, B> {
                 pair.val2))
                 || (Objects.equals(val2, pair.val1) && Objects.equals(val1,
                 pair.val2)));
+    }
+
+
+    /**
+     * Generate hashcode for this object
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(val1, val2);
     }
 }

@@ -17,8 +17,8 @@ import java.util.regex.Pattern;
 public class SkipListDatabase implements Database {
 
     //Size of the world box
-    private static final int WorldBoxWidth = 1024;
-    private static final int worldBoxHeight = 1024;
+    private static final int WORLD_BOX_WIDTH = 1024;
+    private static final int WORLD_BOX_HEIGHT = 1024;
 
     // this is the SkipList object that we are using
     // a string for the name of the rectangle and then
@@ -39,7 +39,7 @@ public class SkipListDatabase implements Database {
      */
     @Override
     public Boolean insert(KVPair<String, Rectangle> pair) {
-        if (pair == null || pair.getValue() == null) {
+        if (pair == null) {
             throw new IllegalArgumentException();
         }
 
@@ -115,8 +115,8 @@ public class SkipListDatabase implements Database {
             y = 0;
         }
 
-        w = Math.min(w, WorldBoxWidth);
-        h = Math.min(h, worldBoxHeight);
+        w = Math.min(w, WORLD_BOX_WIDTH);
+        h = Math.min(h, WORLD_BOX_HEIGHT);
 
         Rectangle region = new Rectangle(x, y, w, h);
         List<KVPair<String, Rectangle>> rectangles = new ArrayList<>();
@@ -137,8 +137,8 @@ public class SkipListDatabase implements Database {
      * {@inheritDoc}
      */
     @Override
-    public List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>>
-    intersections() {
+    public List<Pair<KVPair<String, Rectangle>,
+            KVPair<String, Rectangle>>> intersections() {
 
         List<Pair<KVPair<String, Rectangle>, KVPair<String, Rectangle>>>
                 intersectingPairs = new ArrayList<>();
@@ -200,13 +200,11 @@ public class SkipListDatabase implements Database {
      * {@inheritDoc}
      */
     @Override
-    public Boolean validateRectangle(Rectangle rectangle) { //TODO: Write unit
-        // tests for this
-
+    public Boolean validateRectangle(Rectangle rectangle) {
         return (rectangle != null)
                && !(rectangle.x < 0 || rectangle.y < 0
                     || rectangle.width <= 0 || rectangle.height <= 0
-                    || rectangle.x + rectangle.width > WorldBoxWidth
-                    || rectangle.y + rectangle.height > worldBoxHeight);
+                    || rectangle.x + rectangle.width > WORLD_BOX_WIDTH
+                    || rectangle.y + rectangle.height > WORLD_BOX_HEIGHT);
     }
 }
