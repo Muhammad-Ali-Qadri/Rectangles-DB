@@ -44,8 +44,7 @@ public class SkipList<K extends Comparable<? super K>, V>
 
         //Find the node pointing to the key
         for (int i = level; i > -1; i--) {
-            while (current.forward[i] != null &&
-                   current.forward[i].element().getKey().compareTo(key) < 0) {
+            while (checkIfSmallerFound(current, key, i)) {
                 current = current.forward[i];
             }
         }
@@ -110,9 +109,7 @@ public class SkipList<K extends Comparable<? super K>, V>
 
         //Find insertion point for the new item
         for (int i = level; i > -1; i--) {
-            while (current.forward[i] != null &&
-                   current.forward[i].element().getKey()
-                           .compareTo(it.getKey()) < 0) {
+            while (checkIfSmallerFound(current, it.getKey(), i)) {
                 current = current.forward[i];
             }
             update[i] = current;
@@ -133,7 +130,6 @@ public class SkipList<K extends Comparable<? super K>, V>
     /**
      * {@inheritDoc}
      */
-
     @Override
     @SuppressWarnings("unchecked")
     public KVPair<K, V> remove(K key) {
@@ -147,36 +143,28 @@ public class SkipList<K extends Comparable<? super K>, V>
         //The nodes who will point to the deleted node`s forward nodes
         SkipNode[] update = (SkipNode[]) Array.newInstance(SkipNode.class,
                 level + 1);
-        SkipNode current = head;
+        SkipNode curr = head;
 
-        //Find deletion point
+        //Find deletion point`
         for (int i = level; i > -1; i--) {
-            while (current.forward[i] != null &&
-                   current.forward[i].element().getKey().compareTo(key) < 0) {
-                current = current.forward[i];
+            while (checkIfSmallerFound(curr, key, i)) {
+                curr = curr.forward[i];
             }
-            update[i] = current;
+
+            update[i] = curr;
         }
 
-        current = current.forward[0];
+        curr = curr.forward[0];
 
         //key does not exist
-        if (current == null || !current.element().getKey().equals(key)) {
+        if (curr == null || !curr.element().getKey().equals(key)) {
             return null;
         }
 
-        //Disconnect all previous nodes connected to value
-        for (int i = 0; i < update.length; i++) {
-            update[i].forward[i] = null;
-        }
-
-        //Connect all previous nodes connected to nodes value was pointing to
-        for (int i = 0; i < current.forward.length; i++) {
-            update[i].forward[i] = current.forward[i];
-        }
+        removeNodePointers(update, curr);
 
         size--;
-        return current.element();
+        return curr.element();
     }
 
 
@@ -184,6 +172,7 @@ public class SkipList<K extends Comparable<? super K>, V>
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("unchecked")
     public KVPair<K, V> removeByValue(V val) {
         //Checks for null input and empty list
         if (val == null) {
@@ -193,18 +182,44 @@ public class SkipList<K extends Comparable<? super K>, V>
             return null;
         }
 
-        K key = null;
+        SkipNode current = head;
 
-        //Find key for the given value
-        for (KVPair<K, V> pair : this) {
-            if (pair.getValue().equals(val)) {
-                key = pair.getKey();
-                break;
-            }
+        //Find the node with value
+        while (current != null && current.forward[0] != null
+               && !current.forward[0].element().getValue().equals(val)) {
+            current = current.forward[0];
         }
 
-        //Remove and return the item
-        return (key == null) ? null : remove(key);
+        //return null if not found
+        if (current == null || current.forward[0] == null) {
+            return null;
+        }
+
+        SkipNode toBeRemoved = current.forward[0];
+
+        current = head;
+        SkipNode[] update = (SkipNode[]) Array.newInstance(SkipNode.class,
+                level + 1);
+
+        //Find all nodes pointing to the to be deleted node
+        while (current != null && current != toBeRemoved) {
+            for (int i = current.level; i > -1; i--) {
+                if (current.forward[i] != null &&
+                    current.forward[i] == toBeRemoved) {
+                    update[i] = current;
+                }
+            }
+
+            current = current.forward[0];
+        }
+
+        //Remove node from list
+        removeNodePointers(update, toBeRemoved);
+
+        size--;
+
+        //return the item
+        return toBeRemoved.element();
     }
 
 
@@ -244,6 +259,45 @@ public class SkipList<K extends Comparable<? super K>, V>
 
         sb.append("\nSkipList size is: ").append(size());
         return sb.toString();
+    }
+
+
+    /**
+     * Disconnect the removed node from the list. All previous nodes pointing
+     * to it will be nullified, and they will be connected to what the
+     * removed node was pointing to.
+     *
+     * @param update     the update array
+     * @param removeNode the node to remove
+     */
+    private void removeNodePointers(SkipNode[] update, SkipNode removeNode) {
+        //Disconnect all previous nodes connected to value
+        for (int i = 0; i < update.length; i++) {
+            if (update[i] != null) {
+                update[i].forward[i] = null;
+            }
+        }
+
+        //Connect all previous nodes connected to nodes value was pointing to
+        for (int i = 0; i < removeNode.forward.length; i++) {
+            if (update[i] != null) {
+                update[i].forward[i] = removeNode.forward[i];
+            }
+        }
+    }
+
+
+    /**
+     * Checks if the current node is lesser than the key at the given level
+     *
+     * @param curr  the current node under consideration
+     * @param key   the key to compare current node with
+     * @param index the current level in comparison
+     * @return returns true if current node is less than key
+     */
+    private boolean checkIfSmallerFound(SkipNode curr, K key, int index) {
+        return (curr.forward[index] != null
+                && curr.forward[index].element().getKey().compareTo(key) < 0);
     }
 
 

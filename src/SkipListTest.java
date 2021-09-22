@@ -334,6 +334,55 @@ public class SkipListTest {
 
 
     /**
+     * Tests if list removes first element from a filled list by value with
+     * duplicate keys (A, 1) and (A, 2)
+     */
+    @Test
+    public void testA1B2C3DuplicateARemoveByValue1() {
+        listA1B2C3.insert(new KVPair<>("A", "2"));
+        assertEquals(new KVPair<>("A", "1"),
+                listA1B2C3.removeByValue("1"));
+        assertEquals("[(A, 2), (B, 2), (C, 3)]:3", listA1B2C3.toString());
+        assertEquals(new KVPair<>("A", "2"), listA1B2C3.first());
+    }
+
+
+    /**
+     * Tests if list removes first element from a filled list by value with
+     * duplicate keys (A, 1) and (A, 2)
+     */
+    @Test
+    public void testA1B2C3DuplicateARemoveByValue2() {
+        listA1B2C3.insert(new KVPair<>("A", "2"));
+        assertEquals(new KVPair<>("A", "2"),
+                listA1B2C3.removeByValue("2"));
+        assertEquals("[(A, 1), (B, 2), (C, 3)]:3", listA1B2C3.toString());
+        assertEquals(new KVPair<>("A", "1"), listA1B2C3.first());
+    }
+
+
+    /**
+     * Tests if list removes all elements from a filled list by value with
+     * duplicate keys (A, 1), (A, 2) and (A, 3)
+     */
+    @Test
+    public void testEmptyFilledDuplicateARemoveByValue() {
+        listEmpty.insert(new KVPair<>("A", "3"));
+        listEmpty.insert(new KVPair<>("A", "2"));
+        listEmpty.insert(new KVPair<>("A", "1"));
+        assertEquals(new KVPair<>("A", "1"),
+                listEmpty.removeByValue("1"));
+        assertEquals("[(A, 2), (A, 3)]:2", listEmpty.toString());
+        assertEquals(new KVPair<>("A", "2"),
+                listEmpty.removeByValue("2"));
+        assertEquals("[(A, 3)]:1", listEmpty.toString());
+        assertEquals(new KVPair<>("A", "3"),
+                listEmpty.removeByValue("3"));
+        assertEquals("[]:0", listEmpty.toString());
+    }
+
+
+    /**
      * Tests if remove by value function throws exception when null is
      * passed to it
      */
