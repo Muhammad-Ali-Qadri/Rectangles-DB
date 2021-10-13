@@ -37,7 +37,9 @@ public class EmptyTreeNode implements TreeNode {
      */
     @Override
     public TreeNode insert(Point pair, Point start, int width) {
-        return null;
+        TreeNode leaf = new LeafTreeNode();
+
+        return leaf.insert(pair, start, width);
     }
 
 

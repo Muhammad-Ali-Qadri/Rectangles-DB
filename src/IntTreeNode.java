@@ -1,6 +1,5 @@
 import java.util.List;
 
-
 /**
  * This implementation of a tree node represents an internal node in the
  * PRQuadTree implementation.
@@ -18,7 +17,7 @@ public class IntTreeNode implements TreeNode {
     private TreeNode swChildRegion; //Represents the south-west leaf node
     private TreeNode seChildRegion; //Represents the south-east leaf node
 
-    public IntTreeNode(){
+    public IntTreeNode() {
         nwChildRegion = EmptyTreeNode.getInstance();
         neChildRegion = EmptyTreeNode.getInstance();
         swChildRegion = EmptyTreeNode.getInstance();
@@ -30,7 +29,36 @@ public class IntTreeNode implements TreeNode {
      */
     @Override
     public TreeNode insert(Point pair, Point start, int width) {
-        return null;
+        //Add to north region
+        if (pair.getY() >= start.getY()
+            && pair.getY() <= start.getY() + width / 2) {
+            //add to north-west region
+            if (pair.getX() >= start.getX()
+                && pair.getX() <= start.getX() + width / 2) {
+                nwChildRegion = nwChildRegion.insert(pair, start, width / 2);
+            }
+            else { //add to north-east region
+                neChildRegion = neChildRegion.insert(pair,
+                        new Point(((width / 2) + 1), start.getY()),
+                        (width / 2) - 1);
+            }
+        }//Add to south region
+        else {
+            //add to south-west region
+            if (pair.getX() >= start.getX()
+                && pair.getX() <= start.getX() + width / 2) {
+                swChildRegion = swChildRegion.insert(pair,
+                        new Point(start.getX(), (width / 2) + 1),
+                        (width / 2) - 1);
+            }
+            else { //add to south-east region
+                seChildRegion = seChildRegion.insert(pair,
+                        new Point((width / 2) + 1, (width / 2) + 1),
+                        (width / 2) - 1);
+            }
+        }
+
+        return this;
     }
 
 
