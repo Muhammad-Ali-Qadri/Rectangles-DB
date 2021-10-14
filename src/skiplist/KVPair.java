@@ -1,3 +1,5 @@
+package skiplist;
+
 import java.util.Objects;
 
 /**
@@ -5,7 +7,7 @@ import java.util.Objects;
  * method from the Comparable class implemented as well. The purpose of this
  * class is to hold generic KVPair object which will be stored in the SkipList.
  * There is also a toString method for easily translating the objects contained
- * in the KVPair into a human readable string.
+ * in the KVPair into a human-readable string.
  *
  * @param <K> Key to be used
  * @param <V> Value to be associated with the key

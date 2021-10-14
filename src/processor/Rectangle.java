@@ -1,3 +1,5 @@
+package processor;
+
 /**
  * Change the implementation of some methods of java.awt.Rectangle
  *

@@ -1,5 +1,9 @@
+package test.processor;
+
 import org.junit.Before;
 import org.junit.Test;
+import processor.Processor;
+import processor.RectangleCommandProcessor;
 
 import static org.junit.Assert.*;
 

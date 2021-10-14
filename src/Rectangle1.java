@@ -1,3 +1,6 @@
+import processor.Processor;
+import processor.RectangleCommandProcessor;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;

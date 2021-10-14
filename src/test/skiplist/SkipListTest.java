@@ -1,5 +1,9 @@
+package test.skiplist;
+
 import org.junit.Before;
 import org.junit.Test;
+import skiplist.KVPair;
+import skiplist.SkipList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +12,7 @@ import static org.junit.Assert.*;
 
 /**
  * This test class is responsible for testing each scenario of each method in
- * the SkipList class
+ * the skiplist.SkipList class
  *
  * @author Muhammad Ali Qadri
  * @version 1

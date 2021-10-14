@@ -1,5 +1,8 @@
+package test.processor;
+
 import org.junit.Before;
 import org.junit.Test;
+import processor.Rectangle;
 
 import static org.junit.Assert.*;
 

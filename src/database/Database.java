@@ -1,3 +1,9 @@
+package database;
+
+import processor.Rectangle;
+import skiplist.KVPair;
+import skiplist.Pair;
+
 import java.util.List;
 
 /**
@@ -71,7 +77,7 @@ public interface Database {
      * @return The rectangle pairs that intersect
      */
     List<Pair<KVPair<String, Rectangle>,
-            KVPair<String, Rectangle>>> intersections();
+                KVPair<String, Rectangle>>> intersections();
 
 
     /**

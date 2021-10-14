@@ -1,5 +1,10 @@
+package test.quadtree;
+
+import quadtree.PRQTree;
+import quadtree.Point;
 import org.junit.Before;
 import org.junit.Test;
+import skiplist.KVPair;
 
 import static org.junit.Assert.*;
 

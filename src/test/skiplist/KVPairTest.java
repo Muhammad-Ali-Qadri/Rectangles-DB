@@ -1,11 +1,14 @@
+package test.skiplist;
+
 import org.junit.Before;
 import org.junit.Test;
+import skiplist.KVPair;
 
 import static org.junit.Assert.*;
 
 /**
  * This test class is responsible for testing each scenario of each method in
- * the KVPair class
+ * the skiplist.KVPair class
  *
  * @author Muhammad Ali Qadri
  * @version 1
@@ -30,7 +33,7 @@ public class KVPairTest {
 
 
     /**
-     * <p>Test if KVPair constructor accepts null value for key.</p>
+     * <p>Test if skiplist.KVPair constructor accepts null value for key.</p>
      *
      * <p><b>Pass</b> - If <code>IllegalArgumentException</code>
      * exception is thrown</p>
@@ -43,7 +46,7 @@ public class KVPairTest {
 
 
     /**
-     * <p>Test if KVPair constructor accepts null value for value.</p>
+     * <p>Test if skiplist.KVPair constructor accepts null value for value.</p>
      *
      * <p><b>Pass</b> - If <code>IllegalArgumentException</code>
      * exception is thrown</p>
@@ -101,7 +104,7 @@ public class KVPairTest {
 
 
     /**
-     * <p>Test if pair_A_1 is equal to a different KVPair object
+     * <p>Test if pair_A_1 is equal to a different skiplist.KVPair object
      * with same key and value. Provokes the <code>.equals()</code>
      * method</p>
      *

@@ -1,5 +1,8 @@
+package test.skiplist;
+
 import org.junit.Before;
 import org.junit.Test;
+import skiplist.Pair;
 
 import static org.junit.Assert.*;
 

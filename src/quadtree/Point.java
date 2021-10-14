@@ -1,3 +1,5 @@
+package quadtree;
+
 import java.util.Objects;
 //TODO: Write test cases
 /**
