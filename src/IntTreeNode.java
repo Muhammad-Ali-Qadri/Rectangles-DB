@@ -4,18 +4,17 @@ import java.util.List;
  * This implementation of a tree node represents an internal node in the
  * PRQuadTree implementation.
  *
+ * @param <K> the type of key stored in node
  * @author Muhammad Ali Qadri
  * @version 1
  */
-public class IntTreeNode implements TreeNode {
+public class IntTreeNode<K extends Comparable<? super K>>
+        implements TreeNode<K> {
 
-    //Represents the flyweight static node for empty nodes
-    private static final TreeNode EMPTY_NODE = EmptyTreeNode.getInstance();
-
-    private TreeNode nwChildRegion; //Represents the north-west leaf node
-    private TreeNode neChildRegion; //Represents the north-east leaf node
-    private TreeNode swChildRegion; //Represents the south-west leaf node
-    private TreeNode seChildRegion; //Represents the south-east leaf node
+    private TreeNode<K> nwChildRegion; //Represents the north-west leaf node
+    private TreeNode<K> neChildRegion; //Represents the north-east leaf node
+    private TreeNode<K> swChildRegion; //Represents the south-west leaf node
+    private TreeNode<K> seChildRegion; //Represents the south-east leaf node
 
     public IntTreeNode() {
         nwChildRegion = EmptyTreeNode.getInstance();
@@ -26,15 +25,20 @@ public class IntTreeNode implements TreeNode {
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public TreeNode insert(Point pair, Point start, int width) {
+    public TreeNode<K> insert(KVPair<K, Point> pair, Point start, int width) {
+
+        Point point = pair.getValue();
+
         //Add to north region
-        if (pair.getY() >= start.getY()
-            && pair.getY() <= start.getY() + width / 2) {
+        if (point.getY() >= start.getY()
+            && point.getY() <= start.getY() + width / 2) {
             //add to north-west region
-            if (pair.getX() >= start.getX()
-                && pair.getX() <= start.getX() + width / 2) {
+            if (point.getX() >= start.getX()
+                && point.getX() <= start.getX() + width / 2) {
                 nwChildRegion = nwChildRegion.insert(pair, start, width / 2);
             }
             else { //add to north-east region
@@ -45,8 +49,8 @@ public class IntTreeNode implements TreeNode {
         }//Add to south region
         else {
             //add to south-west region
-            if (pair.getX() >= start.getX()
-                && pair.getX() <= start.getX() + width / 2) {
+            if (point.getX() >= start.getX()
+                && point.getX() <= start.getX() + width / 2) {
                 swChildRegion = swChildRegion.insert(pair,
                         new Point(start.getX(), (width / 2) + 1),
                         (width / 2) - 1);
@@ -64,14 +68,18 @@ public class IntTreeNode implements TreeNode {
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public TreeNode removeByValue(Point point, Point start, int width) {
+    public TreeNode<K> removeByValue(Point point, Point start, int width) {
         return null;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
     public List<Point> duplicates() {
@@ -81,10 +89,11 @@ public class IntTreeNode implements TreeNode {
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public List<Point> regionSearch(Point SearchRegionStart,
-                                    int SearchRegionWidth,
+    public List<Point> regionSearch(Rectangle searchRect,
                                     Point CurrentRegionStart,
                                     int currentRegionWidth) {
         return null;

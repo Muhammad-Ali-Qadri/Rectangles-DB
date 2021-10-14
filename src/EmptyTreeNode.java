@@ -6,12 +6,14 @@ import java.util.List;
  * that is
  * used as a flyweight object in the PRQuadTree implementation.
  *
+ * @param <K> the type of key stored in node
  * @author Muhammad Ali Qadri
  * @version 1
  */
-public class EmptyTreeNode implements TreeNode {
+public class EmptyTreeNode<K extends Comparable<? super K>>
+        implements TreeNode<K> {
 
-    private static EmptyTreeNode flyWeight;
+    private static EmptyTreeNode<?> flyWeight;
 
     private EmptyTreeNode() {
 
@@ -21,23 +23,29 @@ public class EmptyTreeNode implements TreeNode {
      * Returns the only Empty Node object in the entire application. It is
      * created whenever this method is first time called.
      *
+     * @param <K1> the type of key in the empty node
      * @return The empty node singleton object.
      */
-    public static EmptyTreeNode getInstance() {
+    @SuppressWarnings("unchecked")
+    public static <K1 extends Comparable<? super K1>>
+    EmptyTreeNode<K1> getInstance() {
         if (flyWeight == null) {
-            flyWeight = new EmptyTreeNode();
+            flyWeight = new EmptyTreeNode<K1>();
         }
 
-        return flyWeight;
+        return (EmptyTreeNode<K1>) flyWeight;
     }
 
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public TreeNode insert(Point pair, Point start, int width) {
-        TreeNode leaf = new LeafTreeNode();
+    public TreeNode<K> insert(KVPair<K, Point> pair, Point start,
+                              int width) {
+        TreeNode<K> leaf = new LeafTreeNode<>();
 
         return leaf.insert(pair, start, width);
     }
@@ -45,14 +53,18 @@ public class EmptyTreeNode implements TreeNode {
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public TreeNode removeByValue(Point point, Point start, int width) {
+    public TreeNode<K> removeByValue(Point point, Point start, int width) {
         return null;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
     public List<Point> duplicates() {
@@ -62,10 +74,11 @@ public class EmptyTreeNode implements TreeNode {
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public List<Point> regionSearch(Point SearchRegionStart,
-                                    int SearchRegionWidth,
+    public List<Point> regionSearch(Rectangle searchRect,
                                     Point CurrentRegionStart,
                                     int currentRegionWidth) {
         return null;

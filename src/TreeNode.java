@@ -3,10 +3,11 @@ import java.util.List;
 /**
  * This interface represents the behavior of a tree node in a PRQuad Tree
  *
+ * @param <K> the key for each point stored in this tree node
  * @author Muhammad Ali Qadri
  * @version 1
  */
-public interface TreeNode {
+public interface TreeNode<K extends Comparable<? super K>> {
     /**
      * Inserts the point into this node recursively. Following are the rules
      * associated with the insertion into a node:
@@ -19,13 +20,13 @@ public interface TreeNode {
      * <p>3- If this is an internal node, the point is inserted
      * recursively into its subtree.</p>
      *
-     * @param pair  the point that is to be inserted into this node
+     * @param pair  the pair that is to be inserted into this node
      * @param start the starting top left point of this nodes region
      * @param width the width of this region
      * @return The node in which insertion has been made. Can be either a new
      * internal or leaf node, or this.
      */
-    TreeNode insert(Point pair, Point start, int width);
+    TreeNode<K> insert(KVPair<K, Point> pair, Point start, int width);
 
 
     /**
@@ -38,7 +39,7 @@ public interface TreeNode {
      * @return The node from which the value has been deleted. Null if value
      * was not found
      */
-    TreeNode removeByValue(Point point, Point start, int width);
+    TreeNode<K> removeByValue(Point point, Point start, int width);
 
 
     /**
@@ -51,14 +52,12 @@ public interface TreeNode {
 
     /** Searches points within rectangle region specified in function
      * parameters
-     * @param SearchRegionStart the top left point of the rectangle to search
-     * @param SearchRegionWidth the width of the rectangle to search
+     * @param searchRect the rectangle within which points are to be searched
      * @param CurrentRegionStart the top left point of the current region
      * @param currentRegionWidth the width of the current region
-     *
-     * */
-    List<Point> regionSearch(Point SearchRegionStart, int SearchRegionWidth,
-                             Point CurrentRegionStart, int currentRegionWidth);
+     * @return  */
+    List<Point> regionSearch(Rectangle searchRect, Point CurrentRegionStart,
+                         int currentRegionWidth);
 
 
     /**

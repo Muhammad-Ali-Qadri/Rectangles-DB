@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class PRQTree {
 
-    private TreeNode root;
+    private TreeNode<String> root;
 
     private final int regionLength;
 
@@ -34,7 +34,7 @@ public class PRQTree {
      *
      * @param pair the point that is to be inserted into this tree
      */
-    public void insert(Point pair) {
+    public void insert(KVPair<String, Point> pair) {
         root = root.insert(pair,
                 new Point(0, 0), regionLength);
     }
@@ -66,11 +66,10 @@ public class PRQTree {
      * Searches points within rectangle region specified in function
      * parameters
      *
-     * @param start the top left point of the rectangle
-     * @param width the width of the rectangle
+     * @param rect rectangle to search
      */
-    List<Point> regionSearch(Point start, int width) {
-        return root.regionSearch(start, width,
+    List<Point> regionSearch(Rectangle rect) {
+        return root.regionSearch(rect,
                 new Point(0, 0), regionLength);
     }
 
