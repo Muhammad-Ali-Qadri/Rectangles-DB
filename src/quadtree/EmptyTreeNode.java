@@ -3,6 +3,7 @@ package quadtree;
 import processor.Rectangle;
 import skiplist.KVPair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,8 +59,9 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public TreeNode<K> removeByValue(Point point, Point start, int width) {
-        return null;
+    public TreeNode<K> removeByValue(Point point, Point start, int width,
+                                     StringBuilder key) {
+        return this;
     }
 
     /**
@@ -79,6 +81,14 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
                                     Point CurrentRegionStart,
                                     int currentRegionWidth) {
         return null;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<KVPair<K, Point>> getPoints(){
+        return new ArrayList<>();
     }
 
     /**

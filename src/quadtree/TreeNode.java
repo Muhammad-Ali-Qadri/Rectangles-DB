@@ -41,10 +41,12 @@ public interface TreeNode<K extends Comparable<? super K>> {
      * @param point the point to remove from this node
      * @param start the starting top left point of this nodes region
      * @param width the width of this region
+     * @param key the key of the point removed
      * @return The node from which the value has been deleted. Null if value
      * was not found
      */
-    TreeNode<K> removeByValue(Point point, Point start, int width);
+    TreeNode<K> removeByValue(Point point, Point start, int width,
+                              StringBuilder key);
 
 
     /**
@@ -68,6 +70,12 @@ public interface TreeNode<K extends Comparable<? super K>> {
     List<Point> regionSearch(Rectangle searchRect, Point CurrentRegionStart,
                              int currentRegionWidth);
 
+
+    /** Get the points stored in only this node
+     *
+     * @return points stored in this node
+     * */
+    List<KVPair<K, Point>> getPoints();
 
     /**
      * Returns the nodes tree representation in the form of a string

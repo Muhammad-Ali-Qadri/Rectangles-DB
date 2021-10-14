@@ -51,8 +51,11 @@ public class PRQTree {
      * @param point the point to remove from this tree
      *              was not found
      */
-    public void removeByValue(Point point) {
-        root = root.removeByValue(point, rootStart, rootLength);
+    public KVPair<String, Point> removeByValue(Point point) {
+        StringBuilder sb = new StringBuilder();
+        root = root.removeByValue(point, rootStart, rootLength, sb);
+
+        return new KVPair<>(sb.toString(), point);
     }
 
 

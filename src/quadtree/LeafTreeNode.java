@@ -63,8 +63,29 @@ public class LeafTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public TreeNode<K> removeByValue(Point point, Point start, int width) {
-        return null;
+    public TreeNode<K> removeByValue(Point point, Point start, int width,
+                                     StringBuilder key) {
+
+        KVPair<K, Point> foundPair = null;
+        for (KVPair<K, Point> listPoint : pairs) {
+            if (point.equals(listPoint.getValue())) {
+                foundPair = listPoint;
+                break;
+            }
+        }
+
+        if (foundPair == null) {
+            return this;
+        }
+
+        key.append(foundPair.getKey());
+        pairs.remove(foundPair);
+
+        if (pairs.size() == 0) {
+            return EmptyTreeNode.getInstance();
+        }
+
+        return this;
     }
 
     /**
@@ -84,6 +105,14 @@ public class LeafTreeNode<K extends Comparable<? super K>>
                                     Point CurrentRegionStart,
                                     int currentRegionWidth) {
         return null;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public List<KVPair<K, Point>> getPoints() {
+        return pairs;
     }
 
     /**
