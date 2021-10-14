@@ -1,0 +1,70 @@
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+/**
+ * This is a test class responsible for testing the operations of an
+ * EmptyTreeNode
+ *
+ * @author Muhammad Ali Qadri
+ * @version 1
+ */
+public class EmptyTreeNodeTest {
+
+    private static final int WORLD_WIDTH = 1024;
+    public static final Point ROOT_START = new Point(0, 0);
+
+    //The empty node to test on
+    private TreeNode<String> emptyTreeNode;
+
+
+    /**
+     * Setup test
+     */
+    @Before
+    public void setUp() {
+        emptyTreeNode = EmptyTreeNode.getInstance();
+    }
+
+
+    /**
+     * Test the dump on empty node
+     */
+    @Test
+    public void testEmptyLevel0Dump() {
+        StringBuilder sb = new StringBuilder();
+        assertEquals(1,
+                emptyTreeNode.dump(0, ROOT_START, WORLD_WIDTH, sb));
+
+        assertEquals("Node at 0, 0, 1024: Empty\n", sb.toString());
+    }
+
+
+    /**
+     * Test the dump on empty node at level 2
+     */
+    @Test
+    public void testEmptyLevel2Dump() {
+        StringBuilder sb = new StringBuilder();
+        assertEquals(1,
+                emptyTreeNode.dump(2, ROOT_START, WORLD_WIDTH, sb));
+
+        assertEquals("    Node at 0, 0, 1024: Empty\n", sb.toString());
+    }
+
+
+    /**
+     * Test inserting point into an empty node
+     */
+    @Test
+    public void testInsert() {
+        TreeNode<String> node = emptyTreeNode.insert(new KVPair<>("P1",
+                new Point(0, 1)), ROOT_START, 1024);
+
+        StringBuilder sb = new StringBuilder();
+        assertEquals(1, node.dump(0, ROOT_START, WORLD_WIDTH, sb));
+
+        assertEquals("Node at 0, 0, 1024:\n(P1, 0, 1)\n", sb.toString());
+    }
+}

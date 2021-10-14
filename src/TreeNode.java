@@ -50,20 +50,30 @@ public interface TreeNode<K extends Comparable<? super K>> {
     List<Point> duplicates();
 
 
-    /** Searches points within rectangle region specified in function
+    /**
+     * Searches points within rectangle region specified in function
      * parameters
-     * @param searchRect the rectangle within which points are to be searched
+     *
+     * @param searchRect         the rectangle within which points are to be
+     *                           searched
      * @param CurrentRegionStart the top left point of the current region
      * @param currentRegionWidth the width of the current region
-     * @return  */
+     * @return list of points for that are contained within specified region
+     */
     List<Point> regionSearch(Rectangle searchRect, Point CurrentRegionStart,
-                         int currentRegionWidth);
+                             int currentRegionWidth);
 
 
     /**
      * Returns the nodes tree representation in the form of a string
      *
-     * @return string representing the internal structure of this node
+     * @param level             the level of the current node
+     * @param start             the starting point of current node`s region
+     * @param width             the width of current node`s region
+     * @param treeStringBuilder the StringBuilder that holds the internal
+     *                          structure of this node
+     * @return The total nodes in current node
      */
-    String dump();
+    int dump(int level, Point start, int width,
+             StringBuilder treeStringBuilder);
 }

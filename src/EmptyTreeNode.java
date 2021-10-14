@@ -39,8 +39,6 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
-     *
-     * @return
      */
     @Override
     public TreeNode<K> insert(KVPair<K, Point> pair, Point start,
@@ -53,8 +51,6 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
-     *
-     * @return
      */
     @Override
     public TreeNode<K> removeByValue(Point point, Point start, int width) {
@@ -63,8 +59,6 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
-     *
-     * @return
      */
     @Override
     public List<Point> duplicates() {
@@ -74,8 +68,6 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
-     *
-     * @return
      */
     @Override
     public List<Point> regionSearch(Rectangle searchRect,
@@ -88,7 +80,10 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public String dump() {
-        return null;
+    public int dump(int level, Point start, int width,
+                    StringBuilder treeStringBuilder) {
+        treeStringBuilder.append("  ".repeat(level)).append("Node at ").append(start).append(", ")
+                .append(width).append(": Empty").append("\n");
+        return 1;
     }
 }

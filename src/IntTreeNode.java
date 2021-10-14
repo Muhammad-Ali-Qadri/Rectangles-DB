@@ -25,40 +25,35 @@ public class IntTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
-     *
-     * @return
      */
     @Override
     public TreeNode<K> insert(KVPair<K, Point> pair, Point start, int width) {
-
         Point point = pair.getValue();
+        int regionWidth = (width / 2);
 
         //Add to north region
         if (point.getY() >= start.getY()
-            && point.getY() <= start.getY() + width / 2) {
+            && point.getY() < start.getY() + (width / 2)) {
             //add to north-west region
             if (point.getX() >= start.getX()
-                && point.getX() <= start.getX() + width / 2) {
-                nwChildRegion = nwChildRegion.insert(pair, start, width / 2);
+                && point.getX() < start.getX() + (width / 2)) {
+                nwChildRegion = nwChildRegion.insert(pair, start, regionWidth);
             }
             else { //add to north-east region
                 neChildRegion = neChildRegion.insert(pair,
-                        new Point(((width / 2) + 1), start.getY()),
-                        (width / 2) - 1);
+                        new Point(width / 2, start.getY()), regionWidth);
             }
         }//Add to south region
         else {
             //add to south-west region
             if (point.getX() >= start.getX()
-                && point.getX() <= start.getX() + width / 2) {
+                && point.getX() < start.getX() + (width / 2)) {
                 swChildRegion = swChildRegion.insert(pair,
-                        new Point(start.getX(), (width / 2) + 1),
-                        (width / 2) - 1);
+                        new Point(start.getX(), width / 2), regionWidth);
             }
             else { //add to south-east region
                 seChildRegion = seChildRegion.insert(pair,
-                        new Point((width / 2) + 1, (width / 2) + 1),
-                        (width / 2) - 1);
+                        new Point(width / 2, width / 2), regionWidth);
             }
         }
 
@@ -68,8 +63,6 @@ public class IntTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
-     *
-     * @return
      */
     @Override
     public TreeNode<K> removeByValue(Point point, Point start, int width) {
@@ -78,8 +71,6 @@ public class IntTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
-     *
-     * @return
      */
     @Override
     public List<Point> duplicates() {
@@ -89,8 +80,6 @@ public class IntTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
-     *
-     * @return
      */
     @Override
     public List<Point> regionSearch(Rectangle searchRect,
@@ -103,7 +92,20 @@ public class IntTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public String dump() {
-        return null;
+    public int dump(int level, Point start, int width,
+                    StringBuilder treeStringBuilder) {
+
+        treeStringBuilder.append("  ".repeat(level)).append("Node at ").
+                append(start).append(", ").append(width).append(": Internal\n");
+
+        return 1 + nwChildRegion.dump(level + 1, start, width / 2,
+                treeStringBuilder)
+               + neChildRegion.dump(level + 1, new Point((width / 2),
+                        start.getY()), width / 2, treeStringBuilder)
+               + swChildRegion.dump(level + 1, new Point(start.getX(),
+                        width / 2), width / 2, treeStringBuilder)
+               + seChildRegion.dump(level + 1,
+                new Point(width / 2, width / 2),
+                width / 2, treeStringBuilder);
     }
 }

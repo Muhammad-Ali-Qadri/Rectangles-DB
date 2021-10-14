@@ -9,8 +9,8 @@ import java.util.List;
 public class PRQTree {
 
     private TreeNode<String> root;
-
-    private final int regionLength;
+    private final Point rootStart;
+    private final int rootLength;
 
 
     /**
@@ -24,8 +24,9 @@ public class PRQTree {
             throw new IllegalArgumentException();
         }
 
+        rootStart = new Point(0, 0);
         root = EmptyTreeNode.getInstance();
-        regionLength = width;
+        rootLength = width;
     }
 
 
@@ -35,8 +36,7 @@ public class PRQTree {
      * @param pair the point that is to be inserted into this tree
      */
     public void insert(KVPair<String, Point> pair) {
-        root = root.insert(pair,
-                new Point(0, 0), regionLength);
+        root = root.insert(pair, rootStart, rootLength);
     }
 
 
@@ -47,8 +47,7 @@ public class PRQTree {
      *              was not found
      */
     public void removeByValue(Point point) {
-        root = root.removeByValue(point,
-                new Point(0, 0), regionLength);
+        root = root.removeByValue(point, rootStart, rootLength);
     }
 
 
@@ -69,8 +68,7 @@ public class PRQTree {
      * @param rect rectangle to search
      */
     List<Point> regionSearch(Rectangle rect) {
-        return root.regionSearch(rect,
-                new Point(0, 0), regionLength);
+        return root.regionSearch(rect, rootStart, rootLength);
     }
 
 
@@ -80,7 +78,13 @@ public class PRQTree {
      * @return string representing the internal structure of this tree
      */
     public String dump() {
-        return root.dump();
+        StringBuilder sb = new StringBuilder();
+        int nodes = root.dump(0, rootStart, rootLength, sb);
+
+        sb.append("QuadTree Size: ").append(nodes)
+                .append(" QuadTree Nodes Printed.\n");
+
+        return sb.toString();
     }
 
 }
