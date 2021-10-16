@@ -73,4 +73,22 @@ public class EmptyTreeNodeTest {
 
         assertEquals("Node at 0, 0, 1024:\n(P1, 0, 1)\n", sb.toString());
     }
+
+    /**
+     * Test remove by value on an empty node
+     */
+    @Test
+    public void testRemoveByValue() {
+        assertSame(emptyTreeNode, emptyTreeNode.removeByValue(new Point(0, 1)
+                , new Point(0, 0), WORLD_WIDTH, new StringBuilder()));
+    }
+
+
+    /**
+     * Test if empty tree node produces any points
+     */
+    @Test
+    public void testGetPoints() {
+        assertEquals(0, emptyTreeNode.getPoints().size());
+    }
 }

@@ -1,5 +1,6 @@
 package test.quadtree;
 
+import quadtree.EmptyTreeNode;
 import quadtree.LeafTreeNode;
 import quadtree.Point;
 import quadtree.TreeNode;
@@ -141,6 +142,55 @@ public class LeafTreeNodeTest {
         testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 5, dumpString);
     }
 
+
+    /**
+     * Test if leaf tree node produces any points
+     */
+    @Test
+    public void testGetPoints() {
+        leafNode = leafNode.insert(new KVPair<>("P1",
+                new Point(0, 0)), ROOT_START, WORLD_WIDTH);
+
+        leafNode = leafNode.insert(new KVPair<>("P1",
+                new Point(512, 0)), ROOT_START, WORLD_WIDTH);
+        assertEquals(2, leafNode.getPoints().size());
+    }
+
+    /**
+     * Test remove by value on an empty leaf node to make it empty node
+     */
+    @Test
+    public void testMultiRemoveByValue() {
+        Point p1 = new Point(0, 0);
+        leafNode = leafNode.insert(new KVPair<>("P1",
+                p1), ROOT_START, WORLD_WIDTH);
+
+        Point p2 = new Point(512, 0);
+        leafNode = leafNode.insert(new KVPair<>("P2",
+                p2), ROOT_START, WORLD_WIDTH);
+
+        StringBuilder sb = new StringBuilder();
+        leafNode = leafNode.removeByValue(p1, ROOT_START, WORLD_WIDTH, sb);
+
+        assertEquals("P1", sb.toString());
+
+        String dumpString = "Node at 0, 0, 1024:\n" +
+                            "(P2, 512, 0)\n";
+
+        testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
+
+        sb = new StringBuilder();
+
+        leafNode = leafNode.removeByValue(p2, ROOT_START, WORLD_WIDTH, sb);
+
+        assertEquals("P2", sb.toString());
+
+        dumpString = "Node at 0, 0, 1024: Empty\n";
+
+        testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
+    }
+
+    //Assert the dump values
     private void testAssertDump(TreeNode<String> node, int level, Point start
             , int width, int assertNodes, String assertDump) {
 

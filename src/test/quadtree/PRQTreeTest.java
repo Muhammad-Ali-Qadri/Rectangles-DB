@@ -5,6 +5,7 @@ import quadtree.Point;
 import org.junit.Before;
 import org.junit.Test;
 import skiplist.KVPair;
+import skiplist.Pair;
 
 import static org.junit.Assert.*;
 
@@ -64,7 +65,8 @@ public class PRQTreeTest {
 
 
     /**
-     * Test the dump and insert on node with points (P1, 0, 0), (P1, 0, 1)
+     * Test the dump and insert on node with points (P1, 0, 0), (P1, 512, 0),
+     * (P1, 0, 512), (P1, 512, 512)
      */
     @Test
     public void testMultiInsertDump() {
@@ -84,6 +86,60 @@ public class PRQTreeTest {
                             "  Node at 512, 512, 512:\n" +
                             "  (P1, 512, 512)\n" +
                             "QuadTree Size: 5 QuadTree Nodes Printed.\n";
+
+        assertEquals(dumpString, prqTree.dump());
+    }
+
+    /**
+     * Test the remove and dump on point (P1, 0, 0)
+     */
+    @Test
+    public void testLeafRemoveByValueDump() {
+
+        prqTree.insert(new KVPair<>("P1", new Point(0, 0)));
+
+        KVPair<String, Point> pair = prqTree.removeByValue(new Point(0, 0));
+
+        assertEquals(new KVPair<>("P1", new Point(0, 0)), pair);
+
+        testEmptyDump();
+    }
+
+    /**
+     * Test the remove and dump on point (P1, 0, 0), (P1, 0, 1), (P1, 512, 0),
+     * (P1, 0, 512), (P1, 512, 512). Remove (P1, 512, 512), (P1, 0, 1)
+     */
+    @Test
+    public void testMultiRemoveByValueDump() {
+
+        testMultiInsertDump();
+
+        prqTree.insert(new KVPair<>("P1", new Point(0, 1)));
+
+        KVPair<String, Point> pair = prqTree.removeByValue(new Point(0, 1));
+        assertEquals(new KVPair<>("P1", new Point(0, 1)), pair);
+
+        String dumpString = "Node at 0, 0, 1024: Internal\n" +
+                            "  Node at 0, 0, 512:\n" +
+                            "  (P1, 0, 0)\n" +
+                            "  Node at 512, 0, 512:\n" +
+                            "  (P1, 512, 0)\n" +
+                            "  Node at 0, 512, 512:\n" +
+                            "  (P1, 0, 512)\n" +
+                            "  Node at 512, 512, 512:\n" +
+                            "  (P1, 512, 512)\n" +
+                            "QuadTree Size: 5 QuadTree Nodes Printed.\n";
+
+        assertEquals(dumpString, prqTree.dump());
+
+        pair = prqTree.removeByValue(new Point(0, 0));
+        assertEquals(new KVPair<>("P1", new Point(0, 0)), pair);
+
+        dumpString = "Node at 0, 0, 1024:\n" +
+                            "(P1, 512, 0)\n" +
+                            "(P1, 0, 512)\n" +
+                            "(P1, 512, 512)\n" +
+                            "QuadTree Size: 1 QuadTree Nodes Printed.\n";
 
         assertEquals(dumpString, prqTree.dump());
     }
