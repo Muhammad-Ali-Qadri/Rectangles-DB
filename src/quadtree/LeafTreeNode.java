@@ -102,12 +102,15 @@ public class LeafTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
+     * @return
      */
     @Override
-    public List<Point> regionSearch(Rectangle searchRect,
-                                    Point CurrentRegionStart,
-                                    int currentRegionWidth) {
-        return null;
+    public List<KVPair<K, Point>> regionSearch(Rectangle searchRect,
+                                               Point CurrentRegionStart,
+                                               int currentRegionWidth) {
+        return pairs.stream().filter(x ->
+                searchRect.contains(x.getValue().getX(), x.getValue().getY()))
+                .collect(Collectors.toList());
     }
 
 

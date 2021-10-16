@@ -75,7 +75,7 @@ public class PRQTree {
      *
      * @param rect rectangle to search
      */
-    List<Point> regionSearch(Rectangle rect) {
+    public List<KVPair<String, Point>> regionSearch(Rectangle rect) {
         return root.regionSearch(rect, rootStart, rootLength);
     }
 

@@ -45,18 +45,21 @@ public class IntTreeNode<K extends Comparable<? super K>>
             }
             else { //add to north-east region
                 neChildRegion = neChildRegion.insert(pair,
-                        new Point(width / 2, start.getY()), regionWidth);
+                        new Point(start.getX() + (width / 2), start.getY()),
+                        regionWidth);
             }
         }//Add to south region
         else {
             //add to south-west region
             if (pointInWestRegion(start, width, point)) {
                 swChildRegion = swChildRegion.insert(pair,
-                        new Point(start.getX(), width / 2), regionWidth);
+                        new Point(start.getX(), start.getY()
+                                                + (width / 2)), regionWidth);
             }
             else { //add to south-east region
                 seChildRegion = seChildRegion.insert(pair,
-                        new Point(width / 2, width / 2), regionWidth);
+                        new Point(start.getX() + (width / 2),
+                                start.getY() + (width / 2)), regionWidth);
             }
         }
 
@@ -80,18 +83,22 @@ public class IntTreeNode<K extends Comparable<? super K>>
             }
             else { //remove from north-east region
                 neChildRegion = neChildRegion.removeByValue(point,
-                        new Point(width / 2, start.getY()), regionWidth, key);
+                        new Point(start.getX() + (width / 2),
+                                start.getY()), regionWidth, key);
             }
         }//remove from south region
         else {
             //remove from south-west region
             if (pointInWestRegion(start, width, point)) {
                 swChildRegion = swChildRegion.removeByValue(point,
-                        new Point(start.getX(), width / 2), regionWidth, key);
+                        new Point(start.getX(),
+                                start.getY() + (width / 2)), regionWidth, key);
             }
             else { //add to south-east region
                 seChildRegion = seChildRegion.removeByValue(point,
-                        new Point(width / 2, width / 2), regionWidth, key);
+                        new Point(start.getX() + (width / 2),
+                                start.getY() + (width / 2)),
+                        regionWidth, key);
             }
         }
 
@@ -116,19 +123,67 @@ public class IntTreeNode<K extends Comparable<? super K>>
 
     /**
      * {@inheritDoc}
+     *
+     * @return
      */
     @Override
-    public List<Point> regionSearch(Rectangle searchRect,
-                                    Point CurrentRegionStart,
-                                    int currentRegionWidth) {
-        return null;
+    public List<KVPair<K, Point>> regionSearch(Rectangle searchRect,
+                                               Point CurrentRegionStart,
+                                               int currentRegionWidth) {
+
+        List<KVPair<K, Point>> intersections = new ArrayList<>();
+        int subRegionWidth = currentRegionWidth / 2;
+
+        Rectangle nwRect = new Rectangle(CurrentRegionStart.getX(),
+                CurrentRegionStart.getY(), subRegionWidth, subRegionWidth);
+
+        Rectangle neRect = new Rectangle(CurrentRegionStart.getX()
+                                         + subRegionWidth,
+                CurrentRegionStart.getY(), subRegionWidth, subRegionWidth);
+
+        Rectangle swRect = new Rectangle(CurrentRegionStart.getX(),
+                CurrentRegionStart.getY() + subRegionWidth, subRegionWidth,
+                subRegionWidth);
+
+        Rectangle seRect = new Rectangle(CurrentRegionStart.getX()
+                                         + subRegionWidth,
+                CurrentRegionStart.getY() + subRegionWidth, subRegionWidth,
+                subRegionWidth);
+
+        if(containsRegion(searchRect, nwRect)){
+            intersections.addAll(nwChildRegion.regionSearch(searchRect,
+                    new Point(nwRect.x, nwRect.y), subRegionWidth));
+        }
+
+        if(containsRegion(searchRect, neRect)){
+            intersections.addAll(neChildRegion.regionSearch(searchRect,
+                    new Point(neRect.x, neRect.y), subRegionWidth));
+        }
+
+        if(containsRegion(searchRect, swRect)){
+            intersections.addAll(swChildRegion.regionSearch(searchRect,
+                    new Point(swRect.x, swRect.y), subRegionWidth));
+        }
+
+        if(containsRegion(searchRect, seRect)){
+            intersections.addAll(seChildRegion.regionSearch(searchRect,
+                    new Point(seRect.x, seRect.y), subRegionWidth));
+        }
+
+        return intersections;
     }
+
 
     /**
      * {@inheritDoc}
      */
-    public List<KVPair<K, Point>> getKeyValuePairs(){
-        return new ArrayList<>();
+    public List<KVPair<K, Point>> getKeyValuePairs() {
+        List<KVPair<K, Point>> points = new ArrayList<>();
+        points.addAll(nwChildRegion.getKeyValuePairs());
+        points.addAll(neChildRegion.getKeyValuePairs());
+        points.addAll(swChildRegion.getKeyValuePairs());
+        points.addAll(seChildRegion.getKeyValuePairs());
+        return points;
     }
 
     /**
@@ -143,12 +198,14 @@ public class IntTreeNode<K extends Comparable<? super K>>
 
         return 1 + nwChildRegion.dump(level + 1, start, width / 2,
                 treeStringBuilder)
-               + neChildRegion.dump(level + 1, new Point((width / 2),
+               + neChildRegion.dump(level + 1,
+                new Point(start.getX() + (width / 2),
                         start.getY()), width / 2, treeStringBuilder)
                + swChildRegion.dump(level + 1, new Point(start.getX(),
-                        width / 2), width / 2, treeStringBuilder)
+                start.getY() + (width / 2)), width / 2, treeStringBuilder)
                + seChildRegion.dump(level + 1,
-                new Point(width / 2, width / 2),
+                new Point(start.getX() + (width / 2), start.getY()
+                                                      + (width / 2)),
                 width / 2, treeStringBuilder);
     }
 
@@ -172,7 +229,7 @@ public class IntTreeNode<K extends Comparable<? super K>>
         internalPoints.addAll(seChildRegion.getKeyValuePairs());
 
         //If children are empty, then reduce to an empty node
-        if(internalPoints.size() == 0){
+        if (internalPoints.size() == 0) {
             return EmptyTreeNode.getInstance();
         }
 
@@ -181,7 +238,7 @@ public class IntTreeNode<K extends Comparable<? super K>>
                         collect(Collectors.toList());
 
         //if unique points count <= 3, reduce this node to a leaf
-        if(distinct.size() <= 3){
+        if (distinct.size() <= 3) {
             TreeNode<K> leaf = new LeafTreeNode<>();
             for (KVPair<K, Point> listPoint : internalPoints) {
                 leaf = leaf.insert(listPoint, start, width);
@@ -191,5 +248,11 @@ public class IntTreeNode<K extends Comparable<? super K>>
         }
 
         return this;
+    }
+
+    //Checks if two rectangles intersect or contain each other
+    private boolean containsRegion(Rectangle searchRect, Rectangle nwRect) {
+        return (nwRect.intersects(searchRect) || searchRect.intersects(nwRect)
+                || searchRect.contains(nwRect) || nwRect.contains(searchRect));
     }
 }

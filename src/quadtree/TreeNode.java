@@ -65,10 +65,11 @@ public interface TreeNode<K extends Comparable<? super K>> {
      *                           searched
      * @param CurrentRegionStart the top left point of the current region
      * @param currentRegionWidth the width of the current region
-     * @return list of points for that are contained within specified region
+     * @return list of pairs for that are contained within specified region
      */
-    List<Point> regionSearch(Rectangle searchRect, Point CurrentRegionStart,
-                             int currentRegionWidth);
+    List<KVPair<K, Point>> regionSearch(Rectangle searchRect,
+                                        Point CurrentRegionStart,
+                                        int currentRegionWidth);
 
 
     /** Get the points stored in only this node

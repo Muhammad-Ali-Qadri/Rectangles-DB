@@ -1,5 +1,6 @@
 package test.quadtree;
 
+import processor.Rectangle;
 import quadtree.LeafTreeNode;
 import quadtree.Point;
 import quadtree.TreeNode;
@@ -226,6 +227,72 @@ public class LeafTreeNodeTest {
         assertTrue(duplicates.contains(new Point(0, 0)));
         assertTrue(duplicates.contains(new Point(0, 1)));
         assertTrue(duplicates.contains(new Point(0, 2)));
+    }
+
+    /**
+     * Test region search on empty node
+     */
+    @Test
+    public void testEmptyRegionSearch() {
+        assertEquals(0,
+                leafNode.regionSearch(
+                        new Rectangle(0 ,0 ,1024, 1024),
+                        ROOT_START, WORLD_WIDTH).size());
+    }
+
+    /**
+     * Test outside region search on node
+     */
+    @Test
+    public void testOutsideRegionSearch() {
+        testMultiInsertDump();
+        assertEquals(0,
+                leafNode.regionSearch(
+                        new Rectangle(10 ,10 ,1024, 1024),
+                        ROOT_START, WORLD_WIDTH).size());
+    }
+
+    /**
+     * Test region search on node
+     */
+    @Test
+    public void testInsideAllRegionSearch() {
+        testMultiInsertDump();
+        List<KVPair<String, Point>> intersections = leafNode.regionSearch(
+                new Rectangle(-1, -1, 10, 10),
+                ROOT_START, WORLD_WIDTH);
+
+        assertEquals(3,
+                intersections.size());
+
+        assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 0))));
+        assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 1))));
+        assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 2))));
+    }
+
+
+    /**
+     * Test region search on node
+     */
+    @Test
+    public void testInsideSomeRegionSearch() {
+        leafNode = leafNode.insert(new KVPair<>("P1",
+                new Point(0, 0)), ROOT_START, WORLD_WIDTH);
+
+        leafNode = leafNode.insert(new KVPair<>("P1",
+                new Point(0, 50)), ROOT_START, WORLD_WIDTH);
+
+        leafNode = leafNode.insert(new KVPair<>("P1",
+                new Point(0, 51)), ROOT_START, WORLD_WIDTH);
+
+        List<KVPair<String, Point>> intersections = leafNode.regionSearch(
+                new Rectangle(-1, -1, 10, 10),
+                ROOT_START, WORLD_WIDTH);
+
+        assertEquals(1,
+                intersections.size());
+
+        assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 0))));
     }
 
     //Assert the dump values

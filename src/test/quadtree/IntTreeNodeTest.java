@@ -1,5 +1,6 @@
 package test.quadtree;
 
+import processor.Rectangle;
 import quadtree.IntTreeNode;
 import quadtree.LeafTreeNode;
 import quadtree.Point;
@@ -198,6 +199,59 @@ public class IntTreeNodeTest {
     }
 
 
+
+    /**
+     * Test the dump and insert on node with point in South-east region on
+     * edge case points edge case points (512, 512), (1023, 1023)
+     */
+    @Test
+    public void testMaxLevel2InsertDump() {
+        testMaxInsertDump();
+
+        internalNode = internalNode.insert(new KVPair<>("P1",
+                new Point(256, 0)), ROOT_START, WORLD_WIDTH);
+
+        internalNode = internalNode.insert(new KVPair<>("P1",
+                new Point(0, 256)), ROOT_START, WORLD_WIDTH);
+
+        internalNode = internalNode.insert(new KVPair<>("P4",
+                new Point(768, 512)), ROOT_START, WORLD_WIDTH);
+
+        internalNode = internalNode.insert(new KVPair<>("P4",
+                new Point(512, 768)), ROOT_START, WORLD_WIDTH);
+
+        internalNode = internalNode.insert(new KVPair<>("P4",
+                new Point(768, 768)), ROOT_START, WORLD_WIDTH);
+
+        String dumpString = "Node at 0, 0, 1024: Internal\n" +
+                            "  Node at 0, 0, 512: Internal\n" +
+                            "    Node at 0, 0, 256:\n" +
+                            "    (P1, 0, 0)\n" +
+                            "    Node at 256, 0, 256:\n" +
+                            "    (P1, 256, 0)\n" +
+                            "    Node at 0, 256, 256:\n" +
+                            "    (P1, 0, 256)\n" +
+                            "    Node at 256, 256, 256:\n" +
+                            "    (P1, 511, 511)\n" +
+                            "  Node at 512, 0, 512:\n" +
+                            "  (P2, 512, 0)\n" +
+                            "  Node at 0, 512, 512:\n" +
+                            "  (P3, 0, 512)\n" +
+                            "  (P3, 511, 1023)\n" +
+                            "  Node at 512, 512, 512: Internal\n" +
+                            "    Node at 512, 512, 256:\n" +
+                            "    (P4, 512, 512)\n" +
+                            "    Node at 768, 512, 256:\n" +
+                            "    (P4, 768, 512)\n" +
+                            "    Node at 512, 768, 256:\n" +
+                            "    (P4, 512, 768)\n" +
+                            "    Node at 768, 768, 256:\n" +
+                            "    (P4, 768, 768)\n";
+
+        testAssertDump(internalNode, 0, ROOT_START, WORLD_WIDTH, 13,
+                dumpString);
+    }
+
     /**
      * Test reduce max internal node to empty NW node
      */
@@ -336,12 +390,65 @@ public class IntTreeNodeTest {
         assertTrue(internalNode instanceof LeafTreeNode);
     }
 
+
+
+    /**
+     * Test reduce 2 level tree to 1 level
+     */
+    @Test
+    public void testReduce2To1LevelRemoveByValue() {
+        testMaxLevel2InsertDump();
+
+        StringBuilder sb = new StringBuilder();
+        internalNode = internalNode.removeByValue(NW_TOP_LEFT_CORNER,
+                ROOT_START, WORLD_WIDTH, sb);
+
+        assertEquals("P1", sb.toString());
+
+        String dumpString = "Node at 0, 0, 1024: Internal\n" +
+                            "  Node at 0, 0, 512:\n" +
+                            "  (P1, 256, 0)\n" +
+                            "  (P1, 0, 256)\n" +
+                            "  (P1, 511, 511)\n" +
+                            "  Node at 512, 0, 512:\n" +
+                            "  (P2, 512, 0)\n" +
+                            "  Node at 0, 512, 512:\n" +
+                            "  (P3, 0, 512)\n" +
+                            "  (P3, 511, 1023)\n" +
+                            "  Node at 512, 512, 512:\n" +
+                            "  (P4, 768, 512)\n" +
+                            "  (P4, 512, 768)\n" +
+                            "  (P4, 768, 768)\n";
+
+        testAssertRemoveDump(SE_TOP_LEFT_CORNER, ROOT_START, WORLD_WIDTH,
+                0, 5, "P4", dumpString);
+    }
+
     /**
      * Test if internal tree node produces any points
      */
     @Test
     public void testGetPoints() {
         assertEquals(0, internalNode.getKeyValuePairs().size());
+    }
+
+    /**
+     * Test if internal tree node produces any points
+     */
+    @Test
+    public void testLevel1GetPoints() {
+        testMaxInsertDump();
+        assertEquals(6, internalNode.getKeyValuePairs().size());
+    }
+
+
+    /**
+     * Test if internal tree node produces any points
+     */
+    @Test
+    public void testLevel2GetPoints() {
+        testMaxLevel2InsertDump();
+        assertEquals(11, internalNode.getKeyValuePairs().size());
     }
 
 
@@ -419,7 +526,7 @@ public class IntTreeNodeTest {
      */
     @Test
     public void testFourDuplicates() {
-        testMaxInsertDump();
+        testMaxLevel2InsertDump();
 
         for(int i = 0; i < 5; i++){
             internalNode = internalNode.insert(new KVPair<>("P" + i,
@@ -441,6 +548,110 @@ public class IntTreeNodeTest {
         assertTrue(duplicates.contains(SW_TOP_LEFT_CORNER));
         assertTrue(duplicates.contains(SE_TOP_LEFT_CORNER));
     }
+
+    /**
+     * Test region search on node
+     */
+    @Test
+    public void testOutsideRegionSearch() {
+        testMaxLevel2InsertDump();
+        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+                new Rectangle(10, 10, 10, 10),
+                ROOT_START, WORLD_WIDTH);
+
+        assertEquals(0,
+                intersections.size());
+    }
+
+
+    /**
+     * Test region search on node
+     */
+    @Test
+    public void testInsideNWSWRegionSearch() {
+        testMaxLevel2InsertDump();
+        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+                new Rectangle(-1, -1, 5, 520),
+                ROOT_START, WORLD_WIDTH);
+
+        assertEquals(3,
+                intersections.size());
+
+        assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 0))));
+        assertTrue(intersections.contains(new KVPair<>("P1",
+                new Point(0, 256))));
+        assertTrue(intersections.contains(new KVPair<>("P3",
+                new Point(0, 512))));
+    }
+
+
+    /**
+     * Test region search on node
+     */
+    @Test
+    public void testInsideMidSectionRegionSearch() {
+        testMaxLevel2InsertDump();
+        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+                new Rectangle(510, -1, 20, 1030),
+                ROOT_START, WORLD_WIDTH);
+
+        assertEquals(5,
+                intersections.size());
+
+        assertTrue(intersections.contains(new KVPair<>("P1",
+                new Point(511, 511))));
+        assertTrue(intersections.contains(new KVPair<>("P3",
+                new Point(511, 1023))));
+        assertTrue(intersections.contains(new KVPair<>("P2",
+                new Point(512, 0))));
+        assertTrue(intersections.contains(new KVPair<>("P4",
+                new Point(512, 512))));
+        assertTrue(intersections.contains(new KVPair<>("P4",
+                new Point(512, 768))));
+    }
+
+
+    /**
+     * Test region search on node
+     */
+    @Test
+    public void testInsideCenterSectionRegionSearch() {
+        testMaxLevel2InsertDump();
+        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+                new Rectangle(250, -1, 300, 1030),
+                ROOT_START, WORLD_WIDTH);
+
+        assertEquals(6,
+                intersections.size());
+
+        assertTrue(intersections.contains(new KVPair<>("P1",
+                new Point(256, 0))));
+        assertTrue(intersections.contains(new KVPair<>("P1",
+                new Point(511, 511))));
+        assertTrue(intersections.contains(new KVPair<>("P3",
+                new Point(511, 1023))));
+        assertTrue(intersections.contains(new KVPair<>("P2",
+                new Point(512, 0))));
+        assertTrue(intersections.contains(new KVPair<>("P4",
+                new Point(512, 512))));
+        assertTrue(intersections.contains(new KVPair<>("P4",
+                new Point(512, 768))));
+    }
+
+    /**
+     * Test region search on all
+     */
+    @Test
+    public void testAllSectionRegionSearch() {
+        testMaxLevel2InsertDump();
+        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+                new Rectangle(-1, -1, 1024, 1030),
+                ROOT_START, WORLD_WIDTH);
+
+        assertEquals(11,
+                intersections.size());
+    }
+
 
     private void testAssertRemoveDump(Point point, Point start, int width,
                                       int level, int nodes, String key,

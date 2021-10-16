@@ -1,5 +1,6 @@
 package test.quadtree;
 
+import processor.Rectangle;
 import quadtree.EmptyTreeNode;
 import quadtree.Point;
 import quadtree.TreeNode;
@@ -98,5 +99,17 @@ public class EmptyTreeNodeTest {
     @Test
     public void testGetPoints() {
         assertEquals(0, emptyTreeNode.getKeyValuePairs().size());
+    }
+
+
+    /**
+     * Test region search on empty node
+     */
+    @Test
+    public void testRegionSearch() {
+        assertEquals(0,
+                emptyTreeNode.regionSearch(
+                        new Rectangle(0 ,0 ,1024, 1024),
+                        ROOT_START, WORLD_WIDTH).size());
     }
 }
