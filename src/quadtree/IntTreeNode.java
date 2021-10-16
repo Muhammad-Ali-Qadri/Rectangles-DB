@@ -4,6 +4,7 @@ import processor.Rectangle;
 import skiplist.KVPair;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * This implementation of a tree node represents an internal node in the
@@ -103,7 +104,13 @@ public class IntTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public List<Point> duplicates() {
-        return null;
+        List<Point> duplicates = new ArrayList<>();
+        duplicates.addAll(nwChildRegion.duplicates());
+        duplicates.addAll(neChildRegion.duplicates());
+        duplicates.addAll(swChildRegion.duplicates());
+        duplicates.addAll(seChildRegion.duplicates());
+
+        return duplicates;
     }
 
 
@@ -120,7 +127,7 @@ public class IntTreeNode<K extends Comparable<? super K>>
     /**
      * {@inheritDoc}
      */
-    public List<KVPair<K, Point>> getPoints(){
+    public List<KVPair<K, Point>> getKeyValuePairs(){
         return new ArrayList<>();
     }
 
@@ -159,24 +166,22 @@ public class IntTreeNode<K extends Comparable<? super K>>
     private TreeNode<K> reduceNode(Point start, int width) {
         //Get all points in direct children
         List<KVPair<K, Point>> internalPoints = new ArrayList<>();
-        internalPoints.addAll(nwChildRegion.getPoints());
-        internalPoints.addAll(neChildRegion.getPoints());
-        internalPoints.addAll(swChildRegion.getPoints());
-        internalPoints.addAll(seChildRegion.getPoints());
+        internalPoints.addAll(nwChildRegion.getKeyValuePairs());
+        internalPoints.addAll(neChildRegion.getKeyValuePairs());
+        internalPoints.addAll(swChildRegion.getKeyValuePairs());
+        internalPoints.addAll(seChildRegion.getKeyValuePairs());
 
         //If children are empty, then reduce to an empty node
         if(internalPoints.size() == 0){
             return EmptyTreeNode.getInstance();
         }
 
-        //Get all points and their counts in a set (retains only unique)
-        Set<Point> pointSet = new HashSet<>();
-        for (KVPair<K, Point> listPoint : internalPoints) {
-            pointSet.add(listPoint.getValue());
-        }
+        List<Point> distinct =
+                internalPoints.stream().map(KVPair::getValue).distinct().
+                        collect(Collectors.toList());
 
         //if unique points count <= 3, reduce this node to a leaf
-        if(pointSet.size() <= 3){
+        if(distinct.size() <= 3){
             TreeNode<K> leaf = new LeafTreeNode<>();
             for (KVPair<K, Point> listPoint : internalPoints) {
                 leaf = leaf.insert(listPoint, start, width);

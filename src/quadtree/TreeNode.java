@@ -75,7 +75,7 @@ public interface TreeNode<K extends Comparable<? super K>> {
      *
      * @return points stored in this node
      * */
-    List<KVPair<K, Point>> getPoints();
+    List<KVPair<K, Point>> getKeyValuePairs();
 
     /**
      * Returns the nodes tree representation in the form of a string

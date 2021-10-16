@@ -5,6 +5,7 @@ import skiplist.KVPair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -93,7 +94,9 @@ public class LeafTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public List<Point> duplicates() {
-        return null;
+       return pairs.stream().filter(x -> pairs.stream().filter(y -> y.getValue()
+               .equals(x.getValue())).count() > 1).map(KVPair::getValue)
+               .distinct().collect(Collectors.toList());
     }
 
 
@@ -111,7 +114,7 @@ public class LeafTreeNode<K extends Comparable<? super K>>
     /**
      * {@inheritDoc}
      */
-    public List<KVPair<K, Point>> getPoints() {
+    public List<KVPair<K, Point>> getKeyValuePairs() {
         return pairs;
     }
 

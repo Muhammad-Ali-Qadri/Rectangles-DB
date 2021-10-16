@@ -85,10 +85,18 @@ public class EmptyTreeNodeTest {
 
 
     /**
+     * Test duplicates on empty node
+     */
+    @Test
+    public void testDuplicates() {
+        assertEquals(0, emptyTreeNode.duplicates().size());
+    }
+
+    /**
      * Test if empty tree node produces any points
      */
     @Test
     public void testGetPoints() {
-        assertEquals(0, emptyTreeNode.getPoints().size());
+        assertEquals(0, emptyTreeNode.getKeyValuePairs().size());
     }
 }

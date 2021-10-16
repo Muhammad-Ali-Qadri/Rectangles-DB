@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import skiplist.KVPair;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -339,7 +341,105 @@ public class IntTreeNodeTest {
      */
     @Test
     public void testGetPoints() {
-        assertEquals(0, internalNode.getPoints().size());
+        assertEquals(0, internalNode.getKeyValuePairs().size());
+    }
+
+
+    /**
+     * Test duplicates on node with no duplicates
+     */
+    @Test
+    public void testNoDuplicates() {
+        testMaxInsertDump();
+        assertEquals(0, internalNode.duplicates().size());
+    }
+
+    /**
+     * Test duplicates on node with 1 duplicate
+     */
+    @Test
+    public void testNWDuplicates() {
+        testMaxInsertDump();
+        internalNode = internalNode.insert(new KVPair<>("P1",
+                NW_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
+
+        List<Point> duplicates = internalNode.duplicates();
+
+        assertEquals(1, duplicates.size());
+        assertTrue(duplicates.contains(NW_TOP_LEFT_CORNER));
+    }
+
+    /**
+     * Test duplicates on node with 1 duplicate
+     */
+    @Test
+    public void testNEDuplicates() {
+        testMaxInsertDump();
+        internalNode = internalNode.insert(new KVPair<>("P1",
+                NE_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
+
+        List<Point> duplicates = internalNode.duplicates();
+
+        assertEquals(1, duplicates.size());
+        assertTrue(duplicates.contains(NE_TOP_LEFT_CORNER));
+    }
+
+    /**
+     * Test duplicates on node with 1 duplicate
+     */
+    @Test
+    public void testSWDuplicates() {
+        testMaxInsertDump();
+        internalNode = internalNode.insert(new KVPair<>("P1",
+                SW_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
+
+        List<Point> duplicates = internalNode.duplicates();
+
+        assertEquals(1, duplicates.size());
+        assertTrue(duplicates.contains(SW_TOP_LEFT_CORNER));
+    }
+
+    /**
+     * Test duplicates on node with 1 duplicate
+     */
+    @Test
+    public void testSEDuplicates() {
+        testMaxInsertDump();
+        internalNode = internalNode.insert(new KVPair<>("P1",
+                SE_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
+
+        List<Point> duplicates = internalNode.duplicates();
+
+        assertEquals(1, duplicates.size());
+        assertTrue(duplicates.contains(SE_TOP_LEFT_CORNER));
+    }
+
+    /**
+     * Test duplicates on node with 4 duplicate
+     */
+    @Test
+    public void testFourDuplicates() {
+        testMaxInsertDump();
+
+        for(int i = 0; i < 5; i++){
+            internalNode = internalNode.insert(new KVPair<>("P" + i,
+                    NW_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
+            internalNode = internalNode.insert(new KVPair<>("P" + i,
+                    NE_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
+            internalNode = internalNode.insert(new KVPair<>("P" + i,
+                    SW_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
+            internalNode = internalNode.insert(new KVPair<>("P" + i,
+                    SE_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
+        }
+
+
+        List<Point> duplicates = internalNode.duplicates();
+
+        assertEquals(4, duplicates.size());
+        assertTrue(duplicates.contains(NW_TOP_LEFT_CORNER));
+        assertTrue(duplicates.contains(NE_TOP_LEFT_CORNER));
+        assertTrue(duplicates.contains(SW_TOP_LEFT_CORNER));
+        assertTrue(duplicates.contains(SE_TOP_LEFT_CORNER));
     }
 
     private void testAssertRemoveDump(Point point, Point start, int width,

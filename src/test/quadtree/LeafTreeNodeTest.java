@@ -1,12 +1,13 @@
 package test.quadtree;
 
-import quadtree.EmptyTreeNode;
 import quadtree.LeafTreeNode;
 import quadtree.Point;
 import quadtree.TreeNode;
 import org.junit.Before;
 import org.junit.Test;
 import skiplist.KVPair;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -153,7 +154,7 @@ public class LeafTreeNodeTest {
 
         leafNode = leafNode.insert(new KVPair<>("P1",
                 new Point(512, 0)), ROOT_START, WORLD_WIDTH);
-        assertEquals(2, leafNode.getPoints().size());
+        assertEquals(2, leafNode.getKeyValuePairs().size());
     }
 
     /**
@@ -176,18 +177,55 @@ public class LeafTreeNodeTest {
 
         String dumpString = "Node at 0, 0, 1024:\n" +
                             "(P2, 512, 0)\n";
-
         testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
 
         sb = new StringBuilder();
-
         leafNode = leafNode.removeByValue(p2, ROOT_START, WORLD_WIDTH, sb);
 
         assertEquals("P2", sb.toString());
 
         dumpString = "Node at 0, 0, 1024: Empty\n";
-
         testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
+    }
+
+
+    /**
+     * Test duplicates on empty leaf node
+     */
+    @Test
+    public void testEmptyDuplicates() {
+        assertEquals(0, leafNode.duplicates().size());
+    }
+
+    /**
+     * Test duplicates on leaf node with no duplicates
+     */
+    @Test
+    public void testNoDuplicates() {
+        leafNode = leafNode.insert(new KVPair<>("P1",
+                new Point(0, 0)), ROOT_START, WORLD_WIDTH);
+        assertEquals(0, leafNode.duplicates().size());
+    }
+
+    /**
+     * Test duplicates on leaf node with 3 duplicates
+     */
+    @Test
+    public void testMultiDuplicates() {
+        for(int i = 0; i < 5; i++){
+            leafNode = leafNode.insert(new KVPair<>("P" + i,
+                    new Point(0, 0)), ROOT_START, WORLD_WIDTH);
+            leafNode = leafNode.insert(new KVPair<>("P" + i,
+                    new Point(0, 1)), ROOT_START, WORLD_WIDTH);
+            leafNode = leafNode.insert(new KVPair<>("P" + i,
+                    new Point(0, 2)), ROOT_START, WORLD_WIDTH);
+        }
+
+        List<Point> duplicates = leafNode.duplicates();
+        assertEquals(3, duplicates.size());
+        assertTrue(duplicates.contains(new Point(0, 0)));
+        assertTrue(duplicates.contains(new Point(0, 1)));
+        assertTrue(duplicates.contains(new Point(0, 2)));
     }
 
     //Assert the dump values

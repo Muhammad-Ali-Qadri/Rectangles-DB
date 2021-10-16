@@ -69,7 +69,7 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public List<Point> duplicates() {
-        return null;
+        return new ArrayList<>();
     }
 
 
@@ -87,7 +87,7 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
     /**
      * {@inheritDoc}
      */
-    public List<KVPair<K, Point>> getPoints(){
+    public List<KVPair<K, Point>> getKeyValuePairs(){
         return new ArrayList<>();
     }
 
