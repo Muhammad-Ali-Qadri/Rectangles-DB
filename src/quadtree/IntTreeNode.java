@@ -71,7 +71,7 @@ public class IntTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public TreeNode<K> removeByValue(Point point, Point start, int width, StringBuilder key) {
+    public TreeNode<K> removeByValue(Point point, Point start, int width, List<KVPair<K, Point>> pairs) {
         int regionWidth = (width / 2);
 
         //remove from north region
@@ -79,12 +79,12 @@ public class IntTreeNode<K extends Comparable<? super K>>
             //remove from north-west region
             if (pointInWestRegion(start, width, point)) {
                 nwChildRegion = nwChildRegion.removeByValue(point, start,
-                        regionWidth, key);
+                        regionWidth, pairs);
             }
             else { //remove from north-east region
                 neChildRegion = neChildRegion.removeByValue(point,
                         new Point(start.getX() + (width / 2),
-                                start.getY()), regionWidth, key);
+                                start.getY()), regionWidth, pairs);
             }
         }//remove from south region
         else {
@@ -92,13 +92,13 @@ public class IntTreeNode<K extends Comparable<? super K>>
             if (pointInWestRegion(start, width, point)) {
                 swChildRegion = swChildRegion.removeByValue(point,
                         new Point(start.getX(),
-                                start.getY() + (width / 2)), regionWidth, key);
+                                start.getY() + (width / 2)), regionWidth, pairs);
             }
             else { //add to south-east region
                 seChildRegion = seChildRegion.removeByValue(point,
                         new Point(start.getX() + (width / 2),
                                 start.getY() + (width / 2)),
-                        regionWidth, key);
+                        regionWidth, pairs);
             }
         }
 

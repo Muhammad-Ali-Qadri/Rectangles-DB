@@ -26,7 +26,7 @@ public class PRQTreeTest {
     private static final Point ROOT_START = new Point(0, 0);
 
     //The empty node to test on
-    private PRQTree prqTree;
+    private PRQTree<String> prqTree;
 
 
     /**
@@ -34,7 +34,7 @@ public class PRQTreeTest {
      */
     @Before
     public void setUp() {
-        prqTree = new PRQTree(WORLD_WIDTH);
+        prqTree = new PRQTree<>(WORLD_WIDTH);
     }
 
 

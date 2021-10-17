@@ -11,6 +11,7 @@ import skiplist.KVPair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
 
@@ -371,14 +372,16 @@ public class IntTreeNodeTest {
     public void testReduceToLeafRemoveByValue() {
         testMaxInsertDump();
 
-        StringBuilder sb = new StringBuilder();
+        List<KVPair<String, Point>> removed = new ArrayList<>();
+
         internalNode = internalNode.removeByValue(NE_TOP_LEFT_CORNER,
-                ROOT_START, WORLD_WIDTH, sb);
+                ROOT_START, WORLD_WIDTH, removed);
 
         internalNode = internalNode.removeByValue(SE_TOP_LEFT_CORNER,
-                ROOT_START, WORLD_WIDTH, sb);
+                ROOT_START, WORLD_WIDTH, removed);
 
-        assertEquals("P2P4", sb.toString());
+        assertTrue(removed.contains(new KVPair<>("P2", NE_TOP_LEFT_CORNER)));
+        assertTrue(removed.contains(new KVPair<>("P4", SE_TOP_LEFT_CORNER)));
 
         String dumpString = "Node at 0, 0, 1024:\n" +
                             "(P1, 511, 511)\n" +
@@ -400,11 +403,13 @@ public class IntTreeNodeTest {
     public void testReduce2To1LevelRemoveByValue() {
         testMaxLevel2InsertDump();
 
-        StringBuilder sb = new StringBuilder();
-        internalNode = internalNode.removeByValue(NW_TOP_LEFT_CORNER,
-                ROOT_START, WORLD_WIDTH, sb);
+        List<KVPair<String, Point>> removed = new ArrayList<>();
 
-        assertEquals("P1", sb.toString());
+        internalNode = internalNode.removeByValue(NW_TOP_LEFT_CORNER,
+                ROOT_START, WORLD_WIDTH, removed);
+
+
+        assertTrue(removed.contains(new KVPair<>("P1", NW_TOP_LEFT_CORNER)));
 
         String dumpString = "Node at 0, 0, 1024: Internal\n" +
                             "  Node at 0, 0, 512:\n" +
@@ -674,11 +679,12 @@ public class IntTreeNodeTest {
     private void testAssertRemoveDump(Point point, Point start, int width,
                                       int level, int nodes, String key,
                                       String dumpString){
-        StringBuilder sb = new StringBuilder();
-        internalNode = internalNode.removeByValue(point, start, width,
-                sb);
 
-        assertEquals(key, sb.toString());
+        List<KVPair<String, Point>> removed = new ArrayList<>();
+        internalNode = internalNode.removeByValue(point, start, width,
+                removed);
+
+        assertTrue(removed.stream().anyMatch(x -> x.getKey().equals(key)));
 
         testAssertDump(internalNode, level, start, width, nodes, dumpString);
     }

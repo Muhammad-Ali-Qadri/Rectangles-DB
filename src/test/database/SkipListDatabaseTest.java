@@ -1253,6 +1253,6 @@ public class SkipListDatabaseTest {
      */
     @Test
     public void testValidateRectangle() {
-        assertFalse(rectEmpty.validateRectangle(null));
+        assertFalse(rectEmpty.validateV(null));
     }
 }

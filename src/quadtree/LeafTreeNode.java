@@ -65,10 +65,10 @@ public class LeafTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public TreeNode<K> removeByValue(Point point, Point start, int width,
-                                     StringBuilder key) {
+                                     List<KVPair<K, Point>> pairs) {
 
         KVPair<K, Point> foundPair = null;
-        for (KVPair<K, Point> listPoint : pairs) {
+        for (KVPair<K, Point> listPoint : this.pairs) {
             if (point.equals(listPoint.getValue())) {
                 foundPair = listPoint;
                 break;
@@ -79,10 +79,10 @@ public class LeafTreeNode<K extends Comparable<? super K>>
             return this;
         }
 
-        key.append(foundPair.getKey());
-        pairs.remove(foundPair);
+        pairs.add(foundPair);
+        this.pairs.remove(foundPair);
 
-        if (pairs.size() == 0) {
+        if (this.pairs.size() == 0) {
             return EmptyTreeNode.getInstance();
         }
 

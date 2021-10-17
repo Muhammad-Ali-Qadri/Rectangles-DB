@@ -60,7 +60,7 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public TreeNode<K> removeByValue(Point point, Point start, int width,
-                                     StringBuilder key) {
+                                     List<KVPair<K, Point>> pairs) {
         return this;
     }
 

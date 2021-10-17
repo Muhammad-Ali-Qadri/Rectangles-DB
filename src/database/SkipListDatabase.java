@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  * @author Muhammad Ali Qadri
  * @version 1
  */
-public class SkipListDatabase implements Database {
+public class SkipListDatabase implements Database<String, Rectangle> {
 
     //Size of the world box
     private static final int WORLD_BOX_WIDTH = 1024;
@@ -53,7 +53,7 @@ public class SkipListDatabase implements Database {
         //Reject if invalid key
         //Reject if coordinates or height or width < 0
         if ((!validateKey(pair.getKey()))
-            || !validateRectangle(pair.getValue())) {
+            || !validateV(pair.getValue())) {
             return false;
         }
 
@@ -64,34 +64,36 @@ public class SkipListDatabase implements Database {
 
     /**
      * {@inheritDoc}
+     * @param key
      */
     @Override
-    public KVPair<String, Rectangle> remove(String name) {
-        if (name == null) {
+    public KVPair<String, Rectangle> remove(String key) {
+        if (key == null) {
             throw new IllegalArgumentException();
         }
 
-        if (!validateKey(name)) {
+        if (!validateKey(key)) {
             return null;
         }
 
-        return list.remove(name);
+        return list.remove(key);
     }
 
     /**
      * {@inheritDoc}
+     * @param value
      */
     @Override
-    public KVPair<String, Rectangle> removeByValue(Rectangle rectangle) {
-        if (rectangle == null) {
+    public KVPair<String, Rectangle> removeByValue(Rectangle value) {
+        if (value == null) {
             throw new IllegalArgumentException();
         }
 
-        if (list.isEmpty() || !validateRectangle(rectangle)) {
+        if (list.isEmpty() || !validateV(value)) {
             return null;
         }
 
-        return list.removeByValue(rectangle);
+        return list.removeByValue(value);
     }
 
     /**
@@ -169,18 +171,19 @@ public class SkipListDatabase implements Database {
 
     /**
      * {@inheritDoc}
+     * @param key
      */
     @Override
-    public List<KVPair<String, Rectangle>> search(String name) {
-        if (name == null) {
+    public List<KVPair<String, Rectangle>> search(String key) {
+        if (key == null) {
             throw new IllegalArgumentException();
         }
 
-        if (!validateKey(name)) {
+        if (!validateKey(key)) {
             return null;
         }
 
-        return list.search(name);
+        return list.search(key);
     }
 
     /**
@@ -205,13 +208,14 @@ public class SkipListDatabase implements Database {
 
     /**
      * {@inheritDoc}
+     * @param value
      */
     @Override
-    public Boolean validateRectangle(Rectangle rectangle) {
-        return (rectangle != null)
-               && !(rectangle.x < 0 || rectangle.y < 0
-                    || rectangle.width <= 0 || rectangle.height <= 0
-                    || rectangle.x + rectangle.width > WORLD_BOX_WIDTH
-                    || rectangle.y + rectangle.height > WORLD_BOX_HEIGHT);
+    public Boolean validateV(Rectangle value) {
+        return (value != null)
+               && !(value.x < 0 || value.y < 0
+                    || value.width <= 0 || value.height <= 0
+                    || value.x + value.width > WORLD_BOX_WIDTH
+                    || value.y + value.height > WORLD_BOX_HEIGHT);
     }
 }

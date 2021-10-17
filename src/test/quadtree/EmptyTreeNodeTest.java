@@ -83,8 +83,10 @@ public class EmptyTreeNodeTest {
      */
     @Test
     public void testRemoveByValue() {
+        List<KVPair<String, Point>> removed = new ArrayList<>();
+
         assertSame(emptyTreeNode, emptyTreeNode.removeByValue(new Point(0, 1)
-                , new Point(0, 0), WORLD_WIDTH, new StringBuilder()));
+                , new Point(0, 0), WORLD_WIDTH, removed));
     }
 
 

@@ -9,12 +9,13 @@ import java.util.List;
 /**
  * This class represents the complete functionality for the PRQuad Tree
  *
+ * @param <K> the key entry in this quad tree
+ *
  * @author Muhammad Ali Qadri
  * @version 1
  */
-public class PRQTree {
-
-    private TreeNode<String> root;
+public class PRQTree<K extends Comparable<K>> {
+    private TreeNode<K> root;
     private final Point rootStart;
     private final int rootLength;
 
@@ -41,7 +42,7 @@ public class PRQTree {
      *
      * @param pair the point that is to be inserted into this tree
      */
-    public void insert(KVPair<String, Point> pair) {
+    public void insert(KVPair<K, Point> pair) {
         root = root.insert(pair, rootStart, rootLength);
     }
 
@@ -52,11 +53,11 @@ public class PRQTree {
      * @param point the point to remove from this tree
      *              was not found
      */
-    public KVPair<String, Point> removeByValue(Point point) {
-        StringBuilder sb = new StringBuilder();
-        root = root.removeByValue(point, rootStart, rootLength, sb);
+    public KVPair<K, Point> removeByValue(Point point) {
+        List<KVPair<K, Point>> removed = new ArrayList<>();
+        root = root.removeByValue(point, rootStart, rootLength, removed);
 
-        return new KVPair<>(sb.toString(), point);
+        return removed.get(0);
     }
 
 
@@ -79,8 +80,8 @@ public class PRQTree {
      *
      * @param rect rectangle to search
      */
-    public List<KVPair<String, Point>> regionSearch(Rectangle rect) {
-        List<KVPair<String, Point>> search = new ArrayList<>();
+    public List<KVPair<K, Point>> regionSearch(Rectangle rect) {
+        List<KVPair<K, Point>> search = new ArrayList<>();
         root.regionSearch(rect, rootStart, rootLength, search);
 
         return search;

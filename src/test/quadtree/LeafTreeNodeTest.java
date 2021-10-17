@@ -172,19 +172,21 @@ public class LeafTreeNodeTest {
         leafNode = leafNode.insert(new KVPair<>("P2",
                 p2), ROOT_START, WORLD_WIDTH);
 
-        StringBuilder sb = new StringBuilder();
-        leafNode = leafNode.removeByValue(p1, ROOT_START, WORLD_WIDTH, sb);
+        List<KVPair<String, Point>> removed = new ArrayList<>();
 
-        assertEquals("P1", sb.toString());
+        leafNode = leafNode.removeByValue(p1, ROOT_START, WORLD_WIDTH, removed);
+
+        assertTrue(removed.contains(new KVPair<>("P1", p1)));
 
         String dumpString = "Node at 0, 0, 1024:\n" +
                             "(P2, 512, 0)\n";
         testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
 
-        sb = new StringBuilder();
-        leafNode = leafNode.removeByValue(p2, ROOT_START, WORLD_WIDTH, sb);
+        removed = new ArrayList<>();
+        leafNode = leafNode.removeByValue(p2, ROOT_START, WORLD_WIDTH, removed);
 
-        assertEquals("P2", sb.toString());
+        assertTrue(removed.contains(new KVPair<>("P2", p2)));
+
 
         dumpString = "Node at 0, 0, 1024: Empty\n";
         testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);

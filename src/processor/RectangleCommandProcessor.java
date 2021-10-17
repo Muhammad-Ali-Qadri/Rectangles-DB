@@ -22,7 +22,7 @@ public class RectangleCommandProcessor implements Processor {
     // the database object to manipulate the
     // commands that the command processor
     // feeds to it
-    private final Database data;
+    private final Database<String, Rectangle> data;
 
     /**
      * The constructor for the command processor requires a database instance to
@@ -108,7 +108,6 @@ public class RectangleCommandProcessor implements Processor {
      */
     private String processRemove(List<String> operationInput) {
         KVPair<String, Rectangle> pair; //Removed value
-        Boolean result = false;
 
         if (operationInput.size() == 2) { //remove by key only
             pair = data.remove(operationInput.get(1));
@@ -120,7 +119,7 @@ public class RectangleCommandProcessor implements Processor {
             int h = Integer.parseInt(operationInput.get(4));
 
             Rectangle rect = new Rectangle(x, y, w, h);
-            if (!data.validateRectangle(rect)) {
+            if (!data.validateV(rect)) {
                 return "Rectangle rejected: " +
                        getRectangleRepresentation(operationInput);
             }
