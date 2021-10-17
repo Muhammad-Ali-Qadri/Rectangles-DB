@@ -68,20 +68,19 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public List<Point> duplicates() {
-        return new ArrayList<>();
+    public void duplicates(List<Point> duplicates) {
+
     }
 
 
     /**
      * {@inheritDoc}
-     * @return
      */
     @Override
-    public List<KVPair<K, Point>> regionSearch(Rectangle searchRect,
-                                               Point CurrentRegionStart,
-                                               int currentRegionWidth) {
-        return new ArrayList<>();
+    public void regionSearch(Rectangle searchRect,
+                             Point CurrentRegionStart, int currentRegionWidth,
+                             List<KVPair<K, Point>> searchPoints) {
+
     }
 
 
@@ -98,8 +97,11 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
     @Override
     public int dump(int level, Point start, int width,
                     StringBuilder treeStringBuilder) {
-        treeStringBuilder.append("  ".repeat(level)).append("Node at ").append(start).append(", ")
-                .append(width).append(": Empty").append("\n");
+
+        treeStringBuilder.append("  ".repeat(level)).append("Node at ").
+                append(start).append(", ").append(width).append(": Empty").
+                append("\n");
+
         return 1;
     }
 }

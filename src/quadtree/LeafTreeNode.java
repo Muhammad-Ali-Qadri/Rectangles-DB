@@ -93,24 +93,28 @@ public class LeafTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public List<Point> duplicates() {
-       return pairs.stream().filter(x -> pairs.stream().filter(y -> y.getValue()
-               .equals(x.getValue())).count() > 1).map(KVPair::getValue)
-               .distinct().collect(Collectors.toList());
+    public void duplicates(List<Point> duplicates) {
+        duplicates.addAll(
+                pairs.stream().filter(x -> pairs.stream()
+                                                   .filter(y -> y.getValue()
+                        .equals(x.getValue())).count() > 1)
+                        .map(KVPair::getValue).distinct()
+                        .collect(Collectors.toList())
+        );
     }
 
 
     /**
      * {@inheritDoc}
-     * @return
      */
     @Override
-    public List<KVPair<K, Point>> regionSearch(Rectangle searchRect,
-                                               Point CurrentRegionStart,
-                                               int currentRegionWidth) {
-        return pairs.stream().filter(x ->
-                searchRect.contains(x.getValue().getX(), x.getValue().getY()))
-                .collect(Collectors.toList());
+    public void regionSearch(Rectangle searchRect,
+                             Point CurrentRegionStart, int currentRegionWidth,
+                             List<KVPair<K, Point>> searchPoints) {
+        searchPoints.addAll(pairs.stream().filter(x ->
+                        searchRect.contains(x.getValue().getX(),
+                                x.getValue().getY())
+                        ).collect(Collectors.toList()));
     }
 
 

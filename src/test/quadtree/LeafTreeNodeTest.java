@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import skiplist.KVPair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -195,7 +196,9 @@ public class LeafTreeNodeTest {
      */
     @Test
     public void testEmptyDuplicates() {
-        assertEquals(0, leafNode.duplicates().size());
+        List<Point> dups = new ArrayList<>();
+        leafNode.duplicates(dups);
+        assertEquals(0, dups.size());
     }
 
     /**
@@ -205,7 +208,11 @@ public class LeafTreeNodeTest {
     public void testNoDuplicates() {
         leafNode = leafNode.insert(new KVPair<>("P1",
                 new Point(0, 0)), ROOT_START, WORLD_WIDTH);
-        assertEquals(0, leafNode.duplicates().size());
+
+        List<Point> dups = new ArrayList<>();
+        leafNode.duplicates(dups);
+
+        assertEquals(0, dups.size());
     }
 
     /**
@@ -222,7 +229,9 @@ public class LeafTreeNodeTest {
                     new Point(0, 2)), ROOT_START, WORLD_WIDTH);
         }
 
-        List<Point> duplicates = leafNode.duplicates();
+        List<Point> duplicates = new ArrayList<>();
+        leafNode.duplicates(duplicates);
+
         assertEquals(3, duplicates.size());
         assertTrue(duplicates.contains(new Point(0, 0)));
         assertTrue(duplicates.contains(new Point(0, 1)));
@@ -234,10 +243,12 @@ public class LeafTreeNodeTest {
      */
     @Test
     public void testEmptyRegionSearch() {
-        assertEquals(0,
-                leafNode.regionSearch(
-                        new Rectangle(0 ,0 ,1024, 1024),
-                        ROOT_START, WORLD_WIDTH).size());
+        List<KVPair<String, Point>> search = new ArrayList<>();
+        leafNode.regionSearch(
+                new Rectangle(0 ,0 ,1024, 1024), ROOT_START,
+                WORLD_WIDTH, search);
+
+        assertEquals(0, search.size());
     }
 
     /**
@@ -246,10 +257,14 @@ public class LeafTreeNodeTest {
     @Test
     public void testOutsideRegionSearch() {
         testMultiInsertDump();
+
+        List<KVPair<String, Point>> search = new ArrayList<>();
+        leafNode.regionSearch(
+                new Rectangle(10 ,10 ,1024, 1024), ROOT_START,
+                WORLD_WIDTH, search);
+
         assertEquals(0,
-                leafNode.regionSearch(
-                        new Rectangle(10 ,10 ,1024, 1024),
-                        ROOT_START, WORLD_WIDTH).size());
+                search.size());
     }
 
     /**
@@ -258,16 +273,19 @@ public class LeafTreeNodeTest {
     @Test
     public void testInsideAllRegionSearch() {
         testMultiInsertDump();
-        List<KVPair<String, Point>> intersections = leafNode.regionSearch(
+
+        List<KVPair<String, Point>> search = new ArrayList<>();
+
+        leafNode.regionSearch(
                 new Rectangle(-1, -1, 10, 10),
-                ROOT_START, WORLD_WIDTH);
+                ROOT_START, WORLD_WIDTH, search);
 
         assertEquals(3,
-                intersections.size());
+                search.size());
 
-        assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 0))));
-        assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 1))));
-        assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 2))));
+        assertTrue(search.contains(new KVPair<>("P1", new Point(0, 0))));
+        assertTrue(search.contains(new KVPair<>("P1", new Point(0, 1))));
+        assertTrue(search.contains(new KVPair<>("P1", new Point(0, 2))));
     }
 
 
@@ -285,9 +303,10 @@ public class LeafTreeNodeTest {
         leafNode = leafNode.insert(new KVPair<>("P1",
                 new Point(0, 51)), ROOT_START, WORLD_WIDTH);
 
-        List<KVPair<String, Point>> intersections = leafNode.regionSearch(
+        List<KVPair<String, Point>> intersections = new ArrayList<>();
+        leafNode.regionSearch(
                 new Rectangle(-1, -1, 10, 10),
-                ROOT_START, WORLD_WIDTH);
+                ROOT_START, WORLD_WIDTH, intersections);
 
         assertEquals(1,
                 intersections.size());

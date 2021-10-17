@@ -52,9 +52,9 @@ public interface TreeNode<K extends Comparable<? super K>> {
     /**
      * Returns all key-value pairs that have duplicate points in this node.
      *
-     * @return The list of pairs that are considered duplicates
+     * @param duplicates the duplicate points in this node
      */
-    List<Point> duplicates();
+    void duplicates(List<Point> duplicates);
 
 
     /**
@@ -65,11 +65,11 @@ public interface TreeNode<K extends Comparable<? super K>> {
      *                           searched
      * @param CurrentRegionStart the top left point of the current region
      * @param currentRegionWidth the width of the current region
-     * @return list of pairs for that are contained within specified region
+     * @param searchPoints the points in the list that are within region
      */
-    List<KVPair<K, Point>> regionSearch(Rectangle searchRect,
-                                        Point CurrentRegionStart,
-                                        int currentRegionWidth);
+    void regionSearch(Rectangle searchRect,
+                      Point CurrentRegionStart, int currentRegionWidth,
+                      List<KVPair<K, Point>> searchPoints);
 
 
     /** Get the points stored in only this node

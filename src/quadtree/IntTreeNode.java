@@ -110,28 +110,23 @@ public class IntTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public List<Point> duplicates() {
-        List<Point> duplicates = new ArrayList<>();
-        duplicates.addAll(nwChildRegion.duplicates());
-        duplicates.addAll(neChildRegion.duplicates());
-        duplicates.addAll(swChildRegion.duplicates());
-        duplicates.addAll(seChildRegion.duplicates());
-
-        return duplicates;
+    public void duplicates(List<Point> duplicates) {
+        nwChildRegion.duplicates(duplicates);
+        neChildRegion.duplicates(duplicates);
+        swChildRegion.duplicates(duplicates);
+        seChildRegion.duplicates(duplicates);
     }
 
 
     /**
      * {@inheritDoc}
      *
-     * @return
      */
     @Override
-    public List<KVPair<K, Point>> regionSearch(Rectangle searchRect,
-                                               Point CurrentRegionStart,
-                                               int currentRegionWidth) {
-
-        List<KVPair<K, Point>> intersections = new ArrayList<>();
+    public void regionSearch(Rectangle searchRect,
+                             Point CurrentRegionStart,
+                             int currentRegionWidth,
+                             List<KVPair<K, Point>> searchPoints) {
         int subRegionWidth = currentRegionWidth / 2;
 
         Rectangle nwRect = new Rectangle(CurrentRegionStart.getX(),
@@ -151,26 +146,24 @@ public class IntTreeNode<K extends Comparable<? super K>>
                 subRegionWidth);
 
         if(containsRegion(searchRect, nwRect)){
-            intersections.addAll(nwChildRegion.regionSearch(searchRect,
-                    new Point(nwRect.x, nwRect.y), subRegionWidth));
+            nwChildRegion.regionSearch(searchRect, new Point(nwRect.x, nwRect.y)
+                    , subRegionWidth, searchPoints);
         }
 
         if(containsRegion(searchRect, neRect)){
-            intersections.addAll(neChildRegion.regionSearch(searchRect,
-                    new Point(neRect.x, neRect.y), subRegionWidth));
+            neChildRegion.regionSearch(searchRect, new Point(neRect.x, neRect.y)
+                    , subRegionWidth, searchPoints);
         }
 
         if(containsRegion(searchRect, swRect)){
-            intersections.addAll(swChildRegion.regionSearch(searchRect,
-                    new Point(swRect.x, swRect.y), subRegionWidth));
+            swChildRegion.regionSearch(searchRect, new Point(swRect.x, swRect.y)
+                    , subRegionWidth, searchPoints);
         }
 
         if(containsRegion(searchRect, seRect)){
-            intersections.addAll(seChildRegion.regionSearch(searchRect,
-                    new Point(seRect.x, seRect.y), subRegionWidth));
+            seChildRegion.regionSearch(searchRect, new Point(seRect.x, seRect.y)
+                    , subRegionWidth, searchPoints);
         }
-
-        return intersections;
     }
 
 

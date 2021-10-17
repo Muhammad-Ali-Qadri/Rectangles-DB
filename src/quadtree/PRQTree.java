@@ -3,6 +3,7 @@ package quadtree;
 import processor.Rectangle;
 import skiplist.KVPair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,7 +66,10 @@ public class PRQTree {
      * @return The list of points that are considered duplicates
      */
     public List<Point> duplicates() {
-        return root.duplicates();
+        List<Point> duplicates = new ArrayList<>();
+        root.duplicates(duplicates);
+
+        return duplicates;
     }
 
 
@@ -76,7 +80,10 @@ public class PRQTree {
      * @param rect rectangle to search
      */
     public List<KVPair<String, Point>> regionSearch(Rectangle rect) {
-        return root.regionSearch(rect, rootStart, rootLength);
+        List<KVPair<String, Point>> search = new ArrayList<>();
+        root.regionSearch(rect, rootStart, rootLength, search);
+
+        return search;
     }
 
 

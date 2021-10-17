@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import skiplist.KVPair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -458,7 +459,11 @@ public class IntTreeNodeTest {
     @Test
     public void testNoDuplicates() {
         testMaxInsertDump();
-        assertEquals(0, internalNode.duplicates().size());
+
+        List<Point> duplicates = new ArrayList<>();
+        internalNode.duplicates(duplicates);
+
+        assertEquals(0, duplicates.size());
     }
 
     /**
@@ -470,7 +475,9 @@ public class IntTreeNodeTest {
         internalNode = internalNode.insert(new KVPair<>("P1",
                 NW_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
 
-        List<Point> duplicates = internalNode.duplicates();
+        List<Point> duplicates = new ArrayList<>();
+
+        internalNode.duplicates(duplicates);
 
         assertEquals(1, duplicates.size());
         assertTrue(duplicates.contains(NW_TOP_LEFT_CORNER));
@@ -485,7 +492,9 @@ public class IntTreeNodeTest {
         internalNode = internalNode.insert(new KVPair<>("P1",
                 NE_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
 
-        List<Point> duplicates = internalNode.duplicates();
+        List<Point> duplicates = new ArrayList<>();
+
+        internalNode.duplicates(duplicates);
 
         assertEquals(1, duplicates.size());
         assertTrue(duplicates.contains(NE_TOP_LEFT_CORNER));
@@ -500,7 +509,9 @@ public class IntTreeNodeTest {
         internalNode = internalNode.insert(new KVPair<>("P1",
                 SW_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
 
-        List<Point> duplicates = internalNode.duplicates();
+        List<Point> duplicates = new ArrayList<>();
+
+        internalNode.duplicates(duplicates);
 
         assertEquals(1, duplicates.size());
         assertTrue(duplicates.contains(SW_TOP_LEFT_CORNER));
@@ -515,7 +526,9 @@ public class IntTreeNodeTest {
         internalNode = internalNode.insert(new KVPair<>("P1",
                 SE_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
 
-        List<Point> duplicates = internalNode.duplicates();
+        List<Point> duplicates = new ArrayList<>();
+
+        internalNode.duplicates(duplicates);
 
         assertEquals(1, duplicates.size());
         assertTrue(duplicates.contains(SE_TOP_LEFT_CORNER));
@@ -539,8 +552,8 @@ public class IntTreeNodeTest {
                     SE_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
         }
 
-
-        List<Point> duplicates = internalNode.duplicates();
+        List<Point> duplicates = new ArrayList<>();
+        internalNode.duplicates(duplicates);
 
         assertEquals(4, duplicates.size());
         assertTrue(duplicates.contains(NW_TOP_LEFT_CORNER));
@@ -555,9 +568,10 @@ public class IntTreeNodeTest {
     @Test
     public void testOutsideRegionSearch() {
         testMaxLevel2InsertDump();
-        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+        List<KVPair<String, Point>> intersections = new ArrayList<>();
+        internalNode.regionSearch(
                 new Rectangle(10, 10, 10, 10),
-                ROOT_START, WORLD_WIDTH);
+                ROOT_START, WORLD_WIDTH, intersections);
 
         assertEquals(0,
                 intersections.size());
@@ -570,9 +584,10 @@ public class IntTreeNodeTest {
     @Test
     public void testInsideNWSWRegionSearch() {
         testMaxLevel2InsertDump();
-        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+        List<KVPair<String, Point>> intersections = new ArrayList<>();
+        internalNode.regionSearch(
                 new Rectangle(-1, -1, 5, 520),
-                ROOT_START, WORLD_WIDTH);
+                ROOT_START, WORLD_WIDTH, intersections);
 
         assertEquals(3,
                 intersections.size());
@@ -591,9 +606,10 @@ public class IntTreeNodeTest {
     @Test
     public void testInsideMidSectionRegionSearch() {
         testMaxLevel2InsertDump();
-        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+        List<KVPair<String, Point>> intersections = new ArrayList<>();
+        internalNode.regionSearch(
                 new Rectangle(510, -1, 20, 1030),
-                ROOT_START, WORLD_WIDTH);
+                ROOT_START, WORLD_WIDTH, intersections);
 
         assertEquals(5,
                 intersections.size());
@@ -617,9 +633,10 @@ public class IntTreeNodeTest {
     @Test
     public void testInsideCenterSectionRegionSearch() {
         testMaxLevel2InsertDump();
-        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+        List<KVPair<String, Point>> intersections = new ArrayList<>();
+        internalNode.regionSearch(
                 new Rectangle(250, -1, 300, 1030),
-                ROOT_START, WORLD_WIDTH);
+                ROOT_START, WORLD_WIDTH, intersections);
 
         assertEquals(6,
                 intersections.size());
@@ -644,9 +661,10 @@ public class IntTreeNodeTest {
     @Test
     public void testAllSectionRegionSearch() {
         testMaxLevel2InsertDump();
-        List<KVPair<String, Point>> intersections = internalNode.regionSearch(
+        List<KVPair<String, Point>> intersections = new ArrayList<>();
+        internalNode.regionSearch(
                 new Rectangle(-1, -1, 1024, 1030),
-                ROOT_START, WORLD_WIDTH);
+                ROOT_START, WORLD_WIDTH, intersections);
 
         assertEquals(11,
                 intersections.size());

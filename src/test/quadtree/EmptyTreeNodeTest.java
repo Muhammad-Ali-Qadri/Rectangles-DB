@@ -8,6 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 import skiplist.KVPair;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -90,7 +93,10 @@ public class EmptyTreeNodeTest {
      */
     @Test
     public void testDuplicates() {
-        assertEquals(0, emptyTreeNode.duplicates().size());
+        List<Point> dups = new ArrayList<>();
+        emptyTreeNode.duplicates(dups);
+
+        assertEquals(0, dups.size());
     }
 
     /**
@@ -107,9 +113,10 @@ public class EmptyTreeNodeTest {
      */
     @Test
     public void testRegionSearch() {
-        assertEquals(0,
-                emptyTreeNode.regionSearch(
-                        new Rectangle(0 ,0 ,1024, 1024),
-                        ROOT_START, WORLD_WIDTH).size());
+        List<KVPair<String, Point>> search = new ArrayList<>();
+        emptyTreeNode.regionSearch(
+                new Rectangle(0 ,0 ,1024, 1024),
+                ROOT_START, WORLD_WIDTH, search);
+        assertEquals(0,search.size());
     }
 }
