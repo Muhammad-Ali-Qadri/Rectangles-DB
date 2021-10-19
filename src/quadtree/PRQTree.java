@@ -57,7 +57,9 @@ public class PRQTree<K extends Comparable<K>> {
         List<KVPair<K, Point>> removed = new ArrayList<>();
         root = root.removeByValue(point, rootStart, rootLength, removed);
 
-        return removed.get(0);
+        if (removed.size() > 0)
+            return removed.get(0);
+        return null;
     }
 
 
