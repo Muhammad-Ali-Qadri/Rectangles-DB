@@ -572,6 +572,7 @@ public class IntTreeNodeTest {
      */
     @Test
     public void testOutsideRegionSearch() {
+        //TODO: test for nodes count
         testMaxLevel2InsertDump();
         List<KVPair<String, Point>> intersections = new ArrayList<>();
         internalNode.regionSearch(

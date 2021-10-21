@@ -81,12 +81,16 @@ public class PRQTree<K extends Comparable<K>> {
      * parameters
      *
      * @param rect rectangle to search
+     * @param search the list of points in "rect" region
+     *
+     * @return the number of nodes traversed in this tree
      */
-    public List<KVPair<K, Point>> regionSearch(Rectangle rect) {
-        List<KVPair<K, Point>> search = new ArrayList<>();
-        root.regionSearch(rect, rootStart, rootLength, search);
+    public int regionSearch(Rectangle rect, List<KVPair<K, Point>> search) {
+        if(search == null){
+            throw new IllegalArgumentException();
+        }
 
-        return search;
+        return root.regionSearch(rect, rootStart, rootLength, search);
     }
 
 

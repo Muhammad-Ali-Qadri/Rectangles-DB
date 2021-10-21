@@ -101,7 +101,7 @@ public class SkipListDatabase implements Database<String, Rectangle> {
      */
     @Override
     public List<KVPair<String, Rectangle>> regionSearch(int x, int y
-            , int w, int h) {
+            , int w, int h, StringBuilder nodesTraversed) {
 
         //Reject if height or width < 0
         if (w <= 0 || h <= 0) {

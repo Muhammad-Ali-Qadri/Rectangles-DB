@@ -147,7 +147,7 @@ public class RectangleCommandProcessor implements Processor {
         int h = Integer.parseInt(operationInput.get(4));
 
         List<KVPair<String, Rectangle>> rectangles =
-                data.regionSearch(x, y, w, h);
+                data.regionSearch(x, y, w, h, null);
 
         if (rectangles == null) {
             return "Rectangle rejected: " +

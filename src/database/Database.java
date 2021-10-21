@@ -61,9 +61,11 @@ public interface Database<K extends Comparable<? super K>, V> {
      * @param y y-Coordinate of the region
      * @param w width of the region
      * @param h height of the region
+     * @param nodesTraversed the nodes traversed in this class
      * @return the list of values that are within the region
      */
-    List<KVPair<K, V>> regionSearch(int x, int y, int w, int h);
+    List<KVPair<K, V>> regionSearch(int x, int y, int w, int h,
+                                    StringBuilder nodesTraversed);
 
 
     /**

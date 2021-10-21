@@ -27,7 +27,7 @@ public class PointCommandProcessor implements Processor{
         }
         else if (input.equals("duplicates") ) {
             List<Point> item = data.duplicates(); //nothing to do... just call method
-            output= commandFormatter(false, item, "duplicates", null, null);
+            output= commandFormatter(false, item, "duplicates", null, null, null);
         }
         else {
             String command = input.substring(0, input.indexOf(' '));
@@ -42,7 +42,7 @@ public class PointCommandProcessor implements Processor{
                 Point sendMe = new Point(x, y);
                 KVPair<String, Point> kvobj = new KVPair<>(name, sendMe);
                 boolean inserted = data.insert(kvobj);
-                output= commandFormatter(inserted, listifier(kvobj), "insert", null, null);
+                output= commandFormatter(inserted, listifier(kvobj), "insert", null, null, null);
             }
             else if (command.equals("remove" ) ) {
                 //I want what's beyond the first space, in Rect_obj
@@ -66,7 +66,8 @@ public class PointCommandProcessor implements Processor{
                     result = data.remove(container[0]);
                 }
                 String sendMe = normalRemove ? container[0] : value.toString();
-                output = commandFormatter(normalRemove, listifier(result), "remove", sendMe, null);
+                output = commandFormatter(normalRemove, listifier(result),
+                        "remove", sendMe, null, null);
             }
             else if (command.equals("regionsearch") ) {
                 //I want what's left of the string... after the space
@@ -84,15 +85,18 @@ public class PointCommandProcessor implements Processor{
                     item.append(")");
                     return item.toString();
                 }
-                List<KVPair<String, Point>> ans = data.regionSearch( x, y, w, h);
-                output = commandFormatter(false, ans, "regionsearch", null, printMe);
+
+                StringBuilder nodes = new StringBuilder();
+                List<KVPair<String, Point>> ans = data.regionSearch( x, y, w, h, nodes);
+                output = commandFormatter(false, ans, "regionsearch", null,
+                        printMe, nodes.toString());
             }
             else {
                 //I want what's left of the string, this is search
                 String rectObj = everythingAfter1stSpace(input);
                 String[] container = rectObj.split("\\s"); //just the name
                 List<KVPair<String, Point>>  resp = data.search(container[0] );
-                output = commandFormatter(false, resp, "search", container[0], null);
+                output = commandFormatter(false, resp, "search", container[0], null, null);
             }
         }
         return output;
@@ -116,14 +120,16 @@ public class PointCommandProcessor implements Processor{
      * @param command command ran
      * @param key the key if passed
      * @param region Rectangle if needed
+     * @param nodes
      * @return String representation of all commands
      */
 
-    public String commandFormatter(boolean successful,  List<? extends Object> pair, String command, String key, Rectangle region) {
+    public String commandFormatter(boolean successful, List<? extends Object>
+            pair, String command, String key, Rectangle region, String nodes) {
         String sendMe;
         switch(command) {
             case "insert":
-                sendMe = (successful) ? "Point inserted: (" + pair.get(0) + ")" :
+                sendMe = (successful) ? "Point inserted: (" + pair.get(0) + ")":
                             "Point rejected: (" + pair.get(0)+ ")";
                 break;
             case "remove":
@@ -136,7 +142,7 @@ public class PointCommandProcessor implements Processor{
                 }
                 break;
             case "regionsearch":
-                sendMe = regionHandler(pair, region);
+                sendMe = regionHandler(pair, region, nodes);
                 break;
             case "duplicates":
                 StringBuilder start = new StringBuilder("Duplicate points:");
@@ -158,7 +164,8 @@ public class PointCommandProcessor implements Processor{
      * @param me the rectangular region in question
      * @return String representation for console, for regionSearch
      */
-    public String regionHandler(List<? extends Object> pair, Rectangle me) {
+    private String regionHandler(List<? extends Object> pair, Rectangle me,
+                                 String nodes) {
 
         if (pair == null) {
             return "Rectangle rejected: (" + me.toString() + ")";
@@ -176,7 +183,8 @@ public class PointCommandProcessor implements Processor{
                 sb.append("Point found: (").append(point).append(")");
             }
         }
-        sb.append(pair.size());
+
+        sb.append("\n").append(nodes);
         sb.append(" quadtree nodes visited");
         return sb.toString();
     }

@@ -246,9 +246,9 @@ public class LeafTreeNodeTest {
     @Test
     public void testEmptyRegionSearch() {
         List<KVPair<String, Point>> search = new ArrayList<>();
-        leafNode.regionSearch(
+        assertEquals(1, leafNode.regionSearch(
                 new Rectangle(0 ,0 ,1024, 1024), ROOT_START,
-                WORLD_WIDTH, search);
+                WORLD_WIDTH, search));
 
         assertEquals(0, search.size());
     }
@@ -261,9 +261,9 @@ public class LeafTreeNodeTest {
         testMultiInsertDump();
 
         List<KVPair<String, Point>> search = new ArrayList<>();
-        leafNode.regionSearch(
+        assertEquals(1, leafNode.regionSearch(
                 new Rectangle(10 ,10 ,1024, 1024), ROOT_START,
-                WORLD_WIDTH, search);
+                WORLD_WIDTH, search));
 
         assertEquals(0,
                 search.size());
@@ -278,9 +278,9 @@ public class LeafTreeNodeTest {
 
         List<KVPair<String, Point>> search = new ArrayList<>();
 
-        leafNode.regionSearch(
+        assertEquals(1, leafNode.regionSearch(
                 new Rectangle(-1, -1, 10, 10),
-                ROOT_START, WORLD_WIDTH, search);
+                ROOT_START, WORLD_WIDTH, search));
 
         assertEquals(3,
                 search.size());
@@ -306,9 +306,9 @@ public class LeafTreeNodeTest {
                 new Point(0, 51)), ROOT_START, WORLD_WIDTH);
 
         List<KVPair<String, Point>> intersections = new ArrayList<>();
-        leafNode.regionSearch(
+        assertEquals(1, leafNode.regionSearch(
                 new Rectangle(-1, -1, 10, 10),
-                ROOT_START, WORLD_WIDTH, intersections);
+                ROOT_START, WORLD_WIDTH, intersections));
 
         assertEquals(1,
                 intersections.size());

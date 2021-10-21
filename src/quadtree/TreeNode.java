@@ -60,16 +60,17 @@ public interface TreeNode<K extends Comparable<? super K>> {
     /**
      * Searches points within rectangle region specified in function
      * parameters
-     *
-     * @param searchRect         the rectangle within which points are to be
+     *  @param searchRect         the rectangle within which points are to be
      *                           searched
      * @param CurrentRegionStart the top left point of the current region
      * @param currentRegionWidth the width of the current region
      * @param searchPoints the points in the list that are within region
+     *
+     * @return the number of nodes visited
      */
-    void regionSearch(Rectangle searchRect,
-                      Point CurrentRegionStart, int currentRegionWidth,
-                      List<KVPair<K, Point>> searchPoints);
+    int regionSearch(Rectangle searchRect,
+                     Point CurrentRegionStart, int currentRegionWidth,
+                     List<KVPair<K, Point>> searchPoints);
 
 
     /** Get the points stored in only this node

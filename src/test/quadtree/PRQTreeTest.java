@@ -9,6 +9,7 @@ import quadtree.TreeNode;
 import skiplist.KVPair;
 import skiplist.Pair;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -45,7 +46,7 @@ public class PRQTreeTest {
     public void testEmptyDump() {
 
         String dumpString = "Node at 0, 0, 1024: Empty\n" +
-                            "QuadTree Size: 1 QuadTree Nodes Printed.\n";
+                            "QuadTree Size: 1 QuadTree Nodes Printed.";
 
         assertEquals(dumpString, prqTree.dump());
     }
@@ -62,7 +63,7 @@ public class PRQTreeTest {
         String dumpString = "Node at 0, 0, 1024:\n" +
                             "(P1, 0, 0)\n" +
                             "(P1, 0, 1)\n" +
-                            "QuadTree Size: 1 QuadTree Nodes Printed.\n";
+                            "QuadTree Size: 1 QuadTree Nodes Printed.";
 
         assertEquals(dumpString, prqTree.dump());
     }
@@ -89,7 +90,7 @@ public class PRQTreeTest {
                             "  (P3, 0, 512)\n" +
                             "  Node at 512, 512, 512:\n" +
                             "  (P4, 512, 512)\n" +
-                            "QuadTree Size: 5 QuadTree Nodes Printed.\n";
+                            "QuadTree Size: 5 QuadTree Nodes Printed.";
 
         assertEquals(dumpString, prqTree.dump());
     }
@@ -134,7 +135,7 @@ public class PRQTreeTest {
                             "    (P4, 512, 768)\n" +
                             "    Node at 768, 768, 256:\n" +
                             "    (P4, 768, 768)\n" +
-                            "QuadTree Size: 13 QuadTree Nodes Printed.\n";
+                            "QuadTree Size: 13 QuadTree Nodes Printed.";
 
         assertEquals(dumpString, prqTree.dump());
     }
@@ -185,7 +186,7 @@ public class PRQTreeTest {
                             "    (P4, 512, 768)\n" +
                             "    Node at 768, 768, 256:\n" +
                             "    (P4, 768, 768)\n" +
-                            "QuadTree Size: 9 QuadTree Nodes Printed.\n";
+                            "QuadTree Size: 9 QuadTree Nodes Printed.";
 
         assertEquals(dumpString, prqTree.dump());
 
@@ -211,7 +212,7 @@ public class PRQTreeTest {
                             "(P2, 512, 0)\n" +
                             "(P3, 0, 512)\n" +
                             "(P4, 512, 512)\n" +
-                            "QuadTree Size: 1 QuadTree Nodes Printed.\n";
+                            "QuadTree Size: 1 QuadTree Nodes Printed.";
 
         assertEquals(dumpString, prqTree.dump());
     }
@@ -273,9 +274,9 @@ public class PRQTreeTest {
     @Test
     public void testLevel2RegionSearch() {
         testMulti2LevelInsertDump();
-
-        List<KVPair<String, Point>> intersections = prqTree.regionSearch(
-                new Rectangle(-1, -1, 1030, 1030));
+        List<KVPair<String, Point>> intersections = new ArrayList<>();
+        assertEquals(13, prqTree.regionSearch(
+                new Rectangle(-1, -1, 1030, 1030), intersections));
 
         assertEquals(10, intersections.size());
         assertTrue(intersections.contains(new KVPair<>("P1", new Point(0, 0))));

@@ -564,7 +564,7 @@ public class SkipListDatabaseTest {
      */
     @Test
     public void testEmptyInvalidWidthRegionSearch() {
-        assertNull(rectEmpty.regionSearch(0, 0, -10, 10));
+        assertNull(rectEmpty.regionSearch(0, 0, -10, 10, null));
     }
 
 
@@ -574,7 +574,7 @@ public class SkipListDatabaseTest {
      */
     @Test
     public void testEmptyInvalidHeightRegionSearch() {
-        assertNull(rectEmpty.regionSearch(0, 0, 10, -10));
+        assertNull(rectEmpty.regionSearch(0, 0, 10, -10, null));
     }
 
 
@@ -585,7 +585,7 @@ public class SkipListDatabaseTest {
     @Test
     public void testEmptyValidOutsideRegionSearch() {
         assertEquals(0,
-                rectEmpty.regionSearch(1025, 1025, 20, 10).size());
+                rectEmpty.regionSearch(1025, 1025, 20, 10, null).size());
     }
 
 
@@ -596,7 +596,7 @@ public class SkipListDatabaseTest {
     @Test
     public void testEmptyInValidOutsideWidthRegionSearch() {
         assertEquals(0,
-                rectEmpty.regionSearch(-1025, -1025, 20, 10000).size());
+                rectEmpty.regionSearch(-1025, -1025, 20, 10000, null).size());
     }
 
 
@@ -607,7 +607,7 @@ public class SkipListDatabaseTest {
     @Test
     public void testEmptyInValidOutsideHeightRegionSearch() {
         assertEquals(0,
-                rectEmpty.regionSearch(-1025, -1025, 2000, 10).size());
+                rectEmpty.regionSearch(-1025, -1025, 2000, 10, null).size());
     }
 
 
@@ -618,7 +618,7 @@ public class SkipListDatabaseTest {
     @Test
     public void testEmptyValidBigInsideRegionSearch() {
         assertEquals(0,
-                rectEmpty.regionSearch(-1025, -1025, 2000, 2000).size());
+                rectEmpty.regionSearch(-1025, -1025, 2000, 2000, null).size());
     }
 
     /**
@@ -628,7 +628,7 @@ public class SkipListDatabaseTest {
     @Test
     public void testEmptyValidInsideRegionSearch() {
         assertEquals(0,
-                rectEmpty.regionSearch(0, 0, 20, 20).size());
+                rectEmpty.regionSearch(0, 0, 20, 20, null).size());
     }
 
 
@@ -640,7 +640,7 @@ public class SkipListDatabaseTest {
     @Test
     public void testRect3ValidUpperLeftRegionSearch() {
         List<KVPair<String, Rectangle>> found =
-                rect3.regionSearch(0, 0, 10, 10);
+                rect3.regionSearch(0, 0, 10, 10, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("A",
@@ -656,7 +656,7 @@ public class SkipListDatabaseTest {
     @Test
     public void testRect3ValidMiddleRegionSearch() {
         List<KVPair<String, Rectangle>> found =
-                rect3.regionSearch(10, 10, 990, 990);
+                rect3.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("B",
@@ -672,7 +672,7 @@ public class SkipListDatabaseTest {
     @Test
     public void testRect3ValidBottomRightRegionSearch() {
         List<KVPair<String, Rectangle>> found =
-                rect3.regionSearch(1000, 1000, 24, 24);
+                rect3.regionSearch(1000, 1000, 24, 24, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("C",
@@ -691,7 +691,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(0, 0, 10, 10)));
 
         assertEquals(0,
-                rectEmpty.regionSearch(10, 10, 990, 990).size());
+                rectEmpty.regionSearch(10, 10, 990, 990, null).size());
     }
 
 
@@ -706,7 +706,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(1000, 0, 24, 24)));
 
         assertEquals(0,
-                rectEmpty.regionSearch(10, 10, 990, 990).size());
+                rectEmpty.regionSearch(10, 10, 990, 990, null).size());
     }
 
 
@@ -721,7 +721,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(0, 1000, 10, 10)));
 
         assertEquals(0,
-                rectEmpty.regionSearch(10, 10, 990, 990).size());
+                rectEmpty.regionSearch(10, 10, 990, 990, null).size());
     }
 
 
@@ -736,7 +736,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(1000, 1000, 24, 24)));
 
         assertEquals(0,
-                rectEmpty.regionSearch(10, 10, 990, 990).size());
+                rectEmpty.regionSearch(10, 10, 990, 990, null).size());
     }
 
 
@@ -751,7 +751,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(0, 100, 10, 10)));
 
         assertEquals(0,
-                rectEmpty.regionSearch(10, 10, 990, 990).size());
+                rectEmpty.regionSearch(10, 10, 990, 990, null).size());
     }
 
 
@@ -766,7 +766,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(100, 0, 10, 10)));
 
         assertEquals(0,
-                rectEmpty.regionSearch(10, 10, 990, 990).size());
+                rectEmpty.regionSearch(10, 10, 990, 990, null).size());
     }
 
 
@@ -781,7 +781,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(1000, 100, 10, 10)));
 
         assertEquals(0,
-                rectEmpty.regionSearch(10, 10, 990, 990).size());
+                rectEmpty.regionSearch(10, 10, 990, 990, null).size());
     }
 
 
@@ -796,7 +796,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(100, 1000, 10, 10)));
 
         assertEquals(0,
-                rectEmpty.regionSearch(10, 10, 990, 990).size());
+                rectEmpty.regionSearch(10, 10, 990, 990, null).size());
     }
 
 
@@ -811,7 +811,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(0, 0, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("ULI",
@@ -830,7 +830,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(990, 0, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("URI",
@@ -849,7 +849,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(0, 990, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("BLI",
@@ -868,7 +868,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(990, 990, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("BRI",
@@ -887,7 +887,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(5, 100, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("MLI",
@@ -906,7 +906,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(15, 0, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("MUI",
@@ -925,7 +925,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(990, 100, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("MRI",
@@ -944,7 +944,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(100, 990, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("MBI",
@@ -963,7 +963,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(10, 10, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("ULIN",
@@ -982,7 +982,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(990, 10, 10, 10)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("URIN",
@@ -1001,7 +1001,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(10, 990, 10, 10)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("BLIN",
@@ -1020,7 +1020,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(990, 990, 10, 10)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("BRIN",
@@ -1038,7 +1038,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(20, 20, 10, 10)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(1, found.size());
         assertTrue(found.contains(new KVPair<>("IN",
@@ -1063,7 +1063,7 @@ public class SkipListDatabaseTest {
                 new Rectangle(990, 990, 15, 15)));
 
         List<KVPair<String, Rectangle>> found =
-                rectEmpty.regionSearch(10, 10, 990, 990);
+                rectEmpty.regionSearch(10, 10, 990, 990, null);
 
         assertEquals(2, found.size());
         assertTrue(found.contains(new KVPair<>("IN",

@@ -1,0 +1,49 @@
+Point inserted: (p_p, 1, 20)
+Point inserted: (p, 10, 30)
+Point inserted: (p_42, 1, 20)
+Point inserted: (far_point, 200, 200)
+SkipList dump:
+Node has depth 2, Value (null)
+Node has depth 2, Value (far_point, 200, 200)
+Node has depth 2, Value (p, 10, 30)
+Node has depth 1, Value (p_42, 1, 20)
+Node has depth 1, Value (p_p, 1, 20)
+SkipList size is: 4
+QuadTree dump:
+Node at 0, 0, 1024: Internal
+  Node at 0, 0, 512: Internal
+    Node at 0, 0, 256: Internal
+      Node at 0, 0, 128:
+      (p_p, 1, 20)
+      (p, 10, 30)
+      (p_42, 1, 20)
+      Node at 128, 0, 128: Empty
+      Node at 0, 128, 128: Empty
+      Node at 128, 128, 128:
+      (far_point, 200, 200)
+    Node at 256, 0, 256: Empty
+    Node at 0, 256, 256: Empty
+    Node at 256, 256, 256: Empty
+  Node at 512, 0, 512: Empty
+  Node at 0, 512, 512: Empty
+  Node at 512, 512, 512: Empty
+QuadTree Size: 13 QuadTree Nodes Printed.
+Duplicate points:
+(1, 20)
+Found (p_p, 1, 20)
+Points intersecting region (0, 0, 25, 25)
+Point found: (p_p, 1, 20)
+Point found: (p_42, 1, 20)2 quadtree nodes visited
+Point removed: (p_p, p_p, 1, 20) Removed
+Point removed: (p, 10, 30)
+Duplicate points:
+SkipList dump:
+Node has depth 2, Value (null)
+Node has depth 2, Value (far_point, 200, 200)
+Node has depth 1, Value (p_42, 1, 20)
+SkipList size is: 2
+QuadTree dump:
+Node at 0, 0, 1024:
+(p_42, 1, 20)
+(far_point, 200, 200)
+QuadTree Size: 1 QuadTree Nodes Printed.

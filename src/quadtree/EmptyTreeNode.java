@@ -77,10 +77,10 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public void regionSearch(Rectangle searchRect,
-                             Point CurrentRegionStart, int currentRegionWidth,
-                             List<KVPair<K, Point>> searchPoints) {
-
+    public int regionSearch(Rectangle searchRect,
+                            Point CurrentRegionStart, int currentRegionWidth,
+                            List<KVPair<K, Point>> searchPoints) {
+        return 1;
     }
 
 

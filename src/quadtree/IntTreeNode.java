@@ -121,13 +121,15 @@ public class IntTreeNode<K extends Comparable<? super K>>
     /**
      * {@inheritDoc}
      *
+     * @return
      */
     @Override
-    public void regionSearch(Rectangle searchRect,
-                             Point CurrentRegionStart,
-                             int currentRegionWidth,
-                             List<KVPair<K, Point>> searchPoints) {
+    public int regionSearch(Rectangle searchRect,
+                            Point CurrentRegionStart,
+                            int currentRegionWidth,
+                            List<KVPair<K, Point>> searchPoints) {
         int subRegionWidth = currentRegionWidth / 2;
+        int nodesTraversed = 1;
 
         Rectangle nwRect = new Rectangle(CurrentRegionStart.getX(),
                 CurrentRegionStart.getY(), subRegionWidth, subRegionWidth);
@@ -146,24 +148,27 @@ public class IntTreeNode<K extends Comparable<? super K>>
                 subRegionWidth);
 
         if(containsRegion(searchRect, nwRect)){
-            nwChildRegion.regionSearch(searchRect, new Point(nwRect.x, nwRect.y)
+            nodesTraversed += nwChildRegion.regionSearch(searchRect,
+                    new Point(nwRect.x, nwRect.y)
                     , subRegionWidth, searchPoints);
         }
 
         if(containsRegion(searchRect, neRect)){
-            neChildRegion.regionSearch(searchRect, new Point(neRect.x, neRect.y)
+            nodesTraversed += neChildRegion.regionSearch(searchRect, new Point(neRect.x, neRect.y)
                     , subRegionWidth, searchPoints);
         }
 
         if(containsRegion(searchRect, swRect)){
-            swChildRegion.regionSearch(searchRect, new Point(swRect.x, swRect.y)
+            nodesTraversed += swChildRegion.regionSearch(searchRect, new Point(swRect.x, swRect.y)
                     , subRegionWidth, searchPoints);
         }
 
         if(containsRegion(searchRect, seRect)){
-            seChildRegion.regionSearch(searchRect, new Point(seRect.x, seRect.y)
+            nodesTraversed += seChildRegion.regionSearch(searchRect, new Point(seRect.x, seRect.y)
                     , subRegionWidth, searchPoints);
         }
+
+        return nodesTraversed;
     }
 
 

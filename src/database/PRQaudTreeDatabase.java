@@ -7,6 +7,7 @@ import skiplist.KVPair;
 import skiplist.Pair;
 import skiplist.SkipList;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PRQaudTreeDatabase implements Database<String, Point>{
@@ -72,9 +73,11 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
      * Rectangle rejected: ({x}, {y}, {w}, {h})
      */
     @Override
-    public List<KVPair<String, Point>> regionSearch(int x, int y, int w, int h) {
+    public List<KVPair<String, Point>> regionSearch(int x, int y, int w, int h,
+                                                    StringBuilder nodesTraversed) {
         Rectangle printMe = new Rectangle(x, y, w, h);
-        List<KVPair<String, Point>> points = prqTree.regionSearch(printMe);
+        List<KVPair<String, Point>> points = new ArrayList<>();
+        nodesTraversed.append(prqTree.regionSearch(printMe, points));
         return points;
     }
 

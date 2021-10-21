@@ -116,9 +116,9 @@ public class EmptyTreeNodeTest {
     @Test
     public void testRegionSearch() {
         List<KVPair<String, Point>> search = new ArrayList<>();
-        emptyTreeNode.regionSearch(
+        assertEquals(1, emptyTreeNode.regionSearch(
                 new Rectangle(0 ,0 ,1024, 1024),
-                ROOT_START, WORLD_WIDTH, search);
+                ROOT_START, WORLD_WIDTH, search));
         assertEquals(0,search.size());
     }
 }
