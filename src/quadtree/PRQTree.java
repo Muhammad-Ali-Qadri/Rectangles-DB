@@ -100,7 +100,7 @@ public class PRQTree<K extends Comparable<K>> {
         int nodes = root.dump(0, rootStart, rootLength, sb);
 
         sb.append("QuadTree Size: ").append(nodes)
-                .append(" QuadTree Nodes Printed.\n");
+                .append(" QuadTree Nodes Printed.");
 
         return sb.toString();
     }

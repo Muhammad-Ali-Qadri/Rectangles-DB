@@ -47,7 +47,7 @@ public class Point2Test {
      */
     @Test
     public void testProcessor() {
-        String[] arr = {"./Data/P2test1.txt"};
+        String[] arr = {"./Data/P2test2.txt"};
         try {
             Point2.main(arr);
             String output = out.toString();

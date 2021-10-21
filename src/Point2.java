@@ -46,7 +46,8 @@ public class Point2 {
                 String line = scanner.nextLine();
                 // determines if the file has more lines to read
                 if (!line.trim().isEmpty()) {
-                    cmdProc.process(line.trim());
+                    String outputLine = cmdProc.process(line.trim());
+                    System.out.println(outputLine);
                 }
             }
             // closes the scanner

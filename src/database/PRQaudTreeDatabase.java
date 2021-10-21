@@ -35,8 +35,7 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
                     return false;
             }
         }
-        insertionHelper(pair);
-        return true;
+        return insertionHelper(pair);
     }
 
     /**
@@ -49,11 +48,6 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
         KVPair<String, Point> item = skipList.remove(key);
         if (item != null) {
             prqTree.removeByValue(item.getValue());
-            String printMe = "Point removed: (" + key + ", " + item + ") Removed";
-            System.out.println(printMe);
-        }
-        else {
-            System.out.println("Point not removed: " + key);
         }
         return item;
     }
@@ -66,21 +60,8 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
     @Override
     public KVPair<String, Point> removeByValue(Point value) {
         KVPair<String, Point> item = prqTree.removeByValue(value);
-        if (!validateV(value)) {
-            String rejected = "Point rejected: (" + value + ")";
-            System.out.println(rejected);
-            return null;
-        }
-
-        if (item != null)
-        {
+        if (item != null) {
             skipList.remove(item.getKey() );
-            String found = "Point removed: (" + item + ")";
-            System.out.println(found);
-        }
-        else{
-            String notFound = "Point not found: (" + value + ")";
-            System.out.println(notFound);
         }
         return item;
     }
@@ -93,29 +74,7 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
     @Override
     public List<KVPair<String, Point>> regionSearch(int x, int y, int w, int h) {
         Rectangle printMe = new Rectangle(x, y, w, h);
-        if ( w < 1 || h < 1)
-        {
-            StringBuilder item = new StringBuilder("Rectangle rejected: (");
-            item.append(printMe);
-            item.append(")");
-            System.out.println(item );
-            return null;
-        }
         List<KVPair<String, Point>> points = prqTree.regionSearch(printMe);
-        StringBuilder regionHeader = new StringBuilder("Rectangles");
-        regionHeader.append(" intersecting region (" );
-        regionHeader.append(printMe );
-        regionHeader.append( ")");
-        System.out.println(regionHeader);
-
-        for (KVPair<String, Point> point: points){
-            regionHeader.setLength(0); // clear string builder
-            String str = "Point found: "+ point.toString() + ")";
-            regionHeader.append(str);
-            System.out.println(regionHeader );
-        }
-        String nodeString = points.size()  + "quadtree nodes visited";
-        System.out.println(nodeString);
         return points;
     }
 
@@ -135,16 +94,6 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
     @Override
     public List<KVPair<String, Point>> search(String key) {
         List<KVPair<String, Point>> items = skipList.search(key);
-        if (items == null) {
-            System.out.println("Point not found: " + key);
-            return null;
-        }
-
-        for (KVPair<String, Point> item : items) {
-            String printThis = "Found (" + item.toString() + ")";
-            System.out.println(printThis);
-        }
-
         return items;
     }
 
@@ -153,11 +102,11 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
      */
     @Override
     public String dump() {
-        System.out.println("SkipList dump:");
-        skipList.dump();
-        System.out.println("QuadTree dump:");
-        prqTree.dump();
-        return null;
+        StringBuilder concatMe = new StringBuilder();
+        concatMe.append(skipList.dump());
+        concatMe.append("\nQuadTree dump:\n");
+        concatMe.append(prqTree.dump());
+        return concatMe.toString();
     }
 
     /**
@@ -174,29 +123,23 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
      * @param pair that's being validated for insertion.
      *             Might rename to validationHelper
      */
-    public void insertionHelper(KVPair<String, Point> pair) {
+    public boolean insertionHelper(KVPair<String, Point> pair) {
         if (validateV(pair.getValue() ) ) {
             prqTree.insert(pair);
             skipList.insert(pair);
-            String approved = "Point inserted: (" + pair + ")";
-            System.out.println(approved);
+            return true;
         }
         else {
-            String rejection = "Point rejected: (" + pair+ ")";
-            System.out.println(rejection);
+            return false;
         }
     }
 
     /**
-     * Will print the duplicates
-     * @return A list containing duplicates
+     * {@inheritDoc}
      */
+    @Override
     public List<Point> duplicates() {
         List<Point> dupList = prqTree.duplicates();
-        System.out.println("Duplicate points:");
-        for (Point point : dupList) {
-            System.out.println("(" + point.toString() + ")" );
-        }
         return dupList;
     }
 }

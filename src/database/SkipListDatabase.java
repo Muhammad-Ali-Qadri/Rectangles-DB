@@ -218,4 +218,12 @@ public class SkipListDatabase implements Database<String, Rectangle> {
                     || value.x + value.width > WORLD_BOX_WIDTH
                     || value.y + value.height > WORLD_BOX_HEIGHT);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Rectangle> duplicates(){
+        return new ArrayList<>();
+    }
 }

@@ -106,4 +106,10 @@ public interface Database<K extends Comparable<? super K>, V> {
      * @return boolean value of validation result
      */
     Boolean validateV(V value);
+
+    /**
+     *
+     * @return a list of all duplicates within the database
+     */
+    List<V> duplicates();
 }
