@@ -191,7 +191,12 @@ public class IntTreeNode<K extends Comparable<? super K>>
     public int dump(int level, Point start, int width,
                     StringBuilder treeStringBuilder) {
 
-        treeStringBuilder.append("  ".repeat(level)).append("Node at ").
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < level; i++){
+            sb.append("  ");
+        }
+
+        treeStringBuilder.append(sb).append("Node at ").
                 append(start).append(", ").append(width).append(": Internal\n");
 
         return 1 + nwChildRegion.dump(level + 1, start, width / 2,

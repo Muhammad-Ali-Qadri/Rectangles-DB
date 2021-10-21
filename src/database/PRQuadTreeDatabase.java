@@ -10,14 +10,19 @@ import skiplist.SkipList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PRQaudTreeDatabase implements Database<String, Point>{
+public class PRQuadTreeDatabase implements Database<String, Point> {
 
     private static final int WORLD_WIDTH = 1024;
 
     private final PRQTree<String> prqTree;
     private final SkipList<String, Point> skipList;
 
-    public PRQaudTreeDatabase(){
+    //TODO: 1- refactor code in processor class
+    //TODO: 2- write test cases for database and processor
+    //TODO: 3- Documentation needs to be filled out
+    //TODO: 4- Reformatting and styling
+
+    public PRQuadTreeDatabase() {
         prqTree = new PRQTree<>(WORLD_WIDTH);
         skipList = new SkipList<>();
     }
@@ -29,11 +34,12 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
      */
     @Override
     public Boolean insert(KVPair<String, Point> pair) {
-        List<KVPair<String, Point>> result = skipList.search(pair.getKey() );
+        List<KVPair<String, Point>> result = skipList.search(pair.getKey());
         if (result != null) {
-            for(KVPair<String, Point> item : result) {
-                if (item.getValue() == pair.getValue() )
+            for (KVPair<String, Point> item : result) {
+                if (item.getValue().equals(pair.getValue())) {
                     return false;
+                }
             }
         }
         return insertionHelper(pair);
@@ -62,7 +68,7 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
     public KVPair<String, Point> removeByValue(Point value) {
         KVPair<String, Point> item = prqTree.removeByValue(value);
         if (item != null) {
-            skipList.remove(item.getKey() );
+            skipList.remove(item.getKey());
         }
         return item;
     }
@@ -118,16 +124,18 @@ public class PRQaudTreeDatabase implements Database<String, Point>{
      */
     @Override
     public Boolean validateV(Point value) {
-        return value.getX() < 1025 && value.getY() < 1025;
+        return (value != null)
+               && !(value.getX() < 0 || value.getY() < 0
+                    || value.getX() > WORLD_WIDTH
+                    || value.getY() > WORLD_WIDTH);
     }
 
     /**
-     *
      * @param pair that's being validated for insertion.
      *             Might rename to validationHelper
      */
     public boolean insertionHelper(KVPair<String, Point> pair) {
-        if (validateV(pair.getValue() ) ) {
+        if (validateV(pair.getValue())) {
             prqTree.insert(pair);
             skipList.insert(pair);
             return true;

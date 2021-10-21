@@ -132,11 +132,17 @@ public class LeafTreeNode<K extends Comparable<? super K>>
     @Override
     public int dump(int level, Point start, int width,
                     StringBuilder treeStringBuilder) {
-        treeStringBuilder.append("  ".repeat(level)).append("Node at ")
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < level; i++){
+            sb.append("  ");
+        }
+
+        treeStringBuilder.append(sb).append("Node at ")
                 .append(start).append(", ").append(width).append(":\n");
 
         for (KVPair<K, Point> pair : pairs) {
-            treeStringBuilder.append("  ".repeat(level)).
+            treeStringBuilder.append(sb).
                     append("(").append(pair).append(")\n");
         }
 

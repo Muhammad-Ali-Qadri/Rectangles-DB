@@ -1,7 +1,7 @@
 package processor;
 
 import database.Database;
-import database.PRQaudTreeDatabase;
+import database.PRQuadTreeDatabase;
 import quadtree.*;
 import skiplist.*;
 
@@ -16,7 +16,7 @@ public class PointCommandProcessor implements Processor{
     private final Database<String, Point> data;
 
     public PointCommandProcessor() {
-        data = new PRQaudTreeDatabase();
+        data = new PRQuadTreeDatabase();
     }
 
     @Override
