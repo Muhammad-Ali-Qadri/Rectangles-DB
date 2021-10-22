@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import processor.Rectangle;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This test class is responsible for testing each scenario of each method in

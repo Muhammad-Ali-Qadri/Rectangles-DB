@@ -1,19 +1,19 @@
 package test.quadtree;
 
+import org.junit.Before;
+import org.junit.Test;
 import processor.Rectangle;
 import quadtree.IntTreeNode;
 import quadtree.LeafTreeNode;
 import quadtree.Point;
 import quadtree.TreeNode;
-import org.junit.Before;
-import org.junit.Test;
 import skiplist.KVPair;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This is a test class responsible for testing the operations of an
@@ -201,7 +201,6 @@ public class IntTreeNodeTest {
     }
 
 
-
     /**
      * Test the dump and insert on node with point in South-east region on
      * edge case points edge case points (512, 512), (1023, 1023)
@@ -275,14 +274,14 @@ public class IntTreeNodeTest {
                 0, 5, "P1", dumpString);
 
         dumpString = "Node at 0, 0, 1024: Internal\n" +
-                            "  Node at 0, 0, 512: Empty\n" +
-                            "  Node at 512, 0, 512:\n" +
-                            "  (P2, 512, 0)\n" +
-                            "  Node at 0, 512, 512:\n" +
-                            "  (P3, 0, 512)\n" +
-                            "  (P3, 511, 1023)\n" +
-                            "  Node at 512, 512, 512:\n" +
-                            "  (P4, 512, 512)\n";
+                     "  Node at 0, 0, 512: Empty\n" +
+                     "  Node at 512, 0, 512:\n" +
+                     "  (P2, 512, 0)\n" +
+                     "  Node at 0, 512, 512:\n" +
+                     "  (P3, 0, 512)\n" +
+                     "  (P3, 511, 1023)\n" +
+                     "  Node at 512, 512, 512:\n" +
+                     "  (P4, 512, 512)\n";
 
         testAssertRemoveDump(NW_BOTTOM_RIGHT_CORNER, ROOT_START, WORLD_WIDTH,
                 0, 5, "P1", dumpString);
@@ -393,7 +392,6 @@ public class IntTreeNodeTest {
 
         assertTrue(internalNode instanceof LeafTreeNode);
     }
-
 
 
     /**
@@ -546,7 +544,7 @@ public class IntTreeNodeTest {
     public void testFourDuplicates() {
         testMaxLevel2InsertDump();
 
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             internalNode = internalNode.insert(new KVPair<>("P" + i,
                     NW_TOP_LEFT_CORNER), ROOT_START, WORLD_WIDTH);
             internalNode = internalNode.insert(new KVPair<>("P" + i,
@@ -679,7 +677,7 @@ public class IntTreeNodeTest {
 
     private void testAssertRemoveDump(Point point, Point start, int width,
                                       int level, int nodes, String key,
-                                      String dumpString){
+                                      String dumpString) {
 
         List<KVPair<String, Point>> removed = new ArrayList<>();
         internalNode = internalNode.removeByValue(point, start, width,

@@ -1,8 +1,9 @@
 package test.database;
-import database.*;
-import org.junit.Test;
-import quadtree.*;
+
+import database.PRQuadTreeDatabase;
 import org.junit.Before;
+import org.junit.Test;
+import quadtree.Point;
 import skiplist.KVPair;
 
 import java.util.List;
@@ -67,7 +68,7 @@ public class PRQuadTreeDatabaseTest {
     public void removeKeyTest() {
         KVPair<String, Point> valid = quadDB.remove("A");
         assertEquals(valid, pair1);
-        assertNull(quadDB.remove("IDontExist")) ;
+        assertNull(quadDB.remove("IDontExist"));
     }
 
     /**
@@ -76,7 +77,7 @@ public class PRQuadTreeDatabaseTest {
     @Test
     public void removeByValueTests() {
         Point invalid = new Point(35, 20);
-        assertNull(quadDB.removeByValue(invalid) );
+        assertNull(quadDB.removeByValue(invalid));
         assertEquals(quadDB.removeByValue(addMe), pair1);
     }
 
@@ -95,7 +96,7 @@ public class PRQuadTreeDatabaseTest {
      */
     @Test
     public void testIntersections() {
-        assertNull(quadDB.intersections() );
+        assertNull(quadDB.intersections());
     }
 
     /**
@@ -134,11 +135,11 @@ public class PRQuadTreeDatabaseTest {
         Point fail2 = new Point(0, -1); // fails cause y
         Point fail3 = new Point(1025, 0); // fails cause x too big
         Point fail4 = new Point(0, 1025); // fails cause y too big
-        assertFalse(quadDB.validateV(fail) );
+        assertFalse(quadDB.validateV(fail));
         assertFalse(quadDB.validateV(fail2));
         assertFalse(quadDB.validateV(fail3));
         assertFalse(quadDB.validateV(fail4));
-        assertFalse(quadDB.validateV(null) );
+        assertFalse(quadDB.validateV(null));
     }
 
 }

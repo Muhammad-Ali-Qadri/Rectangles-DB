@@ -2,8 +2,8 @@ package processor;
 
 import database.Database;
 import database.PRQuadTreeDatabase;
-import quadtree.*;
-import skiplist.*;
+import quadtree.Point;
+import skiplist.KVPair;
 
 import java.util.List;
 

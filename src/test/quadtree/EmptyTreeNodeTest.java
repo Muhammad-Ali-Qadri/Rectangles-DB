@@ -1,17 +1,18 @@
 package test.quadtree;
 
+import org.junit.Before;
+import org.junit.Test;
 import processor.Rectangle;
 import quadtree.EmptyTreeNode;
 import quadtree.Point;
 import quadtree.TreeNode;
-import org.junit.Before;
-import org.junit.Test;
 import skiplist.KVPair;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 /**
  * This is a test class responsible for testing the operations of an
@@ -117,8 +118,8 @@ public class EmptyTreeNodeTest {
     public void testRegionSearch() {
         List<KVPair<String, Point>> search = new ArrayList<>();
         assertEquals(1, emptyTreeNode.regionSearch(
-                new Rectangle(0 ,0 ,1024, 1024),
+                new Rectangle(0, 0, 1024, 1024),
                 ROOT_START, WORLD_WIDTH, search));
-        assertEquals(0,search.size());
+        assertEquals(0, search.size());
     }
 }

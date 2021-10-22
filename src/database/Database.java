@@ -57,10 +57,10 @@ public interface Database<K extends Comparable<? super K>, V> {
      * meaning, Vs that only touch a side or corner of the region
      * specified will not be said to be in the region.
      *
-     * @param x x-Coordinate of the region
-     * @param y y-Coordinate of the region
-     * @param w width of the region
-     * @param h height of the region
+     * @param x              x-Coordinate of the region
+     * @param y              y-Coordinate of the region
+     * @param w              width of the region
+     * @param h              height of the region
      * @param nodesTraversed the nodes traversed in this class
      * @return the list of values that are within the region
      */
@@ -75,7 +75,7 @@ public interface Database<K extends Comparable<? super K>, V> {
      * @return The rectangle pairs that intersect
      */
     List<Pair<KVPair<K, V>,
-                KVPair<K, V>>> intersections();
+            KVPair<K, V>>> intersections();
 
 
     /**
@@ -110,7 +110,6 @@ public interface Database<K extends Comparable<? super K>, V> {
     Boolean validateV(V value);
 
     /**
-     *
      * @return a list of all duplicates within the database
      */
     List<V> duplicates();

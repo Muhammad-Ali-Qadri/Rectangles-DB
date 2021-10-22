@@ -2,14 +2,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import processor.PointCommandProcessor;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 import static org.junit.Assert.*;
-
 
 
 public class Point2Test {
@@ -56,7 +54,7 @@ public class Point2Test {
         catch (FileNotFoundException e) {
             // Confirm exit's return value was zero:
             String output = out.toString();
-            String[] outputArr = output.split( "\n" );
+            String[] outputArr = output.split("\n");
             assertEquals(outputArr[0], "Invalid file");
         }
     }

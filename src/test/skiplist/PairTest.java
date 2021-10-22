@@ -46,7 +46,6 @@ public class PairTest {
     }
 
 
-
     /**
      * Test if class constructor throws exception when null inputs are passed
      */

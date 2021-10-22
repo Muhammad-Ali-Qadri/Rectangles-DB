@@ -1,17 +1,18 @@
 package test.quadtree;
 
+import org.junit.Before;
+import org.junit.Test;
 import processor.Rectangle;
 import quadtree.LeafTreeNode;
 import quadtree.Point;
 import quadtree.TreeNode;
-import org.junit.Before;
-import org.junit.Test;
 import skiplist.KVPair;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This is a test class responsible for testing the operations of an
@@ -92,7 +93,7 @@ public class LeafTreeNodeTest {
         leafNode = leafNode.insert(new KVPair<>("P1",
                 new Point(0, 1)), ROOT_START, WORLD_WIDTH);
 
-        for(int i = 2; i <= 6; i++){
+        for (int i = 2; i <= 6; i++) {
             leafNode = leafNode.insert(new KVPair<>("P" + i,
                     new Point(0, 2)), ROOT_START, WORLD_WIDTH);
         }
@@ -222,7 +223,7 @@ public class LeafTreeNodeTest {
      */
     @Test
     public void testMultiDuplicates() {
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             leafNode = leafNode.insert(new KVPair<>("P" + i,
                     new Point(0, 0)), ROOT_START, WORLD_WIDTH);
             leafNode = leafNode.insert(new KVPair<>("P" + i,
@@ -247,7 +248,7 @@ public class LeafTreeNodeTest {
     public void testEmptyRegionSearch() {
         List<KVPair<String, Point>> search = new ArrayList<>();
         assertEquals(1, leafNode.regionSearch(
-                new Rectangle(0 ,0 ,1024, 1024), ROOT_START,
+                new Rectangle(0, 0, 1024, 1024), ROOT_START,
                 WORLD_WIDTH, search));
 
         assertEquals(0, search.size());
@@ -262,7 +263,7 @@ public class LeafTreeNodeTest {
 
         List<KVPair<String, Point>> search = new ArrayList<>();
         assertEquals(1, leafNode.regionSearch(
-                new Rectangle(10 ,10 ,1024, 1024), ROOT_START,
+                new Rectangle(10, 10, 1024, 1024), ROOT_START,
                 WORLD_WIDTH, search));
 
         assertEquals(0,

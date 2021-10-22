@@ -64,6 +64,7 @@ public class SkipListDatabase implements Database<String, Rectangle> {
 
     /**
      * {@inheritDoc}
+     *
      * @param key
      */
     @Override
@@ -81,6 +82,7 @@ public class SkipListDatabase implements Database<String, Rectangle> {
 
     /**
      * {@inheritDoc}
+     *
      * @param value
      */
     @Override
@@ -171,6 +173,7 @@ public class SkipListDatabase implements Database<String, Rectangle> {
 
     /**
      * {@inheritDoc}
+     *
      * @param key
      */
     @Override
@@ -208,6 +211,7 @@ public class SkipListDatabase implements Database<String, Rectangle> {
 
     /**
      * {@inheritDoc}
+     *
      * @param value
      */
     @Override
@@ -223,7 +227,7 @@ public class SkipListDatabase implements Database<String, Rectangle> {
      * {@inheritDoc}
      */
     @Override
-    public List<Rectangle> duplicates(){
+    public List<Rectangle> duplicates() {
         return new ArrayList<>();
     }
 }

@@ -123,7 +123,6 @@ public class Rectangle1Test {
     }
 
 
-
     /**
      * Test if valid file "testInsertFile" gives console output for inserting
      * a rectangle

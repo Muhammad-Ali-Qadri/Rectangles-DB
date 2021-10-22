@@ -3,7 +3,8 @@ package quadtree;
 import processor.Rectangle;
 import skiplist.KVPair;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -71,7 +72,8 @@ public class IntTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     @Override
-    public TreeNode<K> removeByValue(Point point, Point start, int width, List<KVPair<K, Point>> pairs) {
+    public TreeNode<K> removeByValue(Point point, Point start, int width,
+                                     List<KVPair<K, Point>> pairs) {
         int regionWidth = (width / 2);
 
         //remove from north region
@@ -147,24 +149,27 @@ public class IntTreeNode<K extends Comparable<? super K>>
                 CurrentRegionStart.getY() + subRegionWidth, subRegionWidth,
                 subRegionWidth);
 
-        if(containsRegion(searchRect, nwRect)){
+        if (containsRegion(searchRect, nwRect)) {
             nodesTraversed += nwChildRegion.regionSearch(searchRect,
                     new Point(nwRect.x, nwRect.y)
                     , subRegionWidth, searchPoints);
         }
 
-        if(containsRegion(searchRect, neRect)){
-            nodesTraversed += neChildRegion.regionSearch(searchRect, new Point(neRect.x, neRect.y)
+        if (containsRegion(searchRect, neRect)) {
+            nodesTraversed += neChildRegion.regionSearch(searchRect,
+                    new Point(neRect.x, neRect.y)
                     , subRegionWidth, searchPoints);
         }
 
-        if(containsRegion(searchRect, swRect)){
-            nodesTraversed += swChildRegion.regionSearch(searchRect, new Point(swRect.x, swRect.y)
+        if (containsRegion(searchRect, swRect)) {
+            nodesTraversed += swChildRegion.regionSearch(searchRect,
+                    new Point(swRect.x, swRect.y)
                     , subRegionWidth, searchPoints);
         }
 
-        if(containsRegion(searchRect, seRect)){
-            nodesTraversed += seChildRegion.regionSearch(searchRect, new Point(seRect.x, seRect.y)
+        if (containsRegion(searchRect, seRect)) {
+            nodesTraversed += seChildRegion.regionSearch(searchRect,
+                    new Point(seRect.x, seRect.y)
                     , subRegionWidth, searchPoints);
         }
 
@@ -192,7 +197,7 @@ public class IntTreeNode<K extends Comparable<? super K>>
                     StringBuilder treeStringBuilder) {
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < level; i++){
+        for (int i = 0; i < level; i++) {
             sb.append("  ");
         }
 

@@ -1181,7 +1181,7 @@ public class SkipListDatabaseTest {
                         new Rectangle(10, 10, 990, 990)))));
     }
 
-    
+
     /**
      * Tests if intersection is performed for database with 2 rectangle (10,
      * 10, 990, 990) and (1000, 100, 15, 15)

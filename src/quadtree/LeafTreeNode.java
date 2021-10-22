@@ -95,9 +95,11 @@ public class LeafTreeNode<K extends Comparable<? super K>>
     @Override
     public void duplicates(List<Point> duplicates) {
         duplicates.addAll(
-                pairs.stream().filter(x -> pairs.stream()
-                                                   .filter(y -> y.getValue()
-                        .equals(x.getValue())).count() > 1)
+                pairs.stream().filter(x ->
+                                pairs.stream()
+                                        .filter(y -> y.getValue()
+                                                .equals(x.getValue()
+                                                )).count() > 1)
                         .map(KVPair::getValue).distinct()
                         .collect(Collectors.toList())
         );
@@ -112,9 +114,9 @@ public class LeafTreeNode<K extends Comparable<? super K>>
                             Point CurrentRegionStart, int currentRegionWidth,
                             List<KVPair<K, Point>> searchPoints) {
         searchPoints.addAll(pairs.stream().filter(x ->
-                        searchRect.contains(x.getValue().getX(),
-                                x.getValue().getY())
-                        ).collect(Collectors.toList()));
+                searchRect.contains(x.getValue().getX(),
+                        x.getValue().getY())
+        ).collect(Collectors.toList()));
         return 1;
     }
 
@@ -134,7 +136,7 @@ public class LeafTreeNode<K extends Comparable<? super K>>
                     StringBuilder treeStringBuilder) {
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < level; i++){
+        for (int i = 0; i < level; i++) {
             sb.append("  ");
         }
 

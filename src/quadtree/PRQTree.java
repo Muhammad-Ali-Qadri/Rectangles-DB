@@ -10,7 +10,6 @@ import java.util.List;
  * This class represents the complete functionality for the PRQuad Tree
  *
  * @param <K> the key entry in this quad tree
- *
  * @author Muhammad Ali Qadri
  * @version 1
  */
@@ -80,13 +79,12 @@ public class PRQTree<K extends Comparable<K>> {
      * Searches points within rectangle region specified in function
      * parameters
      *
-     * @param rect rectangle to search
+     * @param rect   rectangle to search
      * @param search the list of points in "rect" region
-     *
      * @return the number of nodes traversed in this tree
      */
     public int regionSearch(Rectangle rect, List<KVPair<K, Point>> search) {
-        if(search == null){
+        if (search == null) {
             throw new IllegalArgumentException();
         }
 

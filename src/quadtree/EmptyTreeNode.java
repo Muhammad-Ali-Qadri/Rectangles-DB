@@ -87,7 +87,7 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
     /**
      * {@inheritDoc}
      */
-    public List<KVPair<K, Point>> getKeyValuePairs(){
+    public List<KVPair<K, Point>> getKeyValuePairs() {
         return new ArrayList<>();
     }
 
@@ -99,7 +99,7 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
                     StringBuilder treeStringBuilder) {
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < level; i++){
+        for (int i = 0; i < level; i++) {
             sb.append("  ");
         }
 

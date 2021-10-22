@@ -1,18 +1,17 @@
 package test.quadtree;
 
+import org.junit.Before;
+import org.junit.Test;
 import processor.Rectangle;
 import quadtree.PRQTree;
 import quadtree.Point;
-import org.junit.Before;
-import org.junit.Test;
-import quadtree.TreeNode;
 import skiplist.KVPair;
-import skiplist.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * This is a test class responsible for testing the operations of an
@@ -209,10 +208,10 @@ public class PRQTreeTest {
         assertEquals(new KVPair<>("P4", new Point(768, 512)), pair);
 
         dumpString = "Node at 0, 0, 1024:\n" +
-                            "(P2, 512, 0)\n" +
-                            "(P3, 0, 512)\n" +
-                            "(P4, 512, 512)\n" +
-                            "QuadTree Size: 1 QuadTree Nodes Printed.";
+                     "(P2, 512, 0)\n" +
+                     "(P3, 0, 512)\n" +
+                     "(P4, 512, 512)\n" +
+                     "QuadTree Size: 1 QuadTree Nodes Printed.";
 
         assertEquals(dumpString, prqTree.dump());
     }
@@ -249,7 +248,7 @@ public class PRQTreeTest {
     public void testInternalMultiDuplicates() {
         testMulti2LevelInsertDump();
 
-        for(int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             prqTree.insert(new KVPair<>("P" + i, new Point(0, 0)));
             prqTree.insert(new KVPair<>("P" + i, new Point(512, 0)));
             prqTree.insert(new KVPair<>("P" + i, new Point(0, 512)));

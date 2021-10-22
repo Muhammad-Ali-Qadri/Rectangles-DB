@@ -2,10 +2,10 @@ package test.processor;
 
 import org.junit.Before;
 import org.junit.Test;
-import processor.Processor;
 import processor.PointCommandProcessor;
+import processor.Processor;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class PointCommandProcessorTest {
     private Processor processor;
@@ -52,8 +52,8 @@ public class PointCommandProcessorTest {
     public void testRemoveByKey() {
         processor.process("insert C1    1   1");
         String output = processor.process("remove C1");
-        assertEquals("Point removed: (C1, 1, 1)",output
-                );
+        assertEquals("Point removed: (C1, 1, 1)", output
+        );
         assertEquals(processor.process("remove C9"), "Point not removed: C9");
     }
 
@@ -64,7 +64,7 @@ public class PointCommandProcessorTest {
     public void testRemoveByValue() {
         processor.process("insert C1    1   1");
         String output = processor.process("remove 1 1");
-        assertEquals("Point removed: (C1, 1, 1)",output
+        assertEquals("Point removed: (C1, 1, 1)", output
         );
         assertEquals(processor.process("remove 5 2"), "Point not found: (5, 2)");
     }

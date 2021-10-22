@@ -18,8 +18,7 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
     private final SkipList<String, Point> skipList;
 
     //TODO: 1- write test cases for database and processor
-    //TODO: 2- Documentation needs to be filled out
-    //TODO: 3- Reformatting and styling
+    //TODO: 2- Check for documentation that needs to be filled out
 
     public PRQuadTreeDatabase() {
         prqTree = new PRQTree<>(WORLD_WIDTH);
@@ -110,8 +109,8 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
     @Override
     public String dump() {
         return skipList.dump() +
-                          "\nQuadTree dump:\n" +
-                          prqTree.dump();
+               "\nQuadTree dump:\n" +
+               prqTree.dump();
     }
 
     /**

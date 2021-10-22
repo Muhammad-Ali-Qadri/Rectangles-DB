@@ -25,10 +25,9 @@ import java.util.Scanner;
 // letter of this restriction.
 
 public class Point2 {
-    public static void main(String[] args) throws FileNotFoundException{
+    public static void main(String[] args) throws FileNotFoundException {
         // the file object
         File file;
-
 
 
         // Attempts to open the file and scan through it

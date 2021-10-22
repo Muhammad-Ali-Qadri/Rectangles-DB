@@ -2,6 +2,7 @@ package quadtree;
 
 import java.util.Objects;
 //TODO: Write test cases
+
 /**
  * Class representing a point on an x,y plain
  *
