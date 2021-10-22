@@ -17,7 +17,7 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
     private final PRQTree<String> prqTree;
     private final SkipList<String, Point> skipList;
 
-    //TODO: 1- refactor code in processor class
+    //TODO: 1- refactor code in processor class * Done, but I couldn't check on webcat... when I tried to submit, I got a weird exception.
     //TODO: 2- write test cases for database and processor
     //TODO: 3- Documentation needs to be filled out
     //TODO: 4- Reformatting and styling
@@ -134,7 +134,7 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
      * @param pair that's being validated for insertion.
      *             Might rename to validationHelper
      */
-    public boolean insertionHelper(KVPair<String, Point> pair) {
+    private boolean insertionHelper(KVPair<String, Point> pair) {
         if (validateV(pair.getValue())) {
             prqTree.insert(pair);
             skipList.insert(pair);
