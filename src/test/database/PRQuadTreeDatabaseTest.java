@@ -48,20 +48,23 @@ public class PRQuadTreeDatabaseTest {
      */
     @Test
     public void testInsert() {
-        Point addMe = new Point(10, 20);
+        Point badPoint = new Point(10, 20);
         Point addMe2 = new Point(15, 20);
-        KVPair<String, Point> fail = new KVPair<>("A", addMe);
+        KVPair<String, Point> fail = new KVPair<>("A", badPoint);
         KVPair<String, Point> pass = new KVPair<>("A", addMe2);
         assertFalse(quadDB.insert(fail));
         assertTrue(quadDB.insert(pass));
 
     }
 
+    /**
+     * Tests insertion for bad point, and a good point.
+     */
     @Test
     public void testInsertionHelper() {
-        Point addMe = new Point(-2, 38);
+        Point badPoint = new Point(-2, 38);
         Point actuallyValid = new Point(53, 30);
-        KVPair<String, Point> fail = new KVPair<>("E", addMe);
+        KVPair<String, Point> fail = new KVPair<>("E", badPoint);
         KVPair<String, Point> pass = new KVPair<>("E", actuallyValid);
         assertFalse(quadDB.insert(fail));
         assertTrue(quadDB.insert(pass));

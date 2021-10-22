@@ -23,8 +23,6 @@ import static org.junit.Assert.assertTrue;
 public class PRQTreeTest {
 
     private static final int WORLD_WIDTH = 1024;
-    private static final Point ROOT_START = new Point(0, 0);
-
     //The empty node to test on
     private PRQTree<String> prqTree;
 

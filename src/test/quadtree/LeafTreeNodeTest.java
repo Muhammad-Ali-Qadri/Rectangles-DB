@@ -51,7 +51,9 @@ public class LeafTreeNodeTest {
         String dumpString = "Node at 0, 0, 1024:\n" +
                             "(P1, 0, 0)\n";
 
-        testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
+        boolean oneNodeTest = testAssertDump(leafNode, 0, ROOT_START,
+                WORLD_WIDTH, 1, dumpString);
+        assertTrue(oneNodeTest);
     }
 
     /**
@@ -75,7 +77,9 @@ public class LeafTreeNodeTest {
                             "(P1, 0, 1)\n" +
                             "(P1, 0, 2)\n";
 
-        testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
+        boolean threeNodeTest = testAssertDump(leafNode, 0, ROOT_START
+                , WORLD_WIDTH, 1, dumpString);
+        assertTrue(threeNodeTest);
     }
 
 
@@ -107,7 +111,9 @@ public class LeafTreeNodeTest {
                             "(P5, 0, 2)\n" +
                             "(P6, 0, 2)\n";
 
-        testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
+        boolean test6Points = testAssertDump(leafNode, 0, ROOT_START,
+                WORLD_WIDTH, 1, dumpString);
+        assertTrue(test6Points);
     }
 
 
@@ -143,7 +149,9 @@ public class LeafTreeNodeTest {
                             "  Node at 512, 512, 512:\n" +
                             "  (P1, 512, 512)\n";
 
-        testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 5, dumpString);
+        boolean checkDump = testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH
+                , 5, dumpString);
+        assertTrue(checkDump);
     }
 
 
@@ -181,7 +189,9 @@ public class LeafTreeNodeTest {
 
         String dumpString = "Node at 0, 0, 1024:\n" +
                             "(P2, 512, 0)\n";
-        testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
+        boolean testDump = testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH
+                , 1, dumpString);
+        assertTrue(testDump);
 
         removed = new ArrayList<>();
         leafNode = leafNode.removeByValue(p2, ROOT_START, WORLD_WIDTH, removed);
@@ -190,7 +200,10 @@ public class LeafTreeNodeTest {
 
 
         dumpString = "Node at 0, 0, 1024: Empty\n";
-        testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH, 1, dumpString);
+        boolean test;
+        test = testAssertDump(leafNode, 0, ROOT_START, WORLD_WIDTH
+                , 1, dumpString);
+        assertTrue(test);
     }
 
 
@@ -318,13 +331,12 @@ public class LeafTreeNodeTest {
     }
 
     //Assert the dump values
-    private void testAssertDump(TreeNode<String> node, int level, Point start
+    private boolean testAssertDump(TreeNode<String> node, int level, Point start
             , int width, int assertNodes, String assertDump) {
 
         StringBuilder sb = new StringBuilder();
-        assertEquals(assertNodes,
-                node.dump(level, start, width, sb));
-
-        assertEquals(assertDump, sb.toString());
+        boolean check1 = assertNodes == node.dump(level, start, width, sb);
+        boolean check2 = assertDump.equals(sb.toString() );
+        return check1 && check2;
     }
 }

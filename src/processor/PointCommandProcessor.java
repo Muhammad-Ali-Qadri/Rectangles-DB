@@ -43,10 +43,8 @@ public class PointCommandProcessor implements Processor {
             output = duplicateHandler();
         }
         else {
-            String command = input.substring(0, input.indexOf(' '));
-            String rectObj = everythingAfter1stSpace(input);
-            String[] container = rectObj.split("\\s+");
-
+            String[] container = input.split("\\s+");
+            String command = container[0];
             switch (command) {
                 case "insert": {
                     output = insertHandler(container);
@@ -64,8 +62,10 @@ public class PointCommandProcessor implements Processor {
                     output = searchHandler(container);
                     break;
                 }
-                default:
+                default: {
                     output = "";
+                    break;
+                }
             }
         }
         return output;
@@ -76,9 +76,9 @@ public class PointCommandProcessor implements Processor {
      * @return string representation for system out
      */
     private String insertHandler(String[] container) {
-        String name = container[0];
-        int x = Integer.parseInt(container[1]);
-        int y = Integer.parseInt(container[2]);
+        String name = container[1];
+        int x = Integer.parseInt(container[2]);
+        int y = Integer.parseInt(container[3]);
         Point sendMe = new Point(x, y);
         KVPair<String, Point> kvObj = new KVPair<>(name, sendMe);
 
@@ -96,9 +96,9 @@ public class PointCommandProcessor implements Processor {
         KVPair<String, Point> removedElement;
         Point point;
 
-        if (container.length > 1) { //we were given coordinates
-            int x = Integer.parseInt(container[0]);
-            int y = Integer.parseInt(container[1]);
+        if (container.length > 2) { //we were given coordinates
+            int x = Integer.parseInt(container[1]);
+            int y = Integer.parseInt(container[2]);
             point = new Point(x, y);
 
             if (!data.validateV(point)) {
@@ -112,23 +112,12 @@ public class PointCommandProcessor implements Processor {
                     "Point not found: (" + point + ")";
         }
         else {
-            removedElement = data.remove(container[0]);
+            removedElement = data.remove(container[1]);
 
             return (removedElement != null) ?
                     "Point removed: (" + removedElement + ")" :
-                    "Point not removed: " + container[0];
+                    "Point not removed: " + container[1];
         }
-    }
-
-
-    /**
-     * @param line Parsed Line from top level point2 class
-     * @return Just everything after initial space
-     */
-    private String everythingAfter1stSpace(String line) {
-        int findSpace = line.indexOf(' ') + 1;
-        int lineLength = line.length();
-        return line.substring(findSpace, lineLength).trim();
     }
 
     /**
@@ -137,10 +126,10 @@ public class PointCommandProcessor implements Processor {
      */
     private String regionHandler(String[] container) {
 
-        int x = Integer.parseInt(container[0]);
-        int y = Integer.parseInt(container[1]);
-        int w = Integer.parseInt(container[2]);
-        int h = Integer.parseInt(container[3]);
+        int x = Integer.parseInt(container[1]);
+        int y = Integer.parseInt(container[2]);
+        int w = Integer.parseInt(container[3]);
+        int h = Integer.parseInt(container[4]);
         Rectangle region = new Rectangle(x, y, w, h);
 
         if (w < 1 || h < 1) {
@@ -150,10 +139,6 @@ public class PointCommandProcessor implements Processor {
         StringBuilder nodesVisited = new StringBuilder();
         List<KVPair<String, Point>> pairs = data.regionSearch(x, y, w, h,
                 nodesVisited);
-
-        if (pairs == null) {
-            return "Rectangle rejected: (" + region + ")";
-        }
 
         StringBuilder sb =
                 new StringBuilder("Points intersecting region (");
@@ -176,9 +161,9 @@ public class PointCommandProcessor implements Processor {
      * @return returns string that needs to console logged.
      */
     private String searchHandler(String[] container) {
-        List<KVPair<String, Point>> pairs = data.search(container[0]);
+        List<KVPair<String, Point>> pairs = data.search(container[1]);
         if (pairs == null) {
-            return "Point not found: " + container[0];
+            return "Point not found: " + container[1];
         }
 
         StringBuilder sb = new StringBuilder();
@@ -204,4 +189,5 @@ public class PointCommandProcessor implements Processor {
         }
         return start.toString();
     }
+
 }

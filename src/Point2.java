@@ -43,6 +43,10 @@ public class Point2 {
         // the file object
         File file;
 
+        if (args[0] == null) {
+            System.out.println("File expected");
+            return;
+        }
 
         // Attempts to open the file and scan through it
         try {

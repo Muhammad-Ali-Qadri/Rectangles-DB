@@ -1,7 +1,6 @@
 package quadtree;
 
 import java.util.Objects;
-//TODO: Write test cases
 
 /**
  * Class representing a point on an x,y plain
@@ -64,8 +63,12 @@ public class Point {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Point point = (Point) o;
         return x == point.x && y == point.y;
     }

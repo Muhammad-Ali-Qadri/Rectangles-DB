@@ -25,9 +25,6 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
     private final PRQTree<String> prqTree;
     private final SkipList<String, Point> skipList;
 
-    //TODO: 1- write test cases for database and processor
-    //TODO: 2- Check for documentation that needs to be filled out
-
     /**
      * Initialize data structures
      */
