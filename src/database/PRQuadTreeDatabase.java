@@ -17,10 +17,9 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
     private final PRQTree<String> prqTree;
     private final SkipList<String, Point> skipList;
 
-    //TODO: 1- refactor code in processor class * Done, but I couldn't check on webcat... when I tried to submit, I got a weird exception.
-    //TODO: 2- write test cases for database and processor
-    //TODO: 3- Documentation needs to be filled out
-    //TODO: 4- Reformatting and styling
+    //TODO: 1- write test cases for database and processor
+    //TODO: 2- Documentation needs to be filled out
+    //TODO: 3- Reformatting and styling
 
     public PRQuadTreeDatabase() {
         prqTree = new PRQTree<>(WORLD_WIDTH);
@@ -102,8 +101,7 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
      */
     @Override
     public List<KVPair<String, Point>> search(String key) {
-        List<KVPair<String, Point>> items = skipList.search(key);
-        return items;
+        return skipList.search(key);
     }
 
     /**
@@ -111,11 +109,9 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
      */
     @Override
     public String dump() {
-        StringBuilder concatMe = new StringBuilder();
-        concatMe.append(skipList.dump());
-        concatMe.append("\nQuadTree dump:\n");
-        concatMe.append(prqTree.dump());
-        return concatMe.toString();
+        return skipList.dump() +
+                          "\nQuadTree dump:\n" +
+                          prqTree.dump();
     }
 
     /**
@@ -150,7 +146,6 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
      */
     @Override
     public List<Point> duplicates() {
-        List<Point> dupList = prqTree.duplicates();
-        return dupList;
+        return prqTree.duplicates();
     }
 }

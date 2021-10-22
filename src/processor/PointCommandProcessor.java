@@ -7,17 +7,20 @@ import skiplist.*;
 
 import java.util.List;
 
-public class PointCommandProcessor implements Processor{
-    /**
-     * {@inheritDoc}
-     */
+public class PointCommandProcessor implements Processor {
 
     private final Database<String, Point> data;
 
+    /**
+     * Construct this object, initialize quad tree.
+     */
     public PointCommandProcessor() {
         data = new PRQuadTreeDatabase();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String process(String input) {
         if (input == null) {
@@ -25,12 +28,11 @@ public class PointCommandProcessor implements Processor{
         }
 
         String output;
-        if (input.equals("dump") ) {
+        if (input.equals("dump")) {
             return data.dump();
         }
-        else if (input.equals("duplicates") ) {
-            List<Point> item = data.duplicates();
-            output= duplicateHandler(item);
+        else if (input.equals("duplicates")) {
+            output = duplicateHandler();
         }
         else {
             String command = input.substring(0, input.indexOf(' '));
@@ -39,118 +41,141 @@ public class PointCommandProcessor implements Processor{
 
             switch (command) {
                 case "insert": {
-                    String name = container[0];
-                    int x = Integer.parseInt(container[1]);
-                    int y = Integer.parseInt(container[2]);
-                    Point sendMe = new Point(x, y);
-                    KVPair<String, Point> kvObj = new KVPair<>(name, sendMe);
-                    boolean inserted = data.insert(kvObj);
-                    output = insertHandler(kvObj, inserted);
+                    output = insertHandler(container);
                     break;
                 }
                 case "remove": {
-                    KVPair<String, Point> result;
-                    Point value = null;
-                    boolean normalRemove = true;
-                    if (container.length > 1) { //we were given coordinates
-                        int x = Integer.parseInt(container[0]);
-                        int y = Integer.parseInt(container[1]);
-                        value = new Point(x, y);
-                        if (!data.validateV(value)) {
-                            return "Point rejected: (" + value + ")";
-                        }
-                        result = data.removeByValue(value);
-                        normalRemove = false;
-                    } else {
-                        result = data.remove(container[0]);
-                    }
-                    String sendMe = normalRemove ? container[0]
-                            : value.toString();
-                    output = removeHandler(normalRemove, sendMe, result);
+                    output = removeHandler(container);
                     break;
-                    }
+                }
                 case "regionsearch": {
-                    int x = Integer.parseInt(container[0]);
-                    int y = Integer.parseInt(container[1]);
-                    int w = Integer.parseInt(container[2]);
-                    int h = Integer.parseInt(container[3]);
-                    Rectangle printMe = new Rectangle(x, y, w, h);
-                    if (w < 1 || h < 1) {
-                        StringBuilder item = new StringBuilder("Rectangle ");
-                        item.append("rejected: (").append(printMe).append(")");
-                        return item.toString();
-                    }
-
-                    StringBuilder nodes = new StringBuilder();
-                    List<KVPair<String, Point>> ans;
-                    ans = data.regionSearch(x, y, w, h, nodes);
-                    output = regionHandler(ans, printMe, nodes.toString());
+                    output = regionHandler(container);
                     break;
                 }
                 case "search": {
-                    //This is search
-                    List<KVPair<String, Point>> resp = data.search(container[0]);
-                    output = searchHandler(resp, container[0]);
+                    output = searchHandler(container);
                     break;
                 }
-                default: output = "";
+                default:
+                    output = "";
             }
         }
         return output;
     }
 
     /**
-     *
+     * @param container the list of inputs for insert command
+     * @return string representation for system out
+     */
+    private String insertHandler(String[] container) {
+        String name = container[0];
+        int x = Integer.parseInt(container[1]);
+        int y = Integer.parseInt(container[2]);
+        Point sendMe = new Point(x, y);
+        KVPair<String, Point> kvObj = new KVPair<>(name, sendMe);
+
+        return (data.insert(kvObj)) ? "Point inserted: (" + kvObj + ")" :
+                "Point rejected: (" + kvObj + ")";
+    }
+
+
+    /**
+     * @param container the list of inputs for insert command
+     * @return string representation for system out
+     */
+    private String removeHandler(String[] container) {
+
+        KVPair<String, Point> removedElement;
+        Point point;
+
+        if (container.length > 1) { //we were given coordinates
+            int x = Integer.parseInt(container[0]);
+            int y = Integer.parseInt(container[1]);
+            point = new Point(x, y);
+
+            if (!data.validateV(point)) {
+                return "Point rejected: (" + point + ")";
+            }
+
+            removedElement = data.removeByValue(point);
+
+            return (removedElement != null) ?
+                    "Point removed: (" + removedElement + ")" :
+                    "Point not found: (" + point + ")";
+        }
+        else {
+            removedElement = data.remove(container[0]);
+
+            return (removedElement != null) ?
+                    "Point removed: (" + removedElement + ")" :
+                    "Point not removed: " + container[0];
+        }
+    }
+
+
+    /**
      * @param line Parsed Line from top level point2 class
      * @return Just everything after initial space
      */
     private String everythingAfter1stSpace(String line) {
         int findSpace = line.indexOf(' ') + 1;
         int lineLength = line.length();
-        return line.substring(findSpace, lineLength ).trim();
+        return line.substring(findSpace, lineLength).trim();
     }
 
     /**
-     *
-     * @param pair list of points that will be processed into a string
-     * @param me the rectangular region in question
+     * @param container the list of inputs for insert command
      * @return String representation for console, for regionSearch
      */
-    private String regionHandler(List<KVPair<String, Point>> pair, Rectangle me,
-                                 String nodes) {
+    private String regionHandler(String[] container) {
 
-        if (pair == null) {
-            return "Rectangle rejected: (" + me.toString() + ")";
+        int x = Integer.parseInt(container[0]);
+        int y = Integer.parseInt(container[1]);
+        int w = Integer.parseInt(container[2]);
+        int h = Integer.parseInt(container[3]);
+        Rectangle region = new Rectangle(x, y, w, h);
+
+        if (w < 1 || h < 1) {
+            return "Rectangle " + "rejected: (" + region + ")";
         }
+
+        StringBuilder nodesVisited = new StringBuilder();
+        List<KVPair<String, Point>> pairs = data.regionSearch(x, y, w, h,
+                nodesVisited);
+
+        if (pairs == null) {
+            return "Rectangle rejected: (" + region + ")";
+        }
+
         StringBuilder sb =
                 new StringBuilder("Points intersecting region (");
-        sb.append(me).append(")").append("\n");
-        if (pair.size() > 0) {
+        sb.append(region).append(")").append("\n");
+
+        if (pairs.size() > 0) {
             String prefix = "";
-            for (Object point : pair) {
+            for (Object point : pairs) {
                 sb.append(prefix);
                 prefix = "\n";
                 sb.append("Point found: (").append(point).append(")");
             }
         }
-        sb.append("\n").append(nodes).append(" quadtree nodes visited");
+        sb.append("\n").append(nodesVisited).append(" quadtree nodes visited");
         return sb.toString();
     }
 
     /**
-     *
-     * @param pair Contains list search found
-     * @param key Contains name of Point to be found
+     * @param container the list of inputs for insert command
      * @return returns string that needs to console logged.
      */
-    private String searchHandler(List<KVPair<String, Point>> pair, String key) {
-        if (pair == null) {
-            return "Point not found: " + key;
+    private String searchHandler(String[] container) {
+        List<KVPair<String, Point>> pairs = data.search(container[0]);
+        if (pairs == null) {
+            return "Point not found: " + container[0];
         }
 
         StringBuilder sb = new StringBuilder();
-        for (KVPair<String, Point> point : pair) {
-            if (sb.length() > 0){
+        for (KVPair<String, Point> point : pairs) {
+            if (sb.length() > 0) {
                 sb.append("\n");
             }
             sb.append("Found (").append(point).append(")");
@@ -158,43 +183,13 @@ public class PointCommandProcessor implements Processor{
         return sb.toString();
     }
 
-    /**
-     *
-     * @param point which was intended on being added.
-     * @param inserted to skipList and quadtree or not
-     * @return string representation for system out
-     */
-    private String insertHandler(KVPair<String, Point> point
-            , boolean inserted) {
-        return  (inserted) ? "Point inserted: (" + point + ")":
-                "Point rejected: (" + point+ ")";
-    }
 
     /**
-     *
-     * @param removalType when true denotes a remove with key, false with point
-     * @param key for when remove with key was called, or the point as a string
-     * @param pair the point which was removed
-     * @return string representation for system out
-     */
-    private String removeHandler(boolean removalType, String key
-            , KVPair<String, Point> pair)  {
-        if(removalType) {
-            return (pair != null) ? "Point removed: (" + pair +
-                    ")" : "Point not removed: " + key;
-        }
-        else {
-            return (pair != null) ? "Point removed: (" + pair + ")" :
-                    "Point not found: (" + key + ")";
-        }
-    }
-
-    /**
-     *
-     * @param points returned from db
      * @return string to be printed to console
      */
-    private String duplicateHandler(List<Point> points) {
+    private String duplicateHandler() {
+        List<Point> points = data.duplicates();
+
         StringBuilder start = new StringBuilder("Duplicate points:");
         for (Object point : points) {
             start.append("\n(").append(point.toString()).append(")");
