@@ -7,6 +7,14 @@ import skiplist.KVPair;
 
 import java.util.List;
 
+
+/**
+ * Processor for parsing commands and performing different operations based
+ * on the commands and values passed onto the PRQuadTree database
+ *
+ * @author Cristian Diaz-Claure
+ * @version 1
+ */
 public class PointCommandProcessor implements Processor {
 
     private final Database<String, Point> data;

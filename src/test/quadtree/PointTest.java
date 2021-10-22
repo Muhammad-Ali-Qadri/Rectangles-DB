@@ -9,6 +9,9 @@ import static org.junit.Assert.assertNotEquals;
 
 /**
  * Test point class
+ *
+ * @author Muhammad Ali Qadri
+ * @version 1
  */
 public class PointTest {
 

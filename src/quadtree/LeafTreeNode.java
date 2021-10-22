@@ -20,10 +20,13 @@ public class LeafTreeNode<K extends Comparable<? super K>>
         implements TreeNode<K> {
 
     //Represents the list of key-point pairs stored in this leaf node
-    private final List<KVPair<K, Point>> pairs;
+    private final List<KVPair<K, Point>> valuePairs;
 
+    /**
+     * Initialize internal pairs
+     * */
     public LeafTreeNode() {
-        pairs = new ArrayList<>();
+        valuePairs = new ArrayList<>();
     }
 
     /**
@@ -32,26 +35,24 @@ public class LeafTreeNode<K extends Comparable<? super K>>
     @Override
     public TreeNode<K> insert(KVPair<K, Point> pair, Point start,
                               int width) {
-        //TODO: add find all method to the skiplist class
-
         boolean foundPoint = false;
 
-        for (KVPair<K, Point> listPoint : pairs) {
+        for (KVPair<K, Point> listPoint : valuePairs) {
             if (pair.getValue().equals(listPoint.getValue())) {
                 foundPoint = true;
                 break;
             }
         }
 
-        pairs.add(pair);
+        valuePairs.add(pair);
 
-        if (foundPoint || pairs.size() <= 3) {
+        if (foundPoint || valuePairs.size() <= 3) {
             return this;
         }
         else {
             TreeNode<K> internal = new IntTreeNode<>();
 
-            for (KVPair<K, Point> listPoint : pairs) {
+            for (KVPair<K, Point> listPoint : valuePairs) {
                 internal = internal.insert(listPoint, start, width);
             }
 
@@ -68,7 +69,7 @@ public class LeafTreeNode<K extends Comparable<? super K>>
                                      List<KVPair<K, Point>> pairs) {
 
         KVPair<K, Point> foundPair = null;
-        for (KVPair<K, Point> listPoint : this.pairs) {
+        for (KVPair<K, Point> listPoint : this.valuePairs) {
             if (point.equals(listPoint.getValue())) {
                 foundPair = listPoint;
                 break;
@@ -80,9 +81,9 @@ public class LeafTreeNode<K extends Comparable<? super K>>
         }
 
         pairs.add(foundPair);
-        this.pairs.remove(foundPair);
+        this.valuePairs.remove(foundPair);
 
-        if (this.pairs.size() == 0) {
+        if (this.valuePairs.size() == 0) {
             return EmptyTreeNode.getInstance();
         }
 
@@ -95,8 +96,8 @@ public class LeafTreeNode<K extends Comparable<? super K>>
     @Override
     public void duplicates(List<Point> duplicates) {
         duplicates.addAll(
-                pairs.stream().filter(x ->
-                                pairs.stream()
+                valuePairs.stream().filter(x ->
+                                valuePairs.stream()
                                         .filter(y -> y.getValue()
                                                 .equals(x.getValue()
                                                 )).count() > 1)
@@ -111,9 +112,9 @@ public class LeafTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public int regionSearch(Rectangle searchRect,
-                            Point CurrentRegionStart, int currentRegionWidth,
+                            Point currentRegionStart, int currentRegionWidth,
                             List<KVPair<K, Point>> searchPoints) {
-        searchPoints.addAll(pairs.stream().filter(x ->
+        searchPoints.addAll(valuePairs.stream().filter(x ->
                 searchRect.contains(x.getValue().getX(),
                         x.getValue().getY())
         ).collect(Collectors.toList()));
@@ -125,7 +126,7 @@ public class LeafTreeNode<K extends Comparable<? super K>>
      * {@inheritDoc}
      */
     public List<KVPair<K, Point>> getKeyValuePairs() {
-        return pairs;
+        return valuePairs;
     }
 
     /**
@@ -143,7 +144,7 @@ public class LeafTreeNode<K extends Comparable<? super K>>
         treeStringBuilder.append(sb).append("Node at ")
                 .append(start).append(", ").append(width).append(":\n");
 
-        for (KVPair<K, Point> pair : pairs) {
+        for (KVPair<K, Point> pair : valuePairs) {
             treeStringBuilder.append(sb).
                     append("(").append(pair).append(")\n");
         }

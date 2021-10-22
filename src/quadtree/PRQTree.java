@@ -51,13 +51,16 @@ public class PRQTree<K extends Comparable<K>> {
      *
      * @param point the point to remove from this tree
      *              was not found
+     * @return pair removed
      */
     public KVPair<K, Point> removeByValue(Point point) {
         List<KVPair<K, Point>> removed = new ArrayList<>();
         root = root.removeByValue(point, rootStart, rootLength, removed);
 
-        if (removed.size() > 0)
+        if (removed.size() > 0) {
             return removed.get(0);
+        }
+
         return null;
     }
 

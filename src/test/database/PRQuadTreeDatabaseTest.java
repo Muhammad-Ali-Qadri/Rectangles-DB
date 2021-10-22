@@ -10,6 +10,12 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Test PRQuad tree
+ *
+ * @author Muhammad Ali Qadri
+ * @version 1
+ */
 public class PRQuadTreeDatabaseTest {
     private PRQuadTreeDatabase quadDB;
     private Point addMe;

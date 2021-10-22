@@ -15,6 +15,8 @@ import java.util.List;
  * Many of these methods will simply call the appropriate version of the
  * internal data-structure method after some preparation.
  *
+ * @param <K> Type of key for database entries
+ * @param <V> Type of value against each key
  * @author Muhammad Ali Qadri
  * @version 1
  */

@@ -26,14 +26,14 @@ public class IntTreeNodeTest {
 
     private static final int WORLD_WIDTH = 1024;
     private static final Point ROOT_START = new Point(0, 0);
-    public static final Point NW_TOP_LEFT_CORNER = new Point(0, 0);
-    public static final Point NW_BOTTOM_RIGHT_CORNER = new Point(511, 511);
-    public static final Point NE_TOP_LEFT_CORNER = new Point(512, 0);
-    public static final Point NE_BOTTOM_RIGHT_CORNER = new Point(1023, 511);
-    public static final Point SW_TOP_LEFT_CORNER = new Point(0, 512);
-    public static final Point SW_BOTTOM_RIGHT_CORNER = new Point(511, 1023);
-    public static final Point SE_TOP_LEFT_CORNER = new Point(512, 512);
-    public static final Point SE_BOTTOM_RIGHT_CORNER = new Point(1023, 1023);
+    private static final Point NW_TOP_LEFT_CORNER = new Point(0, 0);
+    private static final Point NW_BOTTOM_RIGHT_CORNER = new Point(511, 511);
+    private static final Point NE_TOP_LEFT_CORNER = new Point(512, 0);
+    private static final Point NE_BOTTOM_RIGHT_CORNER = new Point(1023, 511);
+    private static final Point SW_TOP_LEFT_CORNER = new Point(0, 512);
+    private static final Point SW_BOTTOM_RIGHT_CORNER = new Point(511, 1023);
+    private static final Point SE_TOP_LEFT_CORNER = new Point(512, 512);
+    private static final Point SE_BOTTOM_RIGHT_CORNER = new Point(1023, 1023);
 
     //The empty node to test on
     private TreeNode<String> internalNode;

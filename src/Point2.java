@@ -24,7 +24,21 @@ import java.util.Scanner;
 // during the discussion. I have violated neither the spirit nor
 // letter of this restriction.
 
+/**
+ * Main entry point for point 2 program
+ *
+ * @author Cristian Diaz-Claure
+ * @version 1
+ */
 public class Point2 {
+
+    /**
+     * Function run on program execution
+     *
+     * @param args the arguments passed to this program
+     * @throws FileNotFoundException when file input in string parameter is
+     *                               not found
+     */
     public static void main(String[] args) throws FileNotFoundException {
         // the file object
         File file;

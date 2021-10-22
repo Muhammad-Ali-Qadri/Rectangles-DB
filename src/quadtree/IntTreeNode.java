@@ -23,6 +23,10 @@ public class IntTreeNode<K extends Comparable<? super K>>
     private TreeNode<K> swChildRegion; //Represents the south-west leaf node
     private TreeNode<K> seChildRegion; //Represents the south-east leaf node
 
+
+    /**
+     * Initialize regions with empty node
+     */
     public IntTreeNode() {
         nwChildRegion = EmptyTreeNode.getInstance();
         neChildRegion = EmptyTreeNode.getInstance();
@@ -46,10 +50,11 @@ public class IntTreeNode<K extends Comparable<? super K>>
             }
             else { //add to north-east region
                 neChildRegion = neChildRegion.insert(pair,
-                        new Point(start.getX() + (width / 2), start.getY()),
+                        new Point(start.getX() + (width / 2),
+                                start.getY()),
                         regionWidth);
             }
-        }//Add to south region
+        } //Add to south region
         else {
             //add to south-west region
             if (pointInWestRegion(start, width, point)) {
@@ -88,13 +93,14 @@ public class IntTreeNode<K extends Comparable<? super K>>
                         new Point(start.getX() + (width / 2),
                                 start.getY()), regionWidth, pairs);
             }
-        }//remove from south region
+        } //remove from south region
         else {
             //remove from south-west region
             if (pointInWestRegion(start, width, point)) {
                 swChildRegion = swChildRegion.removeByValue(point,
                         new Point(start.getX(),
-                                start.getY() + (width / 2)), regionWidth, pairs);
+                                start.getY() + (width / 2)),
+                        regionWidth, pairs);
             }
             else { //add to south-east region
                 seChildRegion = seChildRegion.removeByValue(point,
@@ -127,26 +133,26 @@ public class IntTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public int regionSearch(Rectangle searchRect,
-                            Point CurrentRegionStart,
+                            Point currentRegionStart,
                             int currentRegionWidth,
                             List<KVPair<K, Point>> searchPoints) {
         int subRegionWidth = currentRegionWidth / 2;
         int nodesTraversed = 1;
 
-        Rectangle nwRect = new Rectangle(CurrentRegionStart.getX(),
-                CurrentRegionStart.getY(), subRegionWidth, subRegionWidth);
+        Rectangle nwRect = new Rectangle(currentRegionStart.getX(),
+                currentRegionStart.getY(), subRegionWidth, subRegionWidth);
 
-        Rectangle neRect = new Rectangle(CurrentRegionStart.getX()
+        Rectangle neRect = new Rectangle(currentRegionStart.getX()
                                          + subRegionWidth,
-                CurrentRegionStart.getY(), subRegionWidth, subRegionWidth);
+                currentRegionStart.getY(), subRegionWidth, subRegionWidth);
 
-        Rectangle swRect = new Rectangle(CurrentRegionStart.getX(),
-                CurrentRegionStart.getY() + subRegionWidth, subRegionWidth,
+        Rectangle swRect = new Rectangle(currentRegionStart.getX(),
+                currentRegionStart.getY() + subRegionWidth, subRegionWidth,
                 subRegionWidth);
 
-        Rectangle seRect = new Rectangle(CurrentRegionStart.getX()
+        Rectangle seRect = new Rectangle(currentRegionStart.getX()
                                          + subRegionWidth,
-                CurrentRegionStart.getY() + subRegionWidth, subRegionWidth,
+                currentRegionStart.getY() + subRegionWidth, subRegionWidth,
                 subRegionWidth);
 
         if (containsRegion(searchRect, nwRect)) {
@@ -210,7 +216,8 @@ public class IntTreeNode<K extends Comparable<? super K>>
                 new Point(start.getX() + (width / 2),
                         start.getY()), width / 2, treeStringBuilder)
                + swChildRegion.dump(level + 1, new Point(start.getX(),
-                start.getY() + (width / 2)), width / 2, treeStringBuilder)
+                        start.getY() + (width / 2)), width / 2,
+                treeStringBuilder)
                + seChildRegion.dump(level + 1,
                 new Point(start.getX() + (width / 2), start.getY()
                                                       + (width / 2)),

@@ -10,6 +10,14 @@ import skiplist.SkipList;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Database class that uses Skip List and PRQuad Tree as its internal storing
+ * mechanism
+ *
+ * @author Muhammad Ali Qadri, Cristian Diaz-Claure
+ * @version 1
+ */
 public class PRQuadTreeDatabase implements Database<String, Point> {
 
     private static final int WORLD_WIDTH = 1024;
@@ -20,6 +28,9 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
     //TODO: 1- write test cases for database and processor
     //TODO: 2- Check for documentation that needs to be filled out
 
+    /**
+     * Initialize data structures
+     */
     public PRQuadTreeDatabase() {
         prqTree = new PRQTree<>(WORLD_WIDTH);
         skipList = new SkipList<>();
@@ -78,7 +89,8 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
      */
     @Override
     public List<KVPair<String, Point>> regionSearch(int x, int y, int w, int h,
-                                                    StringBuilder nodesTraversed) {
+                                                    StringBuilder
+                                                            nodesTraversed) {
         Rectangle printMe = new Rectangle(x, y, w, h);
         List<KVPair<String, Point>> points = new ArrayList<>();
         nodesTraversed.append(prqTree.regionSearch(printMe, points));
@@ -90,8 +102,8 @@ public class PRQuadTreeDatabase implements Database<String, Point> {
      * This doesn't get used at all. I don't think.
      */
     @Override
-    public List<Pair<KVPair<String, Point>, KVPair<String, Point>>>
-    intersections() {
+    public List<Pair<KVPair<String, Point>,
+            KVPair<String, Point>>> intersections() {
         return null;
     }
 

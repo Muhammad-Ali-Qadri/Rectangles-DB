@@ -63,13 +63,13 @@ public interface TreeNode<K extends Comparable<? super K>> {
      *
      * @param searchRect         the rectangle within which points are to be
      *                           searched
-     * @param CurrentRegionStart the top left point of the current region
+     * @param currentRegionStart the top left point of the current region
      * @param currentRegionWidth the width of the current region
      * @param searchPoints       the points in the list that are within region
      * @return the number of nodes visited
      */
     int regionSearch(Rectangle searchRect,
-                     Point CurrentRegionStart, int currentRegionWidth,
+                     Point currentRegionStart, int currentRegionWidth,
                      List<KVPair<K, Point>> searchPoints);
 
 

@@ -33,8 +33,8 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      * @return The empty node singleton object.
      */
     @SuppressWarnings("unchecked")
-    public static <K1 extends Comparable<? super K1>>
-    EmptyTreeNode<K1> getInstance() {
+    public static <K1 extends
+            Comparable<? super K1>> EmptyTreeNode<K1> getInstance() {
         if (flyWeight == null) {
             flyWeight = new EmptyTreeNode<K1>();
         }
@@ -69,7 +69,7 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public void duplicates(List<Point> duplicates) {
-
+        //Will remain empty as there are no duplicates in an empty node.
     }
 
 
@@ -78,7 +78,7 @@ public class EmptyTreeNode<K extends Comparable<? super K>>
      */
     @Override
     public int regionSearch(Rectangle searchRect,
-                            Point CurrentRegionStart, int currentRegionWidth,
+                            Point currentRegionStart, int currentRegionWidth,
                             List<KVPair<K, Point>> searchPoints) {
         return 1;
     }
